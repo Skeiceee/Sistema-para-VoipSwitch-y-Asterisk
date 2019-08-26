@@ -8,8 +8,6 @@
     <title>{{ config('app.name', 'Vozdigital') }}</title>
     <link rel="icon" href="{{ asset('img/favicon.png') }}" sizes="32x32">
     <link rel="icon" href="{{ asset('img/favicon.png') }}" sizes="192x192">
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

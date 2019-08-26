@@ -8,7 +8,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
-                    <span>Dashboard</span>
+                    <i class="fas fa-chart-line"></i><span class="font-weight-bold ml-2">Dashboard</span>
                     <hr class="my-3">
                     <div class="row">
                         <div class="col-md-6">

@@ -29,7 +29,7 @@
                                 class="form-control datepicker-here"
                                 name="month">
                             <div class="input-group-append">
-                                <button id="" class="btn btn-outline-secondary" type="button">Buscar</button>
+                                <button class="btn btn-outline-secondary" type="button">Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,6 @@
         let filterToggle = $("#filter_toggle")
         let filterWrapper = $("#filter_wrapper")
         filterToggle.tooltip()
-        filterWrapper.hide()
         filterToggle.click(function(){
             if(filterWrapper.attr('data') === undefined){
                 console.log(filterWrapper.attr('data'))
@@ -86,7 +85,7 @@
             }else{
                 filterWrapper.show()
                     .slideToggle(150)
-                    .removeAttr('data')
+                    .removeAttr('data').css('display: inline')
             }
         }) 
         let csrfToken = $('meta[name="csrf-token"]').attr('content')

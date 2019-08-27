@@ -2,11 +2,11 @@
 
 namespace App\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Scheduling\Schedule;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
             ob_end_clean();
 
             Storage::disk('revenues')->put(str_random(5).".xlsx", $content);
-            
+             
         })->cron('*/1 * * * *');
     }
 

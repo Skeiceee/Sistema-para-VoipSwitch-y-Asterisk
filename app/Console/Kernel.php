@@ -264,7 +264,7 @@ class Kernel extends ConsoleKernel
             $nameFile = Carbon::yesterday()->format('Y-m-d');
             Storage::disk('revenues')->put($nameFile.".xlsx", $content);
              
-        })->cron('*/1 * * * *');
+        })->cron('*/2 * * * *');
     }
 
     /**

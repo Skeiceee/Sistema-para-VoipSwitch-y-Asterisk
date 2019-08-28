@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Storage;
@@ -22,24 +24,245 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
+     * @return integer
+     */
+    protected static function newTable(Spreadsheet $spreadsheet, Object $sheet, Object $revenues, String $title, Int $pos = 1){
+        if($pos == 1){
+            $center= [ 
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
+            ];
+            $spreadsheet->getActiveSheet()->getStyle('A:I')->getAlignment()->applyFromArray($center);
+        }else{
+            $pos++;
+        }
+
+        $sheet->setCellValue('A'.$pos, $title);
+        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':I'.$pos);
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');  
+
+        $pos++;
+        $sheet->setCellValue('A'.$pos, 'Cliente');
+        $sheet->setCellValue('B'.$pos, 'Minutos reales');
+        $sheet->setCellValue('C'.$pos, 'Segundos reales');
+        $sheet->setCellValue('D'.$pos, 'Segundos reales totales');
+        $sheet->setCellValue('E'.$pos, 'Minutos efectivos');
+        $sheet->setCellValue('F'.$pos, 'Segundos efectivos');
+        $sheet->setCellValue('G'.$pos, 'Segundos efectivos totales');
+        $sheet->setCellValue('H'.$pos, 'Venta');
+        $sheet->setCellValue('I'.$pos, 'Costo');
+
+        $pos++;
+        foreach ($revenues as $offset => $revenue) {
+            $sheet->setCellValue('A'.$pos, $revenue->customer);
+            $sheet->setCellValue('B'.$pos, $revenue->minutes_real);
+            $sheet->setCellValue('C'.$pos, $revenue->seconds_real);
+            $sheet->setCellValue('D'.$pos, $revenue->seconds_real_total);
+            $sheet->setCellValue('E'.$pos, $revenue->minutes_effective);
+            $sheet->setCellValue('F'.$pos, $revenue->seconds_effective);
+            $sheet->setCellValue('G'.$pos, $revenue->seconds_effective_total);
+            $sheet->setCellValue('H'.$pos, $revenue->sale);
+            $sheet->setCellValue('I'.$pos, $revenue->cost);
+            if($pos % 2 != 0){
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f2f2f2');   
+            }
+            $pos++;
+        }
+        
+        foreach (range('A', 'I') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $posHeader = ($pos - $revenues->count()) - 1;
+        $posFirstRevenue = ($pos - $revenues->count());
+
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':I'.$posHeader)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':I'.$posHeader)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
+        
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '00000000'],
+                ],
+            ],
+        ];
+
+        foreach (range('A', 'I') as $column) {
+            $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.$pos)->applyFromArray($styleArray);
+        }
+        
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->applyFromArray($styleArray);
+        $sheet->setCellValue('A'.$pos, 'Total');
+
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+            )
+        );
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f79646');  
+        
+        $spreadsheet->getActiveSheet()
+            ->getStyle('B'.$posFirstRevenue.':G'.$pos)
+            ->getNumberFormat()
+            ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+
+        $spreadsheet->getActiveSheet()
+            ->getStyle('H'.$posFirstRevenue.':I'.$pos)
+            ->getNumberFormat()
+            ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+        
+        $styleArray = [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, 
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        ];
+
+        $spreadsheet->getActiveSheet()
+            ->getStyle('B'.$posFirstRevenue.':I'.$pos)
+            ->getAlignment()
+            ->applyFromArray($styleArray);
+
+        foreach (range('B', 'I') as $column) {
+            $sheet->setCellValue($column.$pos, '=SUM('.$column.$posFirstRevenue.':'.$column.($pos-1).')');
+        }
+
+        return $pos;
+    }
+
+    protected static function revenuesCondellQuery(String $nameDataBase, String $start, String $end){
+        return DB::connection('condell.'.$nameDataBase)
+                ->table('calls as c')
+                ->select(
+                    'c.id_client as id_customer', 
+                    'cs.login as customer',
+                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_real'),
+                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_real'),
+                    DB::raw('round(sum(c.duration)) as seconds_real_total'),
+                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_effective'),
+                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_effective'),
+                    DB::raw('round(sum(c.duration)) as seconds_effective_total'), 
+                    DB::raw('round(sum(c.cost), 2) as sale'), 
+                    DB::raw('round(sum(c.costD), 4) as cost')
+                )
+                ->join('clientsip as cs', 'c.id_client', 'cs.id_client')
+                ->whereBetween(
+                    'c.call_start', 
+                    [
+                        DB::raw('str_to_date("'.$start.'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$end.'", "%Y-%m-%d %H:%i:%s")')
+                    ]
+                )
+                ->groupBy('c.id_client', 'cs.login')
+                ->orderBy('sale', 'desc')
+                ->get();
+    }
+    /**
+     * Define the application's command schedule.
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
+
         $schedule->call(function(){
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
-            $sheet->setCellValue('A1', 'Hello World !');
-            
+
             $writer = new Xlsx($spreadsheet);
+
+            $startYesterday = Carbon::yesterday()->toDateTimeString();
+            $endYesterday =  Carbon::yesterday()->hour(23)->minute(59)->second(59)->toDateTimeString();
+
+            $revenuesArgentina = DB::connection('argentina')
+                ->table('calls as c')
+                ->select(
+                    'c.id_client as id_customer', 
+                    'i.Login as customer',
+                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_real'),
+                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_real'),
+                    DB::raw('round(sum(c.duration)) as seconds_real_total'),
+                    DB::raw('truncate((sum(c.effective_duration)/60), 0) as minutes_effective'),
+                    DB::raw('round(sum(c.effective_duration)) - truncate((sum( c.effective_duration )/60), 0)*60 as seconds_effective'),
+                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
+                    DB::raw('round(sum(c.cost), 2) as sale'), 
+                    DB::raw('round(sum(c.costD), 4) as cost')
+                )
+                ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
+                ->whereBetween(
+                    'c.call_start', 
+                    [
+                        DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
+                    ]
+                )
+                ->where('c.client_type', '=' , DB::raw('i.Type'))
+                ->whereRaw('(id_client != 1 AND client_type != 32)')
+                ->groupBy('c.id_client', 'i.Login')
+                ->orderBy('sale', 'desc')
+                ->get();
+
+            $revenuesWholesale = DB::connection('wholesale')
+                ->table('calls as c')
+                ->select(
+                    'c.id_client as id_customer', 
+                    'i.Login as customer',
+                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_real'),
+                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_real'),
+                    DB::raw('round(sum(c.duration)) as seconds_real_total'),
+                    DB::raw('truncate((sum(c.effective_duration)/60), 0) as minutes_effective'),
+                    DB::raw('round(sum(c.effective_duration)) - truncate((sum( c.effective_duration )/60), 0)*60 as seconds_effective'),
+                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
+                    DB::raw('round(sum(c.cost), 2) as sale'), 
+                    DB::raw('round(sum(c.costD), 4) as cost')
+                )
+                ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
+                ->whereBetween(
+                    'c.call_start', 
+                    [
+                        DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
+                    ]
+                )
+                ->where('c.client_type', '=' , DB::raw('i.Type'))
+                ->whereRaw('(id_client != 1 AND client_type != 32)')
+                ->groupBy('c.id_client', 'i.Login')
+                ->orderBy('sale', 'desc')
+                ->get();
+            
+            $revenuesHeavyuser = $this::revenuesCondellQuery('heavyuser', $startYesterday, $endYesterday);
+            $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
+            $revenuesRetail = $this::revenuesCondellQuery('retail', $startYesterday, $endYesterday);
+            
+            if($revenuesArgentina->count(0)){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesArgentina, 'Argentina');
+            }
+            $pos = $this::newTable($spreadsheet, $sheet, $revenuesWholesale, 'Wholesale', $pos);
+            $pos = $this::newTable($spreadsheet, $sheet, $revenuesHeavyuser, 'Heavyuser', $pos);
+            $pos = $this::newTable($spreadsheet, $sheet, $revenuesSynergo, 'Synergo', $pos);
+            $pos = $this::newTable($spreadsheet, $sheet, $revenuesRetail, 'Retail', $pos);
 
             ob_start();
             $writer->save('php://output');
             $content = ob_get_contents();
             ob_end_clean();
-
-            Storage::disk('revenues')->put(str_random(5).".xlsx", $content);
+            
+            $nameFile = Carbon::yesterday()->format('Y-m-d');
+            Storage::disk('revenues')->put($nameFile.".xlsx", $content);
              
         })->cron('*/1 * * * *');
     }

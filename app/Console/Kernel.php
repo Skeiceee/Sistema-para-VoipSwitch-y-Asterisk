@@ -249,13 +249,21 @@ class Kernel extends ConsoleKernel
             $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
             $revenuesRetail = $this::revenuesCondellQuery('retail', $startYesterday, $endYesterday);
             
-            if($revenuesArgentina->count(0)){
+            if($revenuesArgentina->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesArgentina, 'Argentina');
             }
-            $pos = $this::newTable($spreadsheet, $sheet, $revenuesWholesale, 'Wholesale', $pos);
-            $pos = $this::newTable($spreadsheet, $sheet, $revenuesHeavyuser, 'Heavyuser', $pos);
-            $pos = $this::newTable($spreadsheet, $sheet, $revenuesSynergo, 'Synergo', $pos);
-            $pos = $this::newTable($spreadsheet, $sheet, $revenuesRetail, 'Retail', $pos);
+            if($revenuesWholesale->count() > 0){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesWholesale, 'Wholesale', $pos);
+            }
+            if($revenuesHeavyuser->count() > 0){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesHeavyuser, 'Heavyuser', $pos);
+            }
+            if($revenuesSynergo->count() > 0){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesSynergo, 'Synergo', $pos);
+            }
+            if($revenuesRetail->count() > 0){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesRetail, 'Retail', $pos);
+            }
 
             ob_start();
             $writer->save('php://output');

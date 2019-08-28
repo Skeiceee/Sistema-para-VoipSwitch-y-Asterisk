@@ -83,7 +83,6 @@ $(document).ready(function(){
     filterToggle.tooltip()
     filterToggle.click(function(){
         if(filterWrapper.attr('data') === undefined){
-            console.log(filterWrapper.attr('data'))
             filterWrapper.hide()
                 .slideToggle(150)
                 .attr('data','hide')

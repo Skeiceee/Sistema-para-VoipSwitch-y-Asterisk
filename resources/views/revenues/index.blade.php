@@ -39,10 +39,7 @@
                             <thead class = "theade-danger">
                             <tr>
                                 <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th>Monto</th>
-                                <th>Costo</th>
-                                <th>Duracion</th>
+                                <th>Descripcion</th>
                                 <th class="no-sort" width="10">Acciones</th>
                             </tr>
                             </thead>
@@ -69,65 +66,58 @@
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script> 
-    $(document).ready(function(){
-        $('input[name="month"]').datepicker({
-            todayButton: new Date()
-        })
-        let filterToggle = $("#filter_toggle")
-        let filterWrapper = $("#filter_wrapper")
-        filterToggle.tooltip()
-        filterToggle.click(function(){
-            if(filterWrapper.attr('data') === undefined){
-                console.log(filterWrapper.attr('data'))
-                filterWrapper.hide()
-                    .slideToggle(150)
-                    .attr('data','hide')
-            }else{
-                filterWrapper.show()
-                    .slideToggle(150)
-                    .removeAttr('data').css('display: inline')
-            }
-        }) 
-        let csrfToken = $('meta[name="csrf-token"]').attr('content')
-        var table = $('#revenues').DataTable({
-            "bAutoWidth": false,
-            "language":{
-                "url": '{{ route('datatables.spanish') }}'
-            },
-            "destroy": true,
-            "responsive": true,
-            "serverSide":true,
-            "processing": 'Procesando',
-            "deferLoading": 0,
-            "ajax": {
-                "url": '{{ url('api/cargosdeacceso') }}',
-                "method": "POST",
-                "data": function(d){
-                    d.username = '{{ auth()->user()->username }}'
-                    d.token = '{{ auth()->user()->token }}'
-                    d.dates = $('input[name="dates"]').val()
-                    d._token = csrfToken
-                    d._type = true
-                }
-            },
-            "columnDefs": [{
-                "targets": 'no-sort',
-                "orderable": false,
-                "searchable": false,
-            }],
-            "columns":[
-                {data: 'fecha', name: 'cda.fecha'},
-                {data: 'fecha_emision', name: 'cda.fecha_emision'},
-                {data: 'descripcion', name: 'cda.descripcion'},
-                {data: 'tarifa', name: 'cda.tarifa'},
-                {data: 'lala', name: 'lala'},
-                {data: 'btn'},
-            ]
-        })
+var SITEURL = '{{ URL::to('') }}'
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-        $('#display-filter').click(function (){
-            $('#filter-wrapper').hide();
-        })
+    $('input[name="month"]').datepicker({
+        todayButton: new Date()
     })
+
+    let filterToggle = $("#filter_toggle")
+    let filterWrapper = $("#filter_wrapper")
+    filterToggle.tooltip()
+    filterToggle.click(function(){
+        if(filterWrapper.attr('data') === undefined){
+            console.log(filterWrapper.attr('data'))
+            filterWrapper.hide()
+                .slideToggle(150)
+                .attr('data','hide')
+        }else{
+            filterWrapper.show()
+                .slideToggle(150)
+                .removeAttr('data').css('display: inline')
+        }
+    })
+
+    $('#display-filter').click(function (){
+        $('#filter-wrapper').hide();
+    })
+
+    $('#revenues').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: SITEURL + "/consumos",
+            type: 'GET',
+        },
+        columns: [
+            {data: 'date', name: 'date'},
+            {data: 'description', name: 'description'},
+            {data: 'action', name: 'action', orderable: false}
+        ],
+        order: [[0, 'desc']]
+    })
+
+    /* When click download excel*/
+    $('body').on('click', '.download', function () {
+        var file_id = $(this).data('id')
+        window.location = SITEURL + '/consumos/download/'+ file_id
+    });
+})
 </script>
 @endpush

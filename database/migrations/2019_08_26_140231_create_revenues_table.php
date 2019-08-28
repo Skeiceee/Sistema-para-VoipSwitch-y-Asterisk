@@ -16,13 +16,8 @@ class CreateRevenuesTable extends Migration
         Schema::connection('mysql')->create('revenues', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date');
-            $table->string('ip_voipswitch', 15);
-            $table->string('type_customer', 15);
-            $table->string('id_customer', 50);
-            $table->string('customer', 50);
-            $table->decimal('duration', 12, 4);
-            $table->decimal('revenue', 12, 4);
-            $table->decimal('cost', 12, 4);
+            $table->string('description', 50);
+            $table->string('file_name', 10);
         });
     }
 

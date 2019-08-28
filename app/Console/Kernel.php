@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Revenue;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Carbon;
@@ -263,8 +264,18 @@ class Kernel extends ConsoleKernel
             
             $nameFile = Carbon::yesterday()->format('Y-m-d');
             Storage::disk('revenues')->put($nameFile.".xlsx", $content);
-             
-        })->cron('*/2 * * * *');
+
+            $days = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+            $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+            $yesterday = Carbon::yesterday();
+            $revenue = new Revenue();
+            $revenue->date = $yesterday;
+            $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[$yesterday->format('n')].' del '.$yesterday->format('Y');
+            $revenue->file_name = $nameFile;
+            $revenue->save();
+
+        })->cron('0 0 * * *');
     }
 
     /**

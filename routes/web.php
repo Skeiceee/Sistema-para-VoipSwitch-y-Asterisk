@@ -19,12 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/consumos', 'RevenuesController', [
-    'only' => ['index','create']
-])->names([
-    'index' => 'revenues.index',
-    'create' => 'revenues.create'
-]);
+Route::get('/consumos/download/{id}', 'RevenuesController@download')->name('revenues.download');
+Route::resource('/consumos', 'RevenuesController', ['only' => ['index','create']])->names(['index' => 'revenues.index','create' => 'revenues.create']);
 
 Route::get('/datatables/spanish', function(){
     return response()->json([

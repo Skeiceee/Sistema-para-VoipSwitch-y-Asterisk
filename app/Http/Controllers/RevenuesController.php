@@ -2,10 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Revenue;
 use Illuminate\Http\Request;
 
 class RevenuesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
+     * Download excel
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function download($id)
+    {
+        $revenue = Revenue::find($id);
+        $file_name = $revenue->file_name.'.xlsx';
+        $fullpath = storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'revenues'.DIRECTORY_SEPARATOR.$file_name;
+        $headers = ['Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+        return response()
+            ->download($fullpath, $file_name, $headers);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,6 +32,13 @@ class RevenuesController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()) {
+            return datatables()->of(Revenue::select('id', 'date', 'description'))
+                ->addColumn('action', 'actions.revenues')
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
         return view('revenues.index');
     }
 

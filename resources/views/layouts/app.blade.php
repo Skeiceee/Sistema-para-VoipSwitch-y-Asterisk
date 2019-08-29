@@ -49,7 +49,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ Auth::user()->name }} {{ Auth::user()->last_name }}<span class="caret"></span>
+                                    <span class="mr-2">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
                                     <div class="no-avatar d-none d-md-inline ml-2 align-self-start order-3">
                                         <span class="initials">{{ Auth::user()->initials() }}</span>
                                     </div>

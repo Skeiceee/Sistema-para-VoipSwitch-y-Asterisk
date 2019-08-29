@@ -11,27 +11,26 @@
                     <i class="fas fa-chart-line"></i><span class="font-weight-bold ml-2">Dashboard</span>
                     <hr class="my-3">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="card">
-                                <div class="card-body d-flex justify-content-between align-items-sm-center">
-                                    <span class="fa-stack fa-1x">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fas fa-phone-alt fa-stack-1x fa-inverse faa-shake animated"></i>
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <span class="fa-stack">
+                                        <i class="fas fa-fw fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-fw fa-phone-alt fa-stack-1x fa-inverse faa-shake animated"></i>
                                     </span>
                                     <span class="text-muted">Llamadas activas</span>
                                     <div>
-                                        <span id="active" class="size-20 mr-2">0</span>
-                                        <span id="indicator"></span>
+                                        <span id="active" class="size-20 mr-3">0</span><span id="indicator"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-6 mt-3 mt-lg-0">
                             <div class="card">
-                                <div class="card-body d-flex justify-content-between align-items-sm-center">
-                                    <span class="fa-stack fa-1x">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fas fa-phone-alt fa-stack-1x fa-inverse fa-rotate-90"></i>
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <span class="fa-stack">
+                                        <i class="fas fa-fw fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-fw fa-phone-alt fa-stack-1x fa-inverse fa-rotate-90 faa-shake "></i>
                                     </span>
                                     <span class="text-muted">Llamadas procesadas</span>
                                     <span id="processed" class="size-20">0</span>

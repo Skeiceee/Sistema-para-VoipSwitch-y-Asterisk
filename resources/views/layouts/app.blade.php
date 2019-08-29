@@ -48,8 +48,11 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} {{ Auth::user()->last_name }} <span class="caret"></span>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ Auth::user()->name }} {{ Auth::user()->last_name }}<span class="caret"></span>
+                                    <div class="no-avatar d-none d-md-inline ml-2 align-self-start order-3">
+                                        <span class="initials">{{ Auth::user()->initials() }}</span>
+                                    </div>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <span>Registrarse</span>
+                    <i class="fas fa-user-plus"></i><span class="font-weight-bold ml-2">Registrarse</span>
                     <hr class="my-3">
 
                     <form method="POST" action="{{ route('register') }}">

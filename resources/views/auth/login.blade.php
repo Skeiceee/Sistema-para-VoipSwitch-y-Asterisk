@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <span>Iniciar sesión</span>
+                    <i class="fas fa-sign-in-alt"></i><span class="font-weight-bold ml-2">Iniciar sesión</span>
                     <hr class="my-3">
                     
                     <form method="POST" action="{{ route('login') }}">

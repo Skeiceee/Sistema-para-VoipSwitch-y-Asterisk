@@ -66,7 +66,7 @@
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script> 
-var SITEURL = '{{ URL::to('') }}'
+var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
     $.ajaxSetup({
         headers: {
@@ -101,21 +101,20 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         ajax: {
-            url: SITEURL + "/consumos",
+            url: SITEURL + "consumos",
             type: 'GET',
         },
         columns: [
             {data: 'date', name: 'date'},
             {data: 'description', name: 'description'},
             {data: 'action', name: 'action', orderable: false}
-        ],
-        order: [[0, 'desc']]
+        ]
+        //order: [[0, 'desc']]
     })
 
-    /* When click download excel*/
     $('body').on('click', '.download', function () {
         var file_id = $(this).data('id')
-        window.location = SITEURL + '/consumos/download/'+ file_id
+        window.location = SITEURL + 'consumos/download/'+ file_id
     });
 })
 </script>

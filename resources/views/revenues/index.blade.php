@@ -2,15 +2,13 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-3">
-            @include('layouts.menu')
-        </div>
+        @include('layouts.menu')
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-wallet"></i><span class="font-weight-bold ml-2">Consumos</span></div>
-                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar consumos.">
+                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
                             <i class="fas fa-filter"></i>
                         </button>
                     </div>
@@ -22,29 +20,29 @@
                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
                             </div>
                             <input type="text"
-                                data-language='es'
-                                data-min-view="months"
-                                data-view="months"
-                                data-date-format="MM - mm/yyyy" 
-                                class="form-control datepicker-here"
-                                name="month">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Buscar</button>
-                            </div>
+                            data-language='es'
+                            data-min-view="months"
+                            data-view="months"
+                            data-date-format="MM - mm/yyyy" 
+                            class="form-control datepicker-here"
+                            name="month">
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table id="revenues" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
-                            <thead class = "theade-danger">
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Descripcion</th>
-                                <th class="no-sort" width="10">Acciones</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>    
+                    <div class="card">
+                        <div class="table-responsive card-body">
+                            <table id="revenues" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
+                                <thead class = "theade-danger">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Descripcion</th>
+                                        <th class="no-sort" width="10">Acciones</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>    
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -65,6 +63,8 @@
 <script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
+<script src="{{ asset('js/menu.js') }}"></script>
 <script> 
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
@@ -91,12 +91,8 @@ $(document).ready(function(){
                 .slideToggle(150)
                 .removeAttr('data').css('display: inline')
         }
-    })
-
-    $('#display-filter').click(function (){
-        $('#filter-wrapper').hide();
-    })
-
+    }) 
+    
     $('#revenues').DataTable({
         processing: true,
         serverSide: true,

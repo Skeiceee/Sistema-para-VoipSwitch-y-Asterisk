@@ -2,9 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-3">
-            @include('layouts.menu')
-        </div>
+        @include('layouts.menu')
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
@@ -68,6 +66,8 @@
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
+<script src="{{ asset('js/menu.js') }}"></script>
 <script>
 $(document).ready(function(){
     function numberWithCommas(x) {

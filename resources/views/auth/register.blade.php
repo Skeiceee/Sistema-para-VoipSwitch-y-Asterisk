@@ -77,3 +77,8 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<footer class="text-center">
+    <span class="text-muted">Copyright &copy; 2019 - Vozdigital</span>
+</footer>
+@endpush

@@ -249,6 +249,7 @@ class Kernel extends ConsoleKernel
             $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
             $revenuesRetail = $this::revenuesCondellQuery('retail', $startYesterday, $endYesterday);
             
+            $pos = 1;
             if($revenuesArgentina->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesArgentina, 'Argentina');
             }
@@ -279,11 +280,11 @@ class Kernel extends ConsoleKernel
             $yesterday = Carbon::yesterday();
             $revenue = new Revenue();
             $revenue->date = $yesterday;
-            $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[$yesterday->format('n')].' del '.$yesterday->format('Y');
+            $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[((int)$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->cron('0 0 * * *');
+        })->cron('*/1 * * * *');
     }
 
     /**

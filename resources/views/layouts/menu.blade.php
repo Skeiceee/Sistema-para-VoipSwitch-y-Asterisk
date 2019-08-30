@@ -1,4 +1,4 @@
-<div class="col-md">
+<div id="menu" class="col-md">
     <div class="card mb-3">
         <div id="menu_toggle" class="card-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -8,7 +8,7 @@
             <div id="menu_wrapper">
                 <hr class="my-3">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    <li id="dashboard" class="nav-item">
                         <a class="nav-link active pl-0" href="{{ route('home') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('layouts.menu')
-        <div class="col-md-9">
+        <div id="stadistic" class="col-md-9">
             <div class="card">
                 <div class="card-body">
                     <i class="fas fa-chart-line"></i><span class="font-weight-bold ml-2">Dashboard</span>
@@ -70,6 +70,22 @@
 <script src="{{ asset('js/menu.js') }}"></script>
 <script>
 $(document).ready(function(){
+    var i = null;
+    const pointer = 'pointer';
+    const none = 'none'
+    $('body').mousemove(function() {
+        clearTimeout(i)
+        $('#menu').show()
+        $('#stadistic').removeClass('col-md-12').addClass('col-md-9')
+        document.body.style.cursor = pointer
+        i = setTimeout('$("#menu").hide();$("#stadistic").removeClass("col-md-9").addClass("col-md-12");document.body.style.cursor = "none";', 10000)
+    }).mouseleave(function() {
+        clearTimeout(i)
+        $('#menu').hide()
+        $('#stadistic').removeClass('col-md-9').addClass('col-md-12')
+        document.body.style.cursor = none
+    });
+    
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }

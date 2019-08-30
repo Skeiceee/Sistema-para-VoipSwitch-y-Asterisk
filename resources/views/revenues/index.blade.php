@@ -100,6 +100,9 @@ $(document).ready(function(){
     $('#revenues').DataTable({
         processing: true,
         serverSide: true,
+        language:{
+            url: SITEURL + "datatables/spanish"
+        },
         ajax: {
             url: SITEURL + "consumos",
             type: 'GET',

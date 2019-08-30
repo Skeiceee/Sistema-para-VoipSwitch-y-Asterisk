@@ -56,7 +56,12 @@
     user-select: none;
 }
 
-footer {
+footer, 
+div.dataTables_wrapper div.dataTables_length label, 
+div#revenues_info, 
+div.dataTables_wrapper div.dataTables_filter label, 
+a.navbar-brand img,
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;

@@ -19,13 +19,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
                             </div>
-                            <input type="text"
+                            <input id="date" 
+                            type="text"
                             data-language='es'
                             data-min-view="months"
                             data-view="months"
                             data-date-format="MM - mm/yyyy" 
-                            class="form-control datepicker-here"
-                            name="month">
+                            class="form-control"
+                            name="date">
                         </div>
                     </div>
 
@@ -74,8 +75,33 @@ $(document).ready(function(){
         }
     });
 
-    $('input[name="month"]').datepicker({
-        todayButton: new Date()
+    let revenuesTable = $('#revenues').DataTable({
+        processing: true,
+        serverSide: true,
+        language:{
+            url: SITEURL + 'datatables/spanish'
+        },
+        ajax: {
+            url: SITEURL + 'consumos',
+            type: 'GET',
+        },
+        columns: [
+            {data: 'date', name: 'date'},
+            {data: 'description', name: 'description'},
+            {data: 'action', name: 'action', orderable: false}
+        ],
+        order: [[0, 'desc']]
+    })
+
+    $('input[name="date"]').datepicker({
+        todayButton: new Date(),
+        onSelect: function(fd, date){
+            if(typeof date === 'object' && date !== null){
+                let month = date.getMonth() + 1
+                let year = date.getFullYear()
+                revenuesTable.ajax.url(SITEURL+'consumos?month='+month+'&year='+year).load();
+            }
+        }
     })
 
     let filterToggle = $("#filter_toggle")
@@ -92,24 +118,6 @@ $(document).ready(function(){
                 .removeAttr('data').css('display: inline')
         }
     }) 
-    
-    $('#revenues').DataTable({
-        processing: true,
-        serverSide: true,
-        language:{
-            url: SITEURL + "datatables/spanish"
-        },
-        ajax: {
-            url: SITEURL + "consumos",
-            type: 'GET',
-        },
-        columns: [
-            {data: 'date', name: 'date'},
-            {data: 'description', name: 'description'},
-            {data: 'action', name: 'action', orderable: false}
-        ]
-        //order: [[0, 'desc']]
-    })
 
     $('body').on('click', '.download', function () {
         var file_id = $(this).data('id')

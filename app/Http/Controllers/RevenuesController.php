@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Revenue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RevenuesController extends Controller
 {
@@ -32,12 +34,52 @@ class RevenuesController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            return datatables()->of(Revenue::select('id', 'date', 'description'))
-                ->addColumn('action', 'actions.revenues')
-                ->rawColumns(['action'])
-                ->addIndexColumn()
-                ->make(true);
+            $sigue = false;
+            $month = intval(request()->get('month')); // Si es null el valor es igual a 0
+            $year = intval(request()->get('year')); // Si es null el valor es igual a 0
+
+            if($month != 0 and $year != 0){
+                foreach (range(1, 12) as $number) {
+                    if($month == $number){
+                        $sigue = true;
+                    }
+                }
+            }
+            if($sigue){
+                $date_start = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->startOfMonth();
+                $date_end = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->endOfMonth();
+                return datatables()->of(
+                        Revenue::select('id', 'date', 'description')
+                            ->whereBetween('date', 
+                                [
+                                    DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'), 
+                                    DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
+                                ]
+                            )
+                    )
+                    ->addColumn('action', 'actions.revenues')
+                    ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+            }else{
+                $date_start = (new Carbon('first day of this month'))->startOfMonth();
+                $date_end = (new Carbon('first day of this month'))->endOfMonth();
+                return datatables()->of(
+                        Revenue::select('id', 'date', 'description')
+                        ->whereBetween('date', 
+                            [
+                                DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'), 
+                                DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
+                            ]
+                        )
+                    )
+                    ->addColumn('action', 'actions.revenues')
+                    ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+            }
         }
+
         return view('revenues.index');
     }
 

@@ -80,10 +80,14 @@ $(document).ready(function(){
             $(this).html('<i class="fas fa-compress"></i>').attr('data','hide')
             $('#menu').hide()
             $('#stadistic').removeClass('col-md-9').addClass('col-md-12')
+            $('#active').removeClass('size-20').addClass('size-35')
+            $('#processed').removeClass('size-20').addClass('size-35')
         }else{
             $(this).html('<i class="fas fa-expand"></i>').removeAttr('data')
             $('#menu').show()
             $('#stadistic').removeClass('col-md-12').addClass('col-md-9')
+            $('#active').removeClass('size-35').addClass('size-20')
+            $('#processed').removeClass('size-35').addClass('size-20')
         }
     });
     

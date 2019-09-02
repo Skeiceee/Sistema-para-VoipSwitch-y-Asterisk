@@ -2,6 +2,10 @@
     font-size: 20px;
 }
 
+.size-35{
+    font-size: 35px;
+}
+
 #filter_wrapper{
     display: none;
 }

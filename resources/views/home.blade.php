@@ -71,7 +71,7 @@
 <script>
 $(document).ready(function(){
     var i = null;
-    const pointer = 'pointer';
+    const pointer = 'default';
     const none = 'none'
     $('body').mousemove(function() {
         clearTimeout(i)

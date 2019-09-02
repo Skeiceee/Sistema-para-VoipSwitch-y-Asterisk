@@ -244,7 +244,7 @@ class Kernel extends ConsoleKernel
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
-            
+
             $revenuesHeavyuser = $this::revenuesCondellQuery('heavyuser', $startYesterday, $endYesterday);
             $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
             $revenuesRetail = $this::revenuesCondellQuery('retail', $startYesterday, $endYesterday);
@@ -284,7 +284,7 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->cron('0 0 * * *');
+        })->cron('0 4 * * *');
     }
 
     /**

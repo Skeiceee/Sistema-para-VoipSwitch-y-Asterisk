@@ -284,7 +284,7 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->cron('0 4 * * *');
+        })->cron('*/1 0 * *');
     }
 
     /**

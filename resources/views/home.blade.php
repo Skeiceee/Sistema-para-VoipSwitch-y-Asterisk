@@ -6,7 +6,10 @@
         <div id="stadistic" class="col-md-9">
             <div class="card">
                 <div class="card-body">
-                    <i class="fas fa-chart-line"></i><span class="font-weight-bold ml-2">Dashboard</span>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div><i class="fas fa-chart-line"></i><span class="font-weight-bold ml-2">Dashboard</span></div>
+                        <a id="dashboard_toggle" href="javascript:void(0);" class="btn btn-primary"><i class="fas fa-expand"></i></a>
+                    </div>
                     <hr class="my-3">
                     <div class="row">
                         <div class="col-lg-6">
@@ -71,19 +74,17 @@
 <script>
 $(document).ready(function(){
     var i = null;
-    const pointer = 'default';
-    const none = 'none'
-    $('body').mousemove(function() {
-        clearTimeout(i)
-        $('#menu').show()
-        $('#stadistic').removeClass('col-md-12').addClass('col-md-9')
-        document.body.style.cursor = pointer
-        i = setTimeout('$("#menu").hide();$("#stadistic").removeClass("col-md-9").addClass("col-md-12");document.body.style.cursor = "none";', 10000)
-    }).mouseleave(function() {
-        clearTimeout(i)
-        $('#menu').hide()
-        $('#stadistic').removeClass('col-md-9').addClass('col-md-12')
-        document.body.style.cursor = none
+
+    $('#dashboard_toggle').click(function (){
+        if($(this).attr('data') === undefined){
+            $(this).html('<i class="fas fa-compress"></i>').attr('data','hide')
+            $('#menu').hide()
+            $('#stadistic').removeClass('col-md-9').addClass('col-md-12')
+        }else{
+            $(this).html('<i class="fas fa-expand"></i>').removeAttr('data')
+            $('#menu').show()
+            $('#stadistic').removeClass('col-md-12').addClass('col-md-9')
+        }
     });
     
     function numberWithCommas(x) {

@@ -284,7 +284,7 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->dailyAt('10:38')->timezone('America/Santiago');
+        })->dailyAt('04:00')->timezone('America/Santiago');
     }
 
     /**

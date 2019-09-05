@@ -48,36 +48,25 @@ class RevenuesController extends Controller
             if($sigue){
                 $date_start = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->startOfMonth();
                 $date_end = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->endOfMonth();
-                return datatables()->of(
-                        Revenue::select('id', 'date', 'description')
-                            ->whereBetween('date', 
-                                [
-                                    DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'), 
-                                    DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
-                                ]
-                            )
-                    )
-                    ->addColumn('action', 'actions.revenues')
-                    ->rawColumns(['action'])
-                    ->addIndexColumn()
-                    ->make(true);
             }else{
                 $date_start = (new Carbon('first day of this month'))->startOfMonth();
                 $date_end = (new Carbon('first day of this month'))->endOfMonth();
-                return datatables()->of(
-                        Revenue::select('id', 'date', 'description')
-                        ->whereBetween('date', 
-                            [
-                                DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'), 
-                                DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
-                            ]
-                        )
-                    )
-                    ->addColumn('action', 'actions.revenues')
-                    ->rawColumns(['action'])
-                    ->addIndexColumn()
-                    ->make(true);
             }
+
+            return datatables()->of(
+                Revenue::select('id', 'date', 'description')
+                    ->whereBetween('date',
+                        [
+                            DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'),
+                            DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
+                        ]
+                    )
+            )
+            ->addColumn('action', 'actions.revenues')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+            
         }
 
         return view('revenues.index');

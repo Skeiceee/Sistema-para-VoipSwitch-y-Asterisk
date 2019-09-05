@@ -10,9 +10,8 @@
 </head>
 <body>
     <div class="h-100 d-flex flex-column justify-content-center align-items-center">
-        {{-- <img src="{{ asset('img/logo.png') }}" alt="Vozdigital"> --}}
         <div class="d-flex flex-column justify-content-center align-items-center bd-highlight mb-3">
-                <span class="text-muted mb-3" style="font-size: 30px;">@yield('code')</span>
+                <span class="text-muted mb-3" style="font-size: 35px;">@yield('code')</span>
                 <div class="bd-highlight border-bottom" style="width: 250px; border-width: 2px !important;"></div>
                 <span class="text-muted mt-3" style="font-size: 30px;">@yield('message')</span>
         </div>

@@ -15,7 +15,7 @@
                         <a class="nav-link active pl-0" href="{{ route('revenues.index') }}">Consumos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-0" href="#">Cargos de acceso</a>
+                        <a class="nav-link pl-0" href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
                     </li>
                 </ul>
             </div>

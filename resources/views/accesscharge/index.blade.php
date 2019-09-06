@@ -20,12 +20,10 @@
                             <hr class="mt-0">
                             <div class="form-group">
                                 <label for="">Nombre</label>
-                                <select name="" class="form-control form-control-chosen" data-placeholder="Selecciona una compañia...">
-                                    {{-- <option value="1">Adwadaw</option>
-                                    <option value="2">Bdwadaw</option>
-                                    <option value="3">Cdwadaw</option>
-                                    <option value="4">Ddwadawdaw</option>
-                                    <option value="5">Edwadwadaw</option> --}}
+                                <select name="" class="form-control form-control-chosen">
+                                    @foreach ($portadores as $portador)
+                                        <option value="{{ $portador->id_port }}">{{ $portador->id_port }} - {{ strtoupper($portador->portador) }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

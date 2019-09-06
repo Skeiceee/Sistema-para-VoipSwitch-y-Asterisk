@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Portador;
 use Illuminate\Http\Request;
 
 class AccessChargeController extends Controller
@@ -13,7 +14,8 @@ class AccessChargeController extends Controller
      */
     public function index()
     {
-        return view('accesscharge.index');
+        $portadores = Portador::select('id_port', 'portador')->get();
+        return view('accesscharge.index', compact('portadores'));
     }
 
     /**

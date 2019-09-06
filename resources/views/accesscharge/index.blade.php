@@ -66,45 +66,33 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-body text-center">
-                            <table class="table table-sm table-bordered table-hover">
+                        <div class="table-responsive card-body">
+                            <table id="periods" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2" style="vertical-align : middle;text-align:center;">#</th>
+                                        <th width="1px" rowspan="2">#</th>
                                         <th colspan="2">Fechas</th>
                                         <th colspan="3">Tarifas</th>
-                                        <th rowspan="2" style="vertical-align : middle;text-align:center;">Acciones</th>
+                                        <th width="10px" rowspan="2">Acciones</th>
                                     </tr>
                                     <tr>
-                                        <th width="170px">Inicio</th>
-                                        <th width="170px">Termino</th>
-                                        <th width="90px">Normal</th>
-                                        <th width="90px">Reducida</th>
-                                        <th width="90px">Nocturna</th>
+                                        <th>Inicio</th>
+                                        <th>Termino</th>
+                                        <th>Normal</th>
+                                        <th>Reducida</th>
+                                        <th class=" border-right">Nocturna</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr id="empty_table">
-                                        <th colspan="7" class="text-muted">La lista de períodos esta vacia.</th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>2019-09-05 17:44:00</td>
-                                        <td>2019-09-05 17:44:00</td>
-                                        <td>0,0345</td>
-                                        <td>0,0345</td>
-                                        <td>0,0345</td>
-                                        <td><a href="#" class="btn-sm btn-block btn-danger"><i class="fas fa-times"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>2019-09-05 17:44:00</td>
-                                        <td>2019-09-05 17:44:00</td>
-                                        <td>0,0345</td>
-                                        <td>0,0345</td>
-                                        <td>0,0345</td>
-                                        <td><a href="#" class="btn-sm btn-block btn-danger"><i class="fas fa-times"></i></a></td>
-                                    </tr>
+                                    {{-- <tr>
+                                        <td>1</td>
+                                        <td>2019-09-06 13:13:13</td>
+                                        <td>2019-09-06 13:13:13</td>
+                                        <td>0,345</td>
+                                        <td>0,345</td>
+                                        <td>0,345</td>
+                                        <td><a href="#" class="btn-sm btn-block btn-danger text-center"><i class="fas fa-times"></i></a></td>
+                                    </tr> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -120,12 +108,15 @@
 @endsection
 @push('css')
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/chosen.min.js')}}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
 <script src="{{ asset('js/menu.js') }}"></script>
 <script> 
@@ -136,7 +127,21 @@ $(document).ready(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
-    
+
+    let periodsTable = $('#periods').DataTable({
+        // scrollX: true,
+        paging: false,
+        searching: false,
+        info: false,
+        language:{
+            url: SITEURL + 'datatables/spanish'
+        },
+        columnDefs: [
+            {targets: [1,2,3,4,5,6], orderable: false} 
+        ],
+        order: [[0, 'desc']]
+    })
+
     $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
 
     let addPeriod = $("#add_period")

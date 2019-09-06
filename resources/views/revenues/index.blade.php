@@ -37,7 +37,7 @@
                                     <tr>
                                         <th>Fecha</th>
                                         <th>Descripcion</th>
-                                        <th class="no-sort" width="10">Acciones</th>
+                                        <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -78,6 +78,7 @@ $(document).ready(function(){
     let revenuesTable = $('#revenues').DataTable({
         processing: true,
         serverSide: true,
+        scrollX: true,
         language:{
             url: SITEURL + 'datatables/spanish'
         },

@@ -39,28 +39,28 @@
                             <hr class="mt-0">
                             <div class="row form-group">
                                 <div class="col-md-6">
-                                    <label for="">Fecha de inicio</label>
-                                    <input id="date" type="text" data-language='es' data-min-view="months"
+                                    <label for="start_date">Fecha de inicio</label>
+                                    <input id="start_date" type="text" data-language='es' data-min-view="months"
                                         data-view="months" data-date-format="MM - mm/yyyy" class="form-control" name="date">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Fecha de termino</label>
-                                    <input id="date" type="text" data-language='es' data-min-view="months"
+                                    <label for="end_date">Fecha de termino</label>
+                                    <input id="end_date" type="text" data-language='es' data-min-view="months"
                                         data-view="months" data-date-format="MM - mm/yyyy" class="form-control" name="date">
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <label for="rate_period_1">Tarifa normal</label>
-                                    <input name="rate_period_1" type="number" step="0.0001" class="form-control">
+                                    <label for="rate_normal">Tarifa normal</label>
+                                    <input name="rate_normal" type="number" step="0.0001" class="form-control">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="rate_period_1">Tarifa reducida</label>
-                                    <input name="rate_period_1" type="number" step="0.0001" class="form-control">
+                                    <label for="rate_reduced">Tarifa reducida</label>
+                                    <input name="rate_reduced" type="number" step="0.0001" class="form-control">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="rate_period_1">Tarifa nocturna</label>
-                                    <input name="rate_period_1" type="number" step="0.0001" class="form-control">
+                                    <label for="rate_night">Tarifa nocturna</label>
+                                    <input name="rate_night" type="number" step="0.0001" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -84,8 +84,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr id="empty_table">
+                                        <th colspan="7" class="text-muted">La lista de períodos esta vacia.</th>
+                                    </tr>
                                     <tr>
-                                        {{-- <th colspan="6" class="text-muted">La lista de períodos esta vacia.</th> --}}
                                         <th scope="row">1</th>
                                         <td>2019-09-05 17:44:00</td>
                                         <td>2019-09-05 17:44:00</td>
@@ -95,7 +97,6 @@
                                         <td><a href="#" class="btn-sm btn-block btn-danger"><i class="fas fa-times"></i></a></td>
                                     </tr>
                                     <tr>
-                                        {{-- <th colspan="6" class="text-muted">La lista de períodos esta vacia.</th> --}}
                                         <th scope="row">2</th>
                                         <td>2019-09-05 17:44:00</td>
                                         <td>2019-09-05 17:44:00</td>

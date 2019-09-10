@@ -19,8 +19,8 @@
                             </div>
                             <hr class="mt-0">
                             <div class="form-group">
-                                <label for="">Nombre</label>
-                                <select name="" class="form-control form-control-chosen">
+                                <label for="ido">Nombre</label>
+                                <select name="ido" class="form-control form-control-chosen">
                                     @foreach ($portadores as $portador)
                                         <option value="{{ $portador->id_port }}">{{ $portador->id_port }} - {{ strtoupper($portador->portador) }}</option>
                                     @endforeach
@@ -36,29 +36,23 @@
                             </div>
                             <hr class="mt-0">
                             <div class="row form-group">
-                                <div class="col-md-6">
-                                    <label for="start_date">Fecha de inicio</label>
-                                    <input id="start_date" type="text" data-language='es' data-min-view="months"
-                                        data-view="months" data-date-format="MM - mm/yyyy" class="form-control" name="date">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="end_date">Fecha de termino</label>
-                                    <input id="end_date" type="text" data-language='es' data-min-view="months"
-                                        data-view="months" data-date-format="MM - mm/yyyy" class="form-control" name="date">
+                                <div class="col-md-12">
+                                    <label for="range_date">Rango de fecha</label>
+                                    <input id="range_date" type="text" data-language='es' data-multiple-dates-separator=" al " data-date-format="dd/mm/yyyy" class="form-control" name="date">
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="rate_normal">Tarifa normal</label>
-                                    <input name="rate_normal" type="number" step="0.0001" class="form-control">
+                                    <input name="rate_normal" type="number" step="0.0001" min="0" class="form-control">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="rate_reduced">Tarifa reducida</label>
-                                    <input name="rate_reduced" type="number" step="0.0001" class="form-control">
+                                    <input name="rate_reduced" type="number" step="0.0001" min="0" class="form-control">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="rate_night">Tarifa nocturna</label>
-                                    <input name="rate_night" type="number" step="0.0001" class="form-control">
+                                    <input name="rate_night" type="number" step="0.0001" min="0" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -81,7 +75,7 @@
                                         <th class=" border-right">Nocturna</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="list_periods">
                                     {{-- <tr>
                                         <td>1</td>
                                         <td>2019-09-06 13:13:13</td>
@@ -95,7 +89,8 @@
                             </table>
                         </div>
                     </div>
-                    <form id="accesscharge" action="" method="get">
+                    <form id="accesscharge" action="{{ route('cargosdeacceso.store') }}" method="post">
+                        @csrf
                         <button type="submit" class="btn btn-block btn-primary mt-3">Calcular</button>
                     </form>
                 </div>
@@ -105,6 +100,7 @@
 </div>
 @endsection
 @push('css')
+<link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
@@ -113,50 +109,92 @@
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/chosen.min.js')}}"></script>
+<script src="{{ asset('js/moment/moment.js') }}"></script>
+<script src="{{ asset('js/datepicker.min.js') }}"></script>
+<script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
 <script src="{{ asset('js/menu.js') }}"></script>
 <script> 
 var SITEURL = '{{ URL::to('').'/' }}'
+var counter = 1
 $(document).ready(function(){
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
+    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
+    $('#range_date').datepicker({ todayButton: new Date(), range: true, toggleSelected: false })
 
-    let periodsTable = $('#periods').DataTable({
-        // scrollX: true,
+    let periodsList = []
+
+    var periodsTable = $('#periods').DataTable({
+        scrollX: true,
         paging: false,
         searching: false,
         info: false,
-        language:{
-            url: SITEURL + 'datatables/spanish'
-        },
+        language: {url: SITEURL + 'datatables/spanish'},
         columnDefs: [
-            {targets: [1,2,3,4,5,6], orderable: false} 
+            {targets: [1,2,3,4,5,6], orderable: false},
+            {targets: 6, data:null, defaultContent:'<button class="btn btn-sm btn-block btn-danger"><i class="fas fa-times"></i></button>'}
         ],
-        order: [[0, 'desc']]
+        createdRow: function (nRow, aData){$(nRow).attr('id', aData[0])},
+        order: [[0, 'asc']]
     })
-
-    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
 
     let addPeriod = $("#add_period")
-    addPeriod.tooltip()
     addPeriod.click(function(){
-        alert('Wena!')
+        let arrDate = $('#range_date').val().split($('#range_date').attr('data-multiple-dates-separator'))
+        let rateNormal = $('input[name="rate_normal"]').val()
+        let rateReduced = $('input[name="rate_reduced"]').val()
+        let rateNight = $('input[name="rate_night"]').val()
+        row = {
+            0 : counter,
+            1 : arrDate[0],
+            2 : arrDate[1],
+            3 : rateNormal,
+            4 : rateReduced,
+            5 : rateNight
+        }
+        periodsList = [...periodsList, row]
+        periodsTable.row.add(row).draw(false)
+        counter++
     })
+    addPeriod.tooltip()
+
+    $('#periods tbody').on('click', 'button', function () {
+        let id = parseInt($(this).parents('tr').attr('id'))
+        var filtered = periodsList.filter(function(value){return id !== value[0]})
+        periodsList = filtered
+        periodsTable.row($(this).parents('tr')).remove().draw()
+    });
 
     $("#accesscharge").submit(function(e) {
         e.preventDefault()
         var form = $(this)
-        console.log(form.serialize())
+        var select = $('select[name="ido"]')
         var url = form.attr('action')
+        var start_dates = []
+        var ends_dates = []
+        var reduced_rates = []
+        var normal_rates = []
+        var night_rates = []
+        periodsList.forEach(function(e){
+            start_dates = [...start_dates, e[1]]
+            ends_dates = [...ends_dates, e[2]]
+            reduced_rates = [...reduced_rates, e[3]]
+            normal_rates = [...normal_rates, e[4]]
+            night_rates = [...night_rates, e[5]]
+        })
         $.ajax({
             type: "POST",
             url: url,
-            data: form.serialize(),
+            data: {
+                start_dates,
+                ends_dates,
+                reduced_rates,
+                normal_rates,
+                night_rates,
+                ido : parseInt(select.val())
+            },
             success: function(data)
             {
                 console.log(data)

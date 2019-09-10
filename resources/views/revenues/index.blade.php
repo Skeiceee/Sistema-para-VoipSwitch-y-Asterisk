@@ -79,13 +79,8 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         scrollX: true,
-        language:{
-            url: SITEURL + 'datatables/spanish'
-        },
-        ajax: {
-            url: SITEURL + 'consumos',
-            type: 'GET',
-        },
+        language:{ url: SITEURL + 'datatables/spanish' },
+        ajax: { url: SITEURL + 'consumos', type: 'GET' },
         columns: [
             {data: 'date', name: 'date'},
             {data: 'description', name: 'description'},

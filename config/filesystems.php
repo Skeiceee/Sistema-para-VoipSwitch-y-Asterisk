@@ -60,6 +60,12 @@ return [
             'root' => storage_path('app/revenues'),
             'url' => env('APP_URL').'/storage',
         ],
+        
+        'accesscharge' => [
+            'driver' => 'local',
+            'root' => storage_path('app/accesscharge'),
+            'url' => env('APP_URL').'/storage',
+        ],
 
         's3' => [
             'driver' => 's3',

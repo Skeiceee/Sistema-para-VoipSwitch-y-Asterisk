@@ -173,25 +173,26 @@ $(document).ready(function(){
         var select = $('select[name="ido"]')
         var url = form.attr('action')
         var start_dates = []
-        var ends_dates = []
+        var end_dates = []
         var reduced_rates = []
         var normal_rates = []
         var night_rates = []
         periodsList.forEach(function(e){
             start_dates = [...start_dates, e[1]]
-            ends_dates = [...ends_dates, e[2]]
-            reduced_rates = [...reduced_rates, e[3]]
-            normal_rates = [...normal_rates, e[4]]
+            end_dates = [...end_dates, e[2]]
+            normal_rates = [...normal_rates, e[3]]
+            reduced_rates = [...reduced_rates, e[4]]
             night_rates = [...night_rates, e[5]]
         })
+        console.log(periodsList)
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 start_dates,
-                ends_dates,
-                reduced_rates,
+                end_dates,
                 normal_rates,
+                reduced_rates,
                 night_rates,
                 ido : parseInt(select.val())
             },

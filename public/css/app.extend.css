@@ -51,6 +51,10 @@
     background-image: none;
 }
 
+input[type=number].form-control.is-invalid, .was-validated .form-control:invalid{
+    padding-right: .75em;
+}
+
 .form-control.is-invalid~.invalid-feedback{
     -webkit-user-select: none;
     -khtml-user-select: none;

@@ -1,14 +1,17 @@
 @extends('layouts.app')
 @section('content')
+<div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog d-flex flex-column justify-content-center align-items-center text-white">
+        <span class="fa fa-spinner fa-spin" style="font-size: 60px"></span>
+        <span class="mt-3" style="font-size: 20px">Cargando</span>
+    </div>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         @include('layouts.menu')
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-money-check"></i><span class="font-weight-bold ml-2">Cargos de acceso</span></div>
-                    </div>
                     <hr class="my-3">
                     <div class="card">
                         <div class="card-body">
@@ -37,22 +40,26 @@
                             <hr class="mt-0">
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <label for="range_date">Rango de fecha</label>
+                                    <label for="range_date">Rango de fechas</label>
                                     <input id="range_date" type="text" data-language='es' data-multiple-dates-separator=" al " data-date-format="dd/mm/yyyy" class="form-control" name="date">
+                                    <span class="invalid-feedback" role="alert">Porfavor, complete el rango de fechas.</span>
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="rate_normal">Tarifa normal</label>
                                     <input name="rate_normal" type="number" step="0.0001" min="0" class="form-control">
+                                    <span class="invalid-feedback" role="alert">El campo tarifa normal es obligatorio.</span>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="rate_reduced">Tarifa reducida</label>
                                     <input name="rate_reduced" type="number" step="0.0001" min="0" class="form-control">
+                                    <span class="invalid-feedback" role="alert">El campo tarifa reducida es obligatorio.</span>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="rate_night">Tarifa nocturna</label>
                                     <input name="rate_night" type="number" step="0.0001" min="0" class="form-control">
+                                    <span class="invalid-feedback" role="alert">El campo tarifa nocturna es obligatorio.</span>
                                 </div>
                             </div>
                         </div>
@@ -76,15 +83,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="list_periods">
-                                    {{-- <tr>
-                                        <td>1</td>
-                                        <td>2019-09-06 13:13:13</td>
-                                        <td>2019-09-06 13:13:13</td>
-                                        <td>0,345</td>
-                                        <td>0,345</td>
-                                        <td>0,345</td>
-                                        <td><a href="#" class="btn-sm btn-block btn-danger text-center"><i class="fas fa-times"></i></a></td>
-                                    </tr> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -143,20 +141,39 @@ $(document).ready(function(){
     let addPeriod = $("#add_period")
     addPeriod.click(function(){
         let arrDate = $('#range_date').val().split($('#range_date').attr('data-multiple-dates-separator'))
-        let rateNormal = $('input[name="rate_normal"]').val()
-        let rateReduced = $('input[name="rate_reduced"]').val()
-        let rateNight = $('input[name="rate_night"]').val()
-        row = {
-            0 : counter,
-            1 : arrDate[0],
-            2 : arrDate[1],
-            3 : rateNormal,
-            4 : rateReduced,
-            5 : rateNight
+        let rateNormal = $('input[name="rate_normal"]')
+        let rateReduced = $('input[name="rate_reduced"]')
+        let rateNight = $('input[name="rate_night"]')
+        $('#range_date').removeClass('is-invalid')
+        rateNormal.removeClass('is-invalid')
+        rateReduced.removeClass('is-invalid')
+        rateNight.removeClass('is-invalid')
+        if((arrDate[0]!==' '&& arrDate[0]!==undefined) && (arrDate[1]!=='' && arrDate[1]!==undefined) && rateNormal.val()!=='' && rateReduced.val()!=='' && rateNight.val()!==''){
+            row = {
+                0 : counter,
+                1 : arrDate[0],
+                2 : arrDate[1],
+                3 : rateNormal.val(),
+                4 : rateReduced.val(),
+                5 : rateNight.val()
+            }
+            periodsList = [...periodsList, row]
+            periodsTable.row.add(row).draw(false)
+            counter++
+        }else{
+            if((arrDate[0]===' '|| arrDate[0]===undefined) || (arrDate[1]==='' || arrDate[1]===undefined)){
+                $('#range_date').addClass('is-invalid')
+            }
+            if(rateNormal.val()===''){
+                rateNormal.addClass('is-invalid')
+            }
+            if(rateReduced.val()===''){
+                rateReduced.addClass('is-invalid')
+            }
+            if(rateNight.val()===''){
+                rateNight.addClass('is-invalid')
+            }
         }
-        periodsList = [...periodsList, row]
-        periodsTable.row.add(row).draw(false)
-        counter++
     })
     addPeriod.tooltip()
 
@@ -184,7 +201,6 @@ $(document).ready(function(){
             reduced_rates = [...reduced_rates, e[4]]
             night_rates = [...night_rates, e[5]]
         })
-        console.log(periodsList)
         $.ajax({
             type: "POST",
             url: url,
@@ -196,10 +212,16 @@ $(document).ready(function(){
                 night_rates,
                 ido : parseInt(select.val())
             },
-            success: function(data)
-            {
-                console.log(data)
+            beforeSend : function(){
+                $('.modal').modal('show')
             }
+        }).fail(function(){
+            setTimeout(function(){
+                $('.modal').modal('hide')
+            }, 1000)
+        }).done(function(data){
+            $('.modal').modal('hide')
+            window.location = SITEURL + 'cargosdeacceso/download/'+ data.filename
         });
     });
 })

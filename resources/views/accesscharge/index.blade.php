@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
-    <div class="modal-dialog d-flex flex-column justify-content-center align-items-center text-white">
+<div class="modal fade bd-example-modal-lg my-0" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog h-100 my-0 d-flex flex-column justify-content-center align-items-center text-white">
         <span class="fa fa-spinner fa-spin" style="font-size: 60px"></span>
         <span class="mt-3" style="font-size: 20px">Cargando</span>
     </div>
@@ -218,6 +218,22 @@ $(document).ready(function(){
         }).fail(function(){
             setTimeout(function(){
                 $('.modal').modal('hide')
+                let arrDate = $('#range_date').val().split($('#range_date').attr('data-multiple-dates-separator'))
+                let rateNormal = $('input[name="rate_normal"]')
+                let rateReduced = $('input[name="rate_reduced"]')
+                let rateNight = $('input[name="rate_night"]')
+                if((arrDate[0]===' '|| arrDate[0]===undefined) || (arrDate[1]==='' || arrDate[1]===undefined)){
+                    $('#range_date').addClass('is-invalid')
+                }
+                if(rateNormal.val()===''){
+                    rateNormal.addClass('is-invalid')
+                }
+                if(rateReduced.val()===''){
+                    rateReduced.addClass('is-invalid')
+                }
+                if(rateNight.val()===''){
+                    rateNight.addClass('is-invalid')
+                }
             }, 1000)
         }).done(function(data){
             $('.modal').modal('hide')

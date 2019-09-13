@@ -50,13 +50,19 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
-                                    <div class="no-avatar d-none d-md-inline ml-2 align-self-start order-3">
-                                        <span class="initials">{{ Auth::user()->initials() }}</span>
-                                    </div>
+                                    @if (is_null(Auth::user()->picture))
+                                        <div class="no-avatar d-none d-md-inline ml-2 align-self-start order-3">
+                                            <span class="initials">{{ Auth::user()->initials() }}</span>
+                                        </div>
+                                    @else
+                                        <div class="avatar d-none d-md-inline ml-2 align-self-start order-3">
+                                            <img src="{{ url(Auth::user()->picture) }}">
+                                        </div>
+                                    @endif
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('configuration.index') }}">
                                         Configuración
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

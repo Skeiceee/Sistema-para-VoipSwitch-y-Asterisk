@@ -25,6 +25,9 @@ Route::resource('/consumos', 'RevenuesController', ['only' => ['index','create']
 Route::get('/cargosdeacceso/download/{namefile}', 'AccessChargeController@download')->name('accesscharge.download');
 Route::resource('/cargosdeacceso', 'AccessChargeController')->names(['index' => 'accesscharge.index', 'create' => 'accesscharge.create']);
 
+Route::get('/configuracion', 'ConfigurationController@index')->name('configuration.index');
+Route::post('/configuracion/guardar', 'ConfigurationController@save')->name('configuration.save');
+
 Route::get('/datatables/spanish', function(){
     return response()->json([
         'sProcessing' => 'Procesando...',

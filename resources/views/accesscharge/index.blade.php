@@ -12,6 +12,9 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div><i class="fas fa-stream"></i><span class="font-weight-bold ml-2">Cargos de acceso</span></div>
+                    </div>
                     <hr class="my-3">
                     <div class="card">
                         <div class="card-body">
@@ -65,7 +68,13 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="table-responsive card-body">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <i class="far fa-calendar-check"></i></i><span class="font-weight-bold ml-2">Periodos</span>
+                                </div>
+                            </div>
+                            <hr class="mt-0">
                             <table id="periods" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>

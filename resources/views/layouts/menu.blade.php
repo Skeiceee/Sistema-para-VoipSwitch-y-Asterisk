@@ -13,7 +13,7 @@
                 </div>
                 <ul class="nav flex-column">
                     <li id="dashboard" class="nav-item">
-                        <a class="nav-link pl-0" href="{{ route('home') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                     </li>
                 </ul>
 
@@ -22,10 +22,19 @@
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link pl-0" href="{{ route('revenues.index') }}">Consumos</a>
+                        <a class="nav-link " href="{{ route('revenues.index') }}">Consumos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-0" href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
+                        <a class="nav-link " href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
+                    </li>
+                </ul>
+     
+                <div class="text-muted py-1">
+                    <i class="fas fa-info-circle"></i><span class="ml-2 font-weight-bold">Información</span>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">Númeracion</a>
                     </li>
                 </ul>
 

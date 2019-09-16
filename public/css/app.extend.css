@@ -115,7 +115,8 @@ div#revenues_info,
 div.dataTables_wrapper div.dataTables_filter label, 
 a.navbar-brand img,
 div.dataTables_wrapper div.dataTables_paginate ul.pagination,
-div#menu_toggle div.d-flex.justify-content-between.align-items-center{
+div#menu_toggle div.d-flex.justify-content-between.align-items-center,
+.text-muted.py-1 span.ml-2.font-weight-bold{
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;

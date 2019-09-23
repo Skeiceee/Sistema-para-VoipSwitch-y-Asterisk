@@ -30,7 +30,7 @@
                 </ul>
      
                 <div class="text-muted py-1">
-                    <i class="fas fa-info-circle"></i><span class="ml-2 font-weight-bold">Información</span>
+                    <i class="fas fa-archive"></i><span class="ml-2 font-weight-bold">Adminitración</span>
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">

@@ -51,7 +51,11 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between aling-items-center">
-                                        <span class="text-muted">Llamadas por movistar</span><span id="sessions" class="text-muted">0</span>
+                                        <span class="text-muted">Llamadas por movistar</span>
+                                        <div class="text-muted">
+                                            <span id="sessions">0</span>
+                                            <span>sesiones</span>
+                                        </div>
                                     </div>
                                     <hr>
                                     <canvas id="sessionsChart" width="400" height="150"></canvas>

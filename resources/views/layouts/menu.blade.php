@@ -34,7 +34,7 @@
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link " href="#">Númeracion</a>
+                        <a class="nav-link disabled" href="#">Númeracion</a>
                     </li>
                 </ul>
 

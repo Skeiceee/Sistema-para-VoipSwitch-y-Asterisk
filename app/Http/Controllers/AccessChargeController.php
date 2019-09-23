@@ -189,7 +189,11 @@ class AccessChargeController extends Controller
                 $content = ob_get_contents();
                 ob_end_clean();
                 
-                $nameFile = str_random(10);
+                $date = str_replace('/','', $start_dates[0]);
+                $nameFile = $portador->id_port.'_'.$portador->portador.'_'.$date;
+                $nameFile = str_replace(' ', '_', $nameFile);
+                $nameFile = str_replace('.', '', $nameFile);
+                
                 Storage::disk('accesscharge')->put($nameFile.".xlsx", $content);
 
                 return response()->json([

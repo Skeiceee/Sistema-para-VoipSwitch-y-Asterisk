@@ -51,7 +51,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between aling-items-center">
-                                        <span class="text-muted">Llamadas totales</span><span id="sessions" class="text-muted">0</span>
+                                        <span class="text-muted">Llamadas por movistar</span><span id="sessions" class="text-muted">0</span>
                                     </div>
                                     <hr>
                                     <canvas id="sessionsChart" width="400" height="150"></canvas>

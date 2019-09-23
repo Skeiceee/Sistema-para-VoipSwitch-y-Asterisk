@@ -40,17 +40,21 @@
                         </div>
                         <div class="col-md-12 mt-3">
                             <div class="card">
-                                <div class="card-body text-center">
-                                    <canvas id="activeChart" width="400" height="80"></canvas>
+                                <div class="card-body">
                                     <span class="text-muted">Llamadas activas</span>
+                                    <hr>
+                                    <canvas id="activeChart" width="400" height="80"></canvas>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">
                             <div class="card">
                                 <div class="card-body text-center">
+                                    <div class="d-flex justify-content-between aling-items-center">
+                                        <span class="text-muted">Llamadas totales</span><span id="sessions" class="text-muted">0</span>
+                                    </div>
+                                    <hr>
                                     <canvas id="sessionsChart" width="400" height="150"></canvas>
-                                    <span id="sessions" class="text-muted">0</span>
                                 </div>
                             </div>
                         </div>

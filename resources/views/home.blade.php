@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-md-12 mt-3">
                             <div class="card">
-                                <div class="card-body text-center">
+                                <div class="card-body">
                                     <div class="d-flex justify-content-between aling-items-center">
                                         <span class="text-muted">Llamadas totales</span><span id="sessions" class="text-muted">0</span>
                                     </div>

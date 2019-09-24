@@ -285,6 +285,39 @@ class Kernel extends ConsoleKernel
             $revenue->save();
 
         })->dailyAt('04:00')->timezone('America/Santiago');
+
+        //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
+        $schedule->call(function () {
+            $startYesterday = Carbon::yesterday()->toDateTimeString();
+            $endYesterday =  Carbon::yesterday()->hour(23)->minute(59)->second(59)->toDateTimeString();
+
+            $avgCalls = DB::connection('asterisk.nostrict')
+                ->table('report')
+                ->distinct()
+                ->select(
+                    'date',
+                    DB::raw('round(avg(active_calls)) as avg'),
+                    DB::raw('min(active_calls) as min'),
+                    DB::raw('max(active_calls) as max')
+                )
+                ->whereBetween(
+                    'date',
+                    [
+                        DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
+                    ]
+                )
+                ->groupBy(DB::raw('hour(date)'))
+                ->get();
+
+            $toInsert = [];
+            foreach($avgCalls as $record) {
+                $toInsert[] = (array)$record;
+            }
+
+            DB::connection('mysql')->table('average_calls')->insert($toInsert);
+
+        })->cron('*/1 * * * *')->timezone('America/Santiago');
     }
 
     /**

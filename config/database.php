@@ -83,6 +83,26 @@ return [
             ]) : [],
         ],
 
+        'asterisk.nostrict' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_ASTERISK', '127.0.0.1'),
+            'port' => env('DB_PORT_ASTERISK', '3306'),
+            'database' => env('DB_DATABASE_ASTERISK', 'forge'),
+            'username' => env('DB_USERNAME_ASTERISK', 'forge'),
+            'password' => env('DB_PASSWORD_ASTERISK', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'latin1',
+            'collation' => 'latin1_swedish_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'asterisk.portables' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),

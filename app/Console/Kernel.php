@@ -179,7 +179,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
+        //Crea el Excel diario de consumos, se ejecuta a las 4 de la mañana.
         $schedule->call(function(){
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();

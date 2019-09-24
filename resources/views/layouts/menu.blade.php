@@ -15,6 +15,9 @@
                     <li id="dashboard" class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                     </li>
+                    <li id="dashboard" class="nav-item">
+                        <a class="nav-link" href="{{ route('reports.index') }}">Informes</a>
+                    </li>
                 </ul>
 
                 <div class="text-muted py-1">

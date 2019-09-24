@@ -28,6 +28,9 @@ Route::resource('/cargosdeacceso', 'AccessChargeController')->names(['index' => 
 Route::get('/configuracion', 'ConfigurationController@index')->name('configuration.index');
 Route::post('/configuracion/guardar', 'ConfigurationController@save')->name('configuration.save');
 
+Route::get('/informe', 'ReportsController@index')->name('reports.index');
+Route::post('/informe/avg/hr/calls', 'ReportsController@avgperhrcalls')->name('reports.avgperhrcalls');
+
 Route::get('/datatables/spanish', function(){
     return response()->json([
         'sProcessing' => 'Procesando...',

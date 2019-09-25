@@ -106,6 +106,9 @@ $(document).ready(function(){
                 data.forEach(function(e){
                     color = dynamicColors()
                     e = {...e, backgroundColor : color}
+                    if(e.data.length == 0){
+                        e = {...e, hidden: true}
+                    }
                     datasets.push(e)
                 });
                 avgPerHourChart.data.datasets = datasets

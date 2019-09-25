@@ -284,7 +284,7 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->dailyAt('04:00')->timezone('America/Santiago');
+        })->dailyAt('05:00')->timezone('America/Santiago');
 
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {
@@ -317,7 +317,7 @@ class Kernel extends ConsoleKernel
 
             DB::connection('mysql')->table('average_calls')->insert($toInsert);
 
-        })->cron('*/1 * * * *')->timezone('America/Santiago');
+        })->dailyAt('05:00')->timezone('America/Santiago');
     }
 
     /**

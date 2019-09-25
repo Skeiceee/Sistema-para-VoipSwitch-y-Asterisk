@@ -16,7 +16,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="text-muted">Promedio de llamadas activas por hora</span>
-                                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
+                                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar promedios de llamadas activas por hora.">
                                             <i class="fas fa-filter"></i>
                                         </button>
                                     </div>
@@ -36,7 +36,7 @@
                                                 name="date">
                                         </div>
                                     </div>
-                                    <canvas id="avgPerHourChart" width="400" height="200"></canvas>
+                                    <canvas id="avgPerHourChart" width="400" height="250"></canvas>
                                 </div>
                             </div>
                         </div>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
@@ -21,27 +24,49 @@ class ReportsController extends Controller
         return view('reports.index');
     }
 
-    public function avgperhrcalls()
+    public function avgperhrcalls(Request $request)
     {
-        //Fomarto para que imprima bien el grafico
-        return response()->json(
-            [
-                [
-                    'label' => '22/09/2019',
-                    'data' => [4,5,2,6,7,20,40,44,50,70,70,80,100,200,240,290,90,50,30,29,10,12,10,5],
-                    'backgroundColor' => '#0941e5'
-                ],
-                [
-                    'label' => '23/09/2019',
-                    'data' => [4,5,2,6,7,20,40,44,50,70,70,80,90,220,230,270,90,50,30,29,10,12,10,5],
-                    'backgroundColor' => '#4eb96e'
-                ],
-                [
-                    'label' => '24/09/2019',
-                    'data' => [4,5,2,6,7,20,40,44,50,70,70,80,90,220,230,270,90,50,30,29,10,12,10,5],
-                    'backgroundColor' => '#000000'
-                ]
-            ]
-        );
+        if(is_null($request->month) and is_null($request->year)){
+            $start = Carbon::now()->firstOfMonth();
+            $year = $start->year;
+            $month = $start->month;
+        }else{
+            $year = $request->year;
+            $month = $request->month;
+        }
+
+        $strDate = $year.'-'.$month.'-01';
+        $startDay = (new Carbon($strDate))->day;
+        $endDay = (new Carbon($strDate))->endOfMonth()->day;
+
+        function avgsPerHour($year, $month, $day){
+            $strDay = $year.'-'.$month.'-'.$day;
+            return $avgDay = DB::connection('mysql')
+                ->table('average_calls')
+                ->select('avg')
+                ->whereBetween(
+                    'date',
+                    [
+                        DB::raw('str_to_date("'.$strDay.' 00:00:00", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$strDay.' 23:59:59", "%Y-%m-%d %H:%i:%s")') 
+                    ]
+                )
+                ->get();
+        }
+
+        $datasets = [];
+        for ($day = $startDay; $day <= $endDay; $day++) {
+            $dataset = []; $avgs = [];
+            $avgsPerHour = avgsPerHour($year, $month, $day);
+            $dataset = ['label' => $day.'/'.$month.'/'.$year];
+            foreach ($avgsPerHour as $key => $avgPerHour) {
+                $avgs = $avgs + [$key => $avgPerHour->avg];
+            }
+            $dataset = $dataset + ['data' => $avgs];
+            $datasets = $datasets + [($day-1) => $dataset];
+        }
+        // dd($datasets);
+        // Fomarto para que imprima bien el grafico
+        return response()->json($datasets);
     }
 }

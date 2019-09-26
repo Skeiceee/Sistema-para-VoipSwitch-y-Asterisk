@@ -7,40 +7,44 @@
             </div>
             <div id="menu_wrapper">
                 <hr class="my-3">
-
-                <div class="text-muted py-1">
-                    <i class="fas fa-globe-americas"></i><span class="ml-2 font-weight-bold">General</span>
+                <div class="d-flex flex-wrap">
+                    <div style="width: 150px">
+                        <div class="text-muted py-1">
+                            <i class="fas fa-globe-americas"></i><span class="ml-2 font-weight-bold">General</span>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li id="dashboard" class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                            </li>
+                            <li id="dashboard" class="nav-item">
+                                <a class="nav-link" href="{{ route('reports.index') }}">Informes</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width: 150px">
+                        <div class="text-muted py-1">
+                            <i class="fas fa-calculator"></i><span class="ml-2 font-weight-bold">Contable</span>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link " href="{{ route('revenues.index') }}">Consumos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width: 150px">
+                        <div class="text-muted py-1">
+                            <i class="fas fa-archive"></i><span class="ml-2 font-weight-bold">Adminitración</span>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Numeración</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="nav flex-column">
-                    <li id="dashboard" class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
-                    </li>
-                    <li id="dashboard" class="nav-item">
-                        <a class="nav-link" href="{{ route('reports.index') }}">Informes</a>
-                    </li>
-                </ul>
-
-                <div class="text-muted py-1">
-                    <i class="fas fa-calculator"></i><span class="ml-2 font-weight-bold">Contable</span>
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{ route('revenues.index') }}">Consumos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
-                    </li>
-                </ul>
-     
-                <div class="text-muted py-1">
-                    <i class="fas fa-archive"></i><span class="ml-2 font-weight-bold">Adminitración</span>
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Numeración</a>
-                    </li>
-                </ul>
-
             </div>
         </div>
     </div>

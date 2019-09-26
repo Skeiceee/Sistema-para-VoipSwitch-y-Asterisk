@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row justify-content-center">
         @include('layouts.menu')
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">

@@ -69,4 +69,9 @@ class ReportsController extends Controller
         // Fomarto para que imprima bien el grafico
         return response()->json($datasets);
     }
+
+    public function maxAvgCalls(Request $request)
+    {
+        //
+    }
 }

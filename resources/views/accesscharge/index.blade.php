@@ -44,7 +44,7 @@
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <label for="range_date">Rango de fechas</label>
-                                    <input id="range_date" type="text" data-language='es' data-multiple-dates-separator=" al " data-date-format="dd/mm/yyyy" class="form-control" name="date">
+                                    <input id="range_date" type="text" data-language='es' data-multiple-dates-separator=" al " data-date-format="dd/mm/yyyy" class="form-control" name="date" autocomplete="off">
                                     <span class="invalid-feedback" role="alert">Porfavor, complete el rango de fechas.</span>
                                 </div>
                             </div>

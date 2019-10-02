@@ -114,7 +114,7 @@ $(document).ready(function(){
             data: { month: param.month, year: param.year },
             dataType: "json",
             success: function(data){
-                let listProcesseedCalls = $('#list_processeed_calls');
+                let listProcesseedCalls = $('#list_processeed_calls').empty();
                 data.forEach(function(e){
                     let spanDate = $(document.createElement('span')).append(e.date)
                     let spanProcesseds = $(document.createElement('span')).append(numberWithDot(e.processed_calls)+' llamadas')

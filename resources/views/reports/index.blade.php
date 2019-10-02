@@ -95,6 +95,18 @@ $(document).ready(function(){
         return "rgba(" + r + "," + g + "," + b + ", 0.5)";
     }
 
+    function maxProcessedCalls(param){
+        $.ajax({
+            type: "post",
+            url: param.url,
+            data: { month: param.month, year: param.year },
+            dataType: "json",
+            success: function(data){
+                console.log(data)
+            }
+        })
+    }
+
     function avgPerHourGraph(param){
         $.ajax({
             type: "post",
@@ -117,15 +129,18 @@ $(document).ready(function(){
         })
     }
 
-    avgPerHourGraph({ url : SITEURL+'/informe/avg/hr/calls'})
-    
+    avgPerHourGraph({ url : SITEURL+'informe/avg/hr/calls' })
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
+    maxProcessedCalls({ url : SITEURL+'informe/processed/calls/' })
+
     $('input[name="date"]').datepicker({
         todayButton: new Date(),
         onSelect: function(fd, date){
             if(typeof date === 'object' && date !== null){
                 let month = date.getMonth() + 1
                 let year = date.getFullYear()
-                avgPerHourGraph({url : SITEURL+'/informe/avg/hr/calls', month, year});
+                maxProcessedCalls({url : SITEURL+'informe/processed/calls', month, year})
+                avgPerHourGraph({url : SITEURL+'informe/avg/hr/calls', month, year})
             }
         }
     })

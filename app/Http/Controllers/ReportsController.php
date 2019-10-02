@@ -70,8 +70,39 @@ class ReportsController extends Controller
         return response()->json($datasets);
     }
 
-    public function maxAvgCalls(Request $request)
-    {
-        //
+    public function processedcalls(Request $request)
+    {   
+
+        if(is_null($request->month) and is_null($request->year)){
+            $start = Carbon::now()->firstOfMonth();
+            $year = $start->year;
+            $month = $start->month;
+        }else{
+            $year = $request->year;
+            $month = $request->month;
+        }
+
+        $strDate = $year.'-'.$month.'-01';
+        $startDay = (new Carbon($strDate));
+        $endDay = (new Carbon($strDate))->endOfMonth();
+
+        $query = DB::connection('asterisk.nostrict')
+            ->table('report')
+            ->select(
+                'date',
+                DB::raw('max(processed_calls) as max')
+            )
+            ->whereBetween(
+                'date',
+                [
+                    DB::raw('str_to_date("'.$startDay->format('Y-m-d').' 00:00:00", "%Y-%m-%d %H:%i:%s")'),
+                    DB::raw('str_to_date("'.$endDay->format('Y-m-d').' 23:59:59", "%Y-%m-%d %H:%i:%s")') 
+                ]
+            )
+            ->groupBy(
+                DB::raw('day(date)')
+            )->get();
+
+            return response()->json($query);
     }
 }

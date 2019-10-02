@@ -114,13 +114,33 @@ $(document).ready(function(){
             data: { month: param.month, year: param.year },
             dataType: "json",
             success: function(data){
-                let listProcesseedCalls = $('#list_processeed_calls').empty();
+                let listProcesseedCalls = $('#list_processeed_calls').empty()
+                let total = 0
                 data.forEach(function(e){
-                    let spanDate = $(document.createElement('span')).append(e.date)
-                    let spanProcesseds = $(document.createElement('span')).append(numberWithDot(e.processed_calls)+' llamadas')
-                    let li = $(document.createElement('li')).addClass('list-group-item d-flex justify-content-between').append(spanDate, spanProcesseds)
-                    listProcesseedCalls.append(li)
+                    listProcesseedCalls.append(
+                        $(document.createElement('li'))
+                        .addClass('list-group-item d-flex border justify-content-between')
+                        .append(
+                            $(document.createElement('span'))
+                                .append(e.date), 
+                            $(document.createElement('span'))
+                                .append(numberWithDot(e.processed_calls)+' llamadas')
+                        )
+                    )
+                    total+=e.processed_calls
                 })
+                listProcesseedCalls.append(
+                    $(document.createElement('li'))
+                    .addClass('list-group-item list-group-item-info border border-info d-flex justify-content-between')
+                    .append(
+                        $(document.createElement('span'))
+                            .addClass('font-weight-bold')
+                            .append('Total'), 
+                        $(document.createElement('span'))
+                            .addClass('font-weight-bold')
+                            .append(numberWithDot(total)+' llamadas')
+                    )
+                )
             }
         })
     }

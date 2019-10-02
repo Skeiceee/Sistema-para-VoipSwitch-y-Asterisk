@@ -40,8 +40,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-muted mb-3">Llamadas procesadas por dia</span>
+                                    </div>
+                                    <ul id="list_processeed_calls" class="list-group list-group-flush">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -95,14 +105,22 @@ $(document).ready(function(){
         return "rgba(" + r + "," + g + "," + b + ", 0.5)";
     }
 
+    function numberWithDot(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");}
     function maxProcessedCalls(param){
+
         $.ajax({
             type: "post",
             url: param.url,
             data: { month: param.month, year: param.year },
             dataType: "json",
             success: function(data){
-                console.log(data)
+                let listProcesseedCalls = $('#list_processeed_calls');
+                data.forEach(function(e){
+                    let spanDate = $(document.createElement('span')).append(e.date)
+                    let spanProcesseds = $(document.createElement('span')).append(numberWithDot(e.processed_calls)+' llamadas')
+                    let li = $(document.createElement('li')).addClass('list-group-item d-flex justify-content-between').append(spanDate, spanProcesseds)
+                    listProcesseedCalls.append(li)
+                })
             }
         })
     }
@@ -129,9 +147,8 @@ $(document).ready(function(){
         })
     }
 
+    maxProcessedCalls({ url : SITEURL+'informe/processed/calls' })
     avgPerHourGraph({ url : SITEURL+'informe/avg/hr/calls' })
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
-    maxProcessedCalls({ url : SITEURL+'informe/processed/calls/' })
 
     $('input[name="date"]').datepicker({
         todayButton: new Date(),

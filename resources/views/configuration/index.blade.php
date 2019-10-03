@@ -64,9 +64,7 @@
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
 <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
-<script src="{{ asset('js/menu.js') }}"></script>
 <script>
 $(document).ready(function () {
     bsCustomFileInput.init()

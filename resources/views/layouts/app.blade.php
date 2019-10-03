@@ -21,6 +21,13 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                
+                <ul class="navbar-nav mr-4 d-sm-none d-md-block">
+                    <div style="width: 40px; height: 40px;">
+                        <a id="menu_toggle" class="btn btn-primary rounded-circle mr-4" href="javascript:void(0);"><i class="fas fa-bars"></i></a>
+                    </div>
+                </ul>
+
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('img/logo.png') }}" alt="Vozdigital">
                 </a>
@@ -30,10 +37,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+                    <ul class="navbar-nav mr-auto d-sm-none d-md-block">
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -82,10 +87,13 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
+            @include('layouts.menu')
             @yield('content')
         </main>
     </div>
     @stack('scripts')
+    <script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
+    <script src="{{ asset('js/menu.js') }}"></script>
 </body>
 </html>

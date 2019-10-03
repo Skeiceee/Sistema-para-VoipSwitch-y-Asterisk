@@ -1,12 +1,12 @@
-<div id="menu" class="col-md">
+<div id="menu" class="col-md p-0">
     <div class="card mb-3">
-        <div id="menu_toggle" class="card-body">
+        <div class="container">
+        {{-- <div id="menu_toggle" class="card-body">
             <div class="d-flex justify-content-between align-items-center ">
                 <div><i class="fas fa-bars"></i><span class="font-weight-bold ml-2">Menu</span></div>
                 <i class="fas fa-chevron-down p-2"></i>
-            </div>
-            <div id="menu_wrapper">
-                <hr class="my-3">
+            </div> --}}
+            <div id="menu_wrapper" class="p-4">
                 <div class="d-flex flex-wrap">
                     <div style="width: 150px">
                         <div class="text-muted py-1">
@@ -40,12 +40,13 @@
                         </div>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Numeración</a>
+                                <a class="nav-link" href="{{ route('numeration.index') }}">Numeración</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>

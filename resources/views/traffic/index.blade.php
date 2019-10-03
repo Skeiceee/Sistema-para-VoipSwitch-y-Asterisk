@@ -2,7 +2,6 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @include('layouts.menu')
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -68,8 +67,6 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/datepicker.min.js') }}"></script>
 <script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
-<script src="{{ asset('js/jquery.hoverIntent.min.js') }}"></script>
-<script src="{{ asset('js/menu.js') }}"></script>
 <script>
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){

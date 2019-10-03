@@ -2,7 +2,6 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @include('layouts.menu')
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">

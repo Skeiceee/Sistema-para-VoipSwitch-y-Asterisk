@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-0">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-0" style="height: 56px">
             <div class="container">
                 @auth
                 <ul class="navbar-nav mr-4 d-sm-none d-md-block">

@@ -6,7 +6,7 @@
         <span class="mt-3" style="font-size: 20px">Cargando</span>
     </div>
 </div>
-<div class="container">
+<div class="container mb-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">

@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-chart-bar"></i><span class="font-weight-bold ml-2">Trafico</span></div>
+                        <div><i class="fas fa-chart-bar"></i><span class="font-weight-bold ml-2">Tráfico</span></div>
                     </div>
                     <hr class="my-3">
                     <div class="row">

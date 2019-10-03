@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -77,7 +77,7 @@
 </div>
 @endsection
 @push('scripts')
-<footer class="text-center">
+<footer class="text-center mt-4">
     <span class="text-muted">Copyright &copy; 2019 - Vozdigital</span>
 </footer>
 @endpush

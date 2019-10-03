@@ -167,8 +167,8 @@ $(document).ready(function(){
         })
     }
 
-    maxProcessedCalls({ url : SITEURL+'informe/processed/calls' })
-    avgPerHourGraph({ url : SITEURL+'informe/avg/hr/calls' })
+    maxProcessedCalls({ url : SITEURL+'trafico/processed/calls' })
+    avgPerHourGraph({ url : SITEURL+'trafico/avg/hr/calls' })
 
     $('input[name="date"]').datepicker({
         todayButton: new Date(),
@@ -176,8 +176,8 @@ $(document).ready(function(){
             if(typeof date === 'object' && date !== null){
                 let month = date.getMonth() + 1
                 let year = date.getFullYear()
-                maxProcessedCalls({url : SITEURL+'informe/processed/calls', month, year})
-                avgPerHourGraph({url : SITEURL+'informe/avg/hr/calls', month, year})
+                maxProcessedCalls({url : SITEURL+'trafico/processed/calls', month, year})
+                avgPerHourGraph({url : SITEURL+'trafico/avg/hr/calls', month, year})
             }
         }
     })

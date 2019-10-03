@@ -21,7 +21,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return view('reports.index');
+        return view('traffic.index');
     }
 
     public function avgperhrcalls(Request $request)

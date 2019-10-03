@@ -21,13 +21,13 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                
+                @auth
                 <ul class="navbar-nav mr-4 d-sm-none d-md-block">
                     <div style="width: 40px; height: 40px;">
                         <a id="menu_toggle" class="btn btn-primary rounded-circle mr-4" href="javascript:void(0);"><i class="fas fa-bars"></i></a>
                     </div>
                 </ul>
-
+                @endauth
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('img/logo.png') }}" alt="Vozdigital">
                 </a>

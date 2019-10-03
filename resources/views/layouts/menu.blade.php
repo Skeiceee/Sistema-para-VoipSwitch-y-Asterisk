@@ -1,5 +1,5 @@
 <div id="menu" class="col-md p-0">
-    <div class="card mb-3">
+    <div class="card rounded-0 border-left-0 border-right-0 mb-3">
         <div class="container">
             <div id="menu_wrapper" class="p-4">
                 <div class="d-flex flex-wrap">

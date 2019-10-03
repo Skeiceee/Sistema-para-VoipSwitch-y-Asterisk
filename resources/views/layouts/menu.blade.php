@@ -31,7 +31,7 @@
                     </div>
                     <div style="width: 150px">
                         <div class="text-muted py-1">
-                            <i class="fas fa-archive"></i><span class="ml-2 font-weight-bold">Administración</span>
+                            <i class="fas fa-archive"></i><span class="ml-2 font-weight-bold">administración</span>
                         </div>
                         <ul class="nav flex-column">
                             <li class="nav-item">

@@ -39,6 +39,23 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="d-sm-block d-md-none" style="width: 150px">
+                        <div class="text-muted py-1">
+                            <i class="fas fa-user"></i><span class="ml-2 font-weight-bold">Cuenta</span>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li>
+                                <a class="nav-link" href="{{ route('configuration.index') }}">Configuración</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    Cerrar sesión
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

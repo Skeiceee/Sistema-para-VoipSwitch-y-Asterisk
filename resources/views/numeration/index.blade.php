@@ -55,7 +55,7 @@
             serverSide: true,
             scrollX: true,
             language:{ url: SITEURL + 'datatables/spanish' },
-            ajax: { url: SITEURL + 'consumos', type: 'GET' },
+            ajax: { url: SITEURL + '', type: 'GET' },
             columns: [
                 {data: 'date', name: 'date'},
                 {data: 'description', name: 'description'},

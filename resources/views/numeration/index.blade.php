@@ -42,31 +42,31 @@
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script> 
-    var SITEURL = '{{ URL::to('').'/' }}'
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    
-        let numerationTable = $('#numeration').DataTable({
-            processing: true,
-            serverSide: true,
-            scrollX: true,
-            language:{ url: SITEURL + 'datatables/spanish' },
-            ajax: { url: SITEURL + '', type: 'GET' },
-            columns: [
-                {data: 'date', name: 'date'},
-                {data: 'description', name: 'description'},
-                {data: 'action', name: 'action', orderable: false}
-            ],
-            order: [[0, 'desc']]
-        })
+var SITEURL = '{{ URL::to('').'/' }}'
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    let numerationTable = $('#numeration').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        language:{ url: SITEURL + 'datatables/spanish' },
+        ajax: { url: SITEURL + '', type: 'GET' },
+        columns: [
+            {data: 'date', name: 'date'},
+            {data: 'description', name: 'description'},
+            {data: 'action', name: 'action', orderable: false}
+        ],
+        order: [[0, 'desc']]
     })
+})
 
-    let addNumeration = $('#add_numeration');
-    addNumeration.tooltip()
+let addNumeration = $('#add_numeration');
+addNumeration.tooltip()
 
-    </script>
+</script>
 @endpush

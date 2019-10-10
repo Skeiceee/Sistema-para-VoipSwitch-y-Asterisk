@@ -52,11 +52,11 @@
                 @else
                 <div class="d-flex align-items-center pr-0">
                     @if (is_null(Auth::user()->picture))
-                    <div class="no-avatar d-none d-md-inline ml-2 align-self-start order-3">
+                    <div class="no-avatar d-sm-block d-md-none ml-2 align-self-start order-3">
                         <span class="initials">{{ Auth::user()->initials() }}</span>
                     </div>
                     @else
-                        <div class="avatar d-none d-md-inline ml-2 align-self-start order-3">
+                        <div class="avatar d-sm-block d-md-none ml-2 align-self-start order-3">
                             <img src="{{ url(Auth::user()->picture) }}">
                         </div>
                     @endif

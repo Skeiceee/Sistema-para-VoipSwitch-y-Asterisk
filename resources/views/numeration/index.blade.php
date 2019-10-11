@@ -15,11 +15,13 @@
                     <div class="card">
                         <div class="table-responsive card-body">
                             <table id="numeration" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
-                                <thead class = "theade-danger">
+                                <thead class="theader-danger">
                                     <tr>
-                                        <th>Fecha de creación</th>
+                                        <th>#</th>
                                         <th>Cliente</th>
-                                        <th>Descripcion</th>
+                                        <th>Descripción</th>
+                                        <th>Creación</th>
+                                        <th>Ultima modificación</th>
                                         <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
@@ -55,13 +57,15 @@ $(document).ready(function(){
         serverSide: true,
         scrollX: true,
         language:{ url: SITEURL + 'datatables/spanish' },
-        ajax: { url: SITEURL + '', type: 'GET' },
+        ajax: { url: SITEURL + 'numeracion', type: 'GET' },
         columns: [
-            {data: 'date', name: 'date'},
-            {data: 'description', name: 'description'},
+            {data: 'id', name: 'id'},
+            {data: 'cliente', name: 'cliente'},
+            {data: 'descripcion', name: 'descripcion'},
+            {data: 'creacion', name: 'creacion'},
+            {data: 'ult_modificacion', name: 'ult_modificacion'},
             {data: 'action', name: 'action', orderable: false}
-        ],
-        order: [[0, 'desc']]
+        ]
     })
 })
 

@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="table-responsive card-body">
                             <table id="revenues" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
-                                <thead class = "theade-danger">
+                                <thead class="theade-danger">
                                     <tr>
                                         <th>Fecha</th>
                                         <th>Descripcion</th>

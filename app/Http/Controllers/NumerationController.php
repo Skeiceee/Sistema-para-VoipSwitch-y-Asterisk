@@ -17,13 +17,14 @@ class NumerationController extends Controller
         if(request()->ajax()){
             return datatables()->of(
                 Numeration::select(
-                    'id', 
-                    'id_client as cliente', 
-                    'description as descripcion', 
-                    'path_documents', 
-                    'created_at as creacion', 
-                    'updated_at as ult_modificacion'
+                    'numerations.id', 
+                    'clients.name as cliente', 
+                    'numerations.description as descripcion', 
+                    'numerations.path_documents', 
+                    'numerations.created_at as creacion', 
+                    'numerations.updated_at as ult_modificacion'
                 )
+                ->join('clients', 'numerations.id_client', 'clients.id')
             )
             ->addColumn('action', 'actions.numerations')
             ->rawColumns(['action'])

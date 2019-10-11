@@ -35,6 +35,11 @@
                         </div>
                         <ul class="nav flex-column">
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('client.index') }}">Clientes</a>
+                            </li>
+                        </ul>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('numeration.index') }}">Numeración</a>
                             </li>
                         </ul>

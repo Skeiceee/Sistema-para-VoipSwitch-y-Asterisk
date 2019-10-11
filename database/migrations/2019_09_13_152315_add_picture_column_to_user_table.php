@@ -13,7 +13,7 @@ class AddPictureColumnToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::connection('mysql')->table('users', function (Blueprint $table) {
             $table->string('picture')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddPictureColumnToUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::connection('mysql')->table('users', function (Blueprint $table) {
             //
         });
     }

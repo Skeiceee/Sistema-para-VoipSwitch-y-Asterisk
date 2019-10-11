@@ -13,9 +13,9 @@ class CreateNumerationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('numerations', function (Blueprint $table) {
+        Schema::connection('mysql')->create('numerations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('id_client');
+            $table->bigInteger('id_client')->unsigned();
             $table->string('description', 500);
             $table->string('path_documents');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateNumerationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('numerations');
+        Schema::connection('mysql')->dropIfExists('numerations');
     }
 }

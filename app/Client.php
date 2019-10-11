@@ -8,4 +8,5 @@ class Client extends Model
 {
     protected $table = "clients";
     protected $primaryKey = "id";
+    protected $connection = 'mysql';
 }

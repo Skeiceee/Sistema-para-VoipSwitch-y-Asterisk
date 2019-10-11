@@ -16,6 +16,9 @@ class CreateNumerationsTable extends Migration
         Schema::connection('mysql')->create('numerations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_client')->unsigned();
+            $table->foreign('id_client')
+                ->references('id')->on('clients')
+                ->onDelete('cascade');
             $table->string('description', 500);
             $table->string('path_documents');
             $table->timestamps();

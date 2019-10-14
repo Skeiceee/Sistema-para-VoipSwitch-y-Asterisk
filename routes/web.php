@@ -12,7 +12,16 @@ Route::resource('/consumos', 'RevenuesController', ['only' => ['index','create']
 Route::get('/cargosdeacceso/download/{namefile}', 'AccessChargeController@download')->name('accesscharge.download');
 Route::resource('/cargosdeacceso', 'AccessChargeController')->names(['index' => 'accesscharge.index', 'create' => 'accesscharge.create']);
 
-Route::resource('/clientes', 'ClientController')->names(['index' => 'client.index','create' => 'client.create', 'show' => 'client.show']);
+Route::resource('/clientes', 'ClientsController')->names(
+    [
+        'index' => 'clients.index',
+        'create' => 'clients.create',
+        'store' => 'clients.store',
+        'edit' => 'clients.edit',
+        'update' => 'clients.update',
+        'show' => 'clients.show'
+    ]
+);
 
 Route::get('/numeracion', 'NumerationController@index')->name('numeration.index');
 

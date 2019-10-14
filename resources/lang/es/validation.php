@@ -148,6 +148,7 @@ return [
         'password' => 'contraseña',
         'email' => 'correo electrónico',
         'name' => 'nombre',
+        'description' => 'descripción',
         'lastName' => 'apellido',
     ],
 

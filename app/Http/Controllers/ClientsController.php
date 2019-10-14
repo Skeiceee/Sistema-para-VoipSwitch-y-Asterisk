@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\Http\Requests\ClientStoreRequest;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class ClientsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,6 +19,21 @@ class ClientController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()){
+            return datatables()->of(
+                Client::select(
+                    'clients.id', 
+                    'clients.name as nombre', 
+                    'clients.description as descripcion',
+                    'clients.created_at as creacion',
+                    'clients.updated_at as ult_modificacion' 
+                )
+            )
+            ->addColumn('action', 'actions.clients')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
         return view('clients.index');
     }
 
@@ -23,7 +44,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('clients.create');
     }
 
     /**
@@ -32,9 +53,16 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientStoreRequest $request)
     {
-        //
+        $client = new Client();
+
+        $client->name = $request->name;
+        $client->description = $request->description;
+
+        $client->save();
+
+        return redirect()->route('clients.index')->with('status', 'El cliente ha sido creado con exito.');
     }
 
     /**
@@ -56,7 +84,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $client = Client::find($id);
+        return view('clients.edit', compact('client'));
     }
 
     /**

@@ -7,14 +7,15 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-users"></i><span class="font-weight-bold ml-2">Clientes</span></div>
-                        <button id="add_numeration"class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo cliente.">
+                        <a id="add_client" href="{{ route('clients.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo cliente.">
                             <i class="fas fa-plus"></i>
-                        </button>
+                        </a>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div class="card">
                         <div class="table-responsive card-body">
-                            <table id="numeration" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
+                            <table id="client" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
                                         <th>#</th>
@@ -52,25 +53,25 @@ $(document).ready(function(){
         }
     });
 
-    let numerationTable = $('#numeration').DataTable({
+    let clientTable = $('#client').DataTable({
         processing: true,
         serverSide: true,
         scrollX: true,
         language:{ url: SITEURL + 'datatables/spanish' },
-        ajax: { url: SITEURL + 'numeracion', type: 'GET' },
+        ajax: { url: SITEURL + 'clientes', type: 'GET' },
         columns: [
             {data: 'id', name: 'id'},
-            {data: 'cliente', name: 'cliente'},
-            {data: 'descripcion', name: 'descripcion'},
-            {data: 'creacion', name: 'creacion'},
-            {data: 'ult_modificacion', name: 'ult_modificacion'},
+            {data: 'nombre', name: 'name'},
+            {data: 'descripcion', name: 'description'},
+            {data: 'creacion', name: 'created_at'},
+            {data: 'ult_modificacion', name: 'updated_at'},
             {data: 'action', name: 'action', orderable: false}
         ]
     })
 })
 
-let addNumeration = $('#add_numeration');
-addNumeration.tooltip()
+let addClient = $('#add_client');
+addClient.tooltip()
 
 </script>
 @endpush

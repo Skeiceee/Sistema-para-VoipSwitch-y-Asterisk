@@ -6,10 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-users"></i><span class="font-weight-bold ml-2">Agregar nuevo cliente</span></div>
-                        {{-- <a id="add_numeration" href="{{ route('clients.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo cliente.">
-                            <i class="fas fa-plus"></i>
-                        </a> --}}
+                        <div><i class="fas fa-user-plus"></i><span class="font-weight-bold ml-2">Agregar nuevo cliente</span></div>
                     </div>
                     <hr class="my-3">
                     <div class="card">

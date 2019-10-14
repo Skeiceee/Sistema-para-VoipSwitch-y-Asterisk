@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-users"></i><span class="font-weight-bold ml-2">Modificar cliente</span></div>
+                        <div><i class="fas fa-user-edit"></i><span class="font-weight-bold ml-2">Modificar cliente</span></div>
                     </div>
                     <hr class="my-3">
                     <div class="card">

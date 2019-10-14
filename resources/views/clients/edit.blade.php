@@ -13,10 +13,11 @@
                         <div class="card-body">
                             <form action="{{ route('clients.update', $client->id) }}" method="post">
                                 @csrf
+                                @method('PUT')
                                 <div class="form-group">
                                     <label for="name">Nombre</label>
                                     
-                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $client->name }}">
+                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ empty(old('name')) ? $client->name : old('name') }}">
                                     
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
@@ -25,7 +26,7 @@
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
                                     
-                                    <textarea name="description" id="description" rows="5" class="form-control @error('description') is-invalid @enderror">{{ $client->description }}</textarea>
+                                    <textarea name="description" id="description" rows="5" class="form-control @error('description') is-invalid @enderror">{{ empty(old('description')) ? $client->description : old('description')}}</textarea>
                                     
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>

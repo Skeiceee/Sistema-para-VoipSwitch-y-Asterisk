@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests\ClientStoreRequest;
+use App\Http\Requests\ClientUpdateRequest;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -73,7 +74,8 @@ class ClientsController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = Client::find($id);
+        return view('clients.show', compact('client'));
     }
 
     /**
@@ -95,9 +97,16 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClientUpdateRequest $request, $id)
     {
-        //
+        $client = Client::find($id);
+
+        $client->name = $request->name;
+        $client->description = $request->description;
+
+        $client->save();
+
+        return redirect()->route('clients.index')->with('status', 'El cliente ha sido guardado con exito.');
     }
 
     /**

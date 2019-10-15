@@ -18,8 +18,8 @@
                                 <thead class="theader-danger">
                                     <tr>
                                         <th>#</th>
-                                        <th>Cliente</th>
-                                        <th>Descripción</th>
+                                        <th>Tipo</th>
+                                        <th>Numero</th>
                                         <th>Creación</th>
                                         <th>Ultima modificación</th>
                                         <th width="10px">Acciones</th>
@@ -60,10 +60,10 @@ $(document).ready(function(){
         ajax: { url: SITEURL + 'numeracion', type: 'GET' },
         columns: [
             {data: 'id', name: 'id'},
-            {data: 'cliente', name: 'cliente'},
-            {data: 'descripcion', name: 'descripcion'},
-            {data: 'creacion', name: 'creacion'},
-            {data: 'ult_modificacion', name: 'ult_modificacion'},
+            {data: 'numero', name: 'number'},
+            {data: 'tipo', name: 'type_id'},
+            {data: 'creacion', name: 'created_at'},
+            {data: 'ult_modificacion', name: 'updated_at'},
             {data: 'action', name: 'action', orderable: false}
         ]
     })

@@ -19,8 +19,7 @@ class CreateNumerationsTable extends Migration
             $table->foreign('type_id')
                 ->references('id')->on('types')
                 ->onDelete('cascade');
-            $table->string('prefijo', 5);
-            $table->string('numero', 15);
+            $table->string('number', 15);
             $table->timestamps();
         });
     }

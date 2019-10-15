@@ -32,11 +32,13 @@ class TypesTableSeeder extends Seeder
         ];
 
         foreach ($types as $type) {
-            DB::table('types')->insert([
-                'name' => $type['name'],
-                'description' => $type['description']
-            ]);
+            DB::table('types')->insert(
+                [
+                    'name' => $type['name'],
+                    'description' => $type['description']
+                ]
+            );
         }
-        
+
     }
 }

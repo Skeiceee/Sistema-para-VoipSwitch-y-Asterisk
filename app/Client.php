@@ -12,6 +12,6 @@ class Client extends Model
 
     public function numerations()
     {
-        return $this->hasMany(Numeration::class);
+        return $this->belongsToMany(Numeration::class);
     }
 }

@@ -12,6 +12,11 @@ class Numeration extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsToMany(Client::class);
+    }
+
+    public function type()
+    {
+        return $this->hasMany(Type::class);
     }
 }

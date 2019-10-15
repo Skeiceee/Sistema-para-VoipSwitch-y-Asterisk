@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Numeration;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,8 @@ class NumerationController extends Controller
 
     public function index()
     {
+        $synergo = Client::find(1);
+        dd($synergo->numerations()->get());
         if(request()->ajax()){
             return datatables()->of(
                 Numeration::select(

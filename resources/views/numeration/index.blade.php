@@ -61,7 +61,7 @@ $(document).ready(function(){
         columns: [
             {data: 'id', name: 'id'},
             {data: 'numero', name: 'number'},
-            {data: 'tipo', name: 'type_id'},
+            {data: 'tipo_nombre', name: 'name'},
             {data: 'creacion', name: 'created_at'},
             {data: 'ult_modificacion', name: 'updated_at'},
             {data: 'action', name: 'action', orderable: false}

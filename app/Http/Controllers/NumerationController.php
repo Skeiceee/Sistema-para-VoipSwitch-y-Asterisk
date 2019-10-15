@@ -19,11 +19,12 @@ class NumerationController extends Controller
             return datatables()->of(
                 Numeration::select(
                     'numerations.id',
-                    'numerations.type_id as tipo',
+                    'types.name as tipo_nombre',
                     'numerations.number as numero', 
                     'numerations.created_at as creacion', 
                     'numerations.updated_at as ult_modificacion'
                 )
+                ->join('types', 'numerations.type_id', 'types.id')
             )
             ->addColumn('action', 'actions.numerations')
             ->rawColumns(['action'])

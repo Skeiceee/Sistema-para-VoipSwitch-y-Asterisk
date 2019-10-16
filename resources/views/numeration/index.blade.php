@@ -7,9 +7,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-sort-numeric-down"></i><span class="font-weight-bold ml-2">Numeración</span></div>
-                        <button id="add_numeration"class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva numeración.">
+                        <a href="{{ route('numeration.create') }}" id="add_numeration"class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva numeración.">
                             <i class="fas fa-plus"></i>
-                        </button>
+                        </a>
                     </div>
                     <hr class="my-3">
                     <div class="card">

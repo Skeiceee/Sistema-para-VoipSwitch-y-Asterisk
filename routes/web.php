@@ -23,7 +23,12 @@ Route::resource('/clientes', 'ClientsController')->names(
     ]
 );
 
-Route::get('/numeracion', 'NumerationController@index')->name('numeration.index');
+Route::resource('/numeracion', 'NumerationController')->names(
+    [
+        'index' => 'numeration.index',
+        'create' => 'numeration.create'      
+    ]
+);
 
 Route::get('/configuracion', 'ConfigurationController@index')->name('configuration.index');
 Route::post('/configuracion/guardar', 'ConfigurationController@save')->name('configuration.save');

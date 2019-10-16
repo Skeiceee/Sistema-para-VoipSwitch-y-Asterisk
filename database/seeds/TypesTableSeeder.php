@@ -19,15 +19,15 @@ class TypesTableSeeder extends Seeder
             ],
             2 => [
                 'name' => 'ITFS',
-                'description' => 'Numeración internacional gratuita'
+                'description' => 'Numeración internacional gratuita.'
             ],
             3 => [
                 'name' => 'Fijo',
-                'description' => 'Numeración telefónica fija '
+                'description' => 'Numeración telefónica fija.'
             ],
             4 => [
                 'name' => 'Movil',
-                'description' => 'Numeración telefónica movil'
+                'description' => 'Numeración telefónica movil.'
             ]
         ];
 

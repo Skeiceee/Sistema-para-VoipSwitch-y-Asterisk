@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Numeration;
+use App\Type;
 use Illuminate\Http\Request;
 
 class NumerationController extends Controller
@@ -44,7 +45,8 @@ class NumerationController extends Controller
      */
     public function create()
     {
-        return view('numeration.create');
+        $types = Type::all();
+        return view('numeration.create', compact('types'));
     }
 
     /**
@@ -55,7 +57,7 @@ class NumerationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('numeration.store')->with('status', 'El cliente ha sido creado con exito.');
     }
 
     /**

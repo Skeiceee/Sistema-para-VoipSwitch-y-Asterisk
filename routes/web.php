@@ -26,7 +26,8 @@ Route::resource('/clientes', 'ClientsController')->names(
 Route::resource('/numeracion', 'NumerationController')->names(
     [
         'index' => 'numeration.index',
-        'create' => 'numeration.create'      
+        'create' => 'numeration.create',
+        'store' => 'numeration.store'
     ]
 );
 

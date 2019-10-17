@@ -102,6 +102,19 @@ $(document).ready(function(){
                         new Option(textSelect, valSelect)
                     )
                 )
+                .append(
+                    $(document.createElement('div'))
+                    .addClass('input-group-append')
+                    .append(
+                        $(document.createElement('button'))
+                        .attr('id', '')
+                        .addClass('btn btn-danger')
+                        .append(
+                            $(document.createElement('li'))
+                            .addClass('fas fa-times')
+                        )
+                    )
+                )
             )
         )
     })

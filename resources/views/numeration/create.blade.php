@@ -19,8 +19,8 @@
                             <div class="form-group">
                                 <label>Rango numérico</label>
                                 <div class="input-group">
-                                    <input id="start_number" type="number" class="form-control">
-                                    <input id="end_number" type="number" class="form-control">
+                                    <input id="start_number" type="number" min="0" step="1" class="form-control">
+                                    <input id="end_number" type="number" min="0" step="1" class="form-control">
                                     <select id="type" class="form-control">
                                         @foreach ($types as $type)
                                             <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -61,6 +61,11 @@ $(document).ready(function(){
     addRange.tooltip()
 
     $('#add_range').click(function(){
+        let startNumber = $('#start_number').val()
+        let endNumber = $('#end_number').val()
+        let valSelect = $('#type').val()
+        let textSelect = $('#type option:selected').text()
+
         $('#range_wrapper')
         .append(
             $(document.createElement('div'))
@@ -76,21 +81,26 @@ $(document).ready(function(){
                     $(document.createElement('input'))
                     .attr('name', 'start_numbers[]')
                     .attr('type', 'number')
-                    .attr('disabled', 'true')
+                    .attr('readonly', 'true')
                     .addClass('form-control')
+                    .val(startNumber)
                 )
                 .append(
                     $(document.createElement('input'))
                     .attr('name', 'end_numbers[]')
                     .attr('type', 'number')
-                    .attr('disabled', 'true')
+                    .attr('readonly', 'true')
                     .addClass('form-control')
+                    .val(endNumber)
                 )
                 .append(
                     $(document.createElement('select'))
                     .attr('name', 'types[]')
-                    .attr('disabled', 'true')
+                    .attr('readonly', 'true')
                     .addClass('form-control')
+                    .append(
+                        new Option(textSelect, valSelect)
+                    )
                 )
             )
         )

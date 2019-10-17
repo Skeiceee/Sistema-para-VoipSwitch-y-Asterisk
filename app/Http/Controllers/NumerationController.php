@@ -57,7 +57,7 @@ class NumerationController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('numeration.store')->with('status', 'El cliente ha sido creado con exito.');
+        return $request;
     }
 
     /**

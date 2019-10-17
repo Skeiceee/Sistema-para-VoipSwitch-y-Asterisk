@@ -16,17 +16,25 @@
                         <div class="card-body">
                             <i class="fas fa-stream"></i><span class="font-weight-bold ml-2">Agregar rango numérico</span>
                             <hr>
+                            <div id="errors">
+
+                            </div>
                             <div class="form-group">
                                 <label>Rango numérico</label>
                                 <div class="input-group">
                                     <input id="start_number" type="number" min="0" step="1" class="form-control">
                                     <input id="end_number" type="number" min="0" step="1" class="form-control">
-                                    <select id="type" class="form-control">
-                                        @foreach ($types as $type)
-                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <span class="invalid-feedback">Debe ingresar los dos rangos numéricos.</span>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type">Tipo de rango numérico</label>
+                                <select id="type" class="form-control">
+                                    @foreach ($types as $type)
+                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="invalid-feedback">El campo tipo de rango numérico es obligatorio.</span>
                             </div>
                         </div>
                     </div>
@@ -37,7 +45,11 @@
                             <form action="{{ route('numeration.store') }}" method="post">
                                 @csrf
                                 <div id="range_wrapper">
+                                    <div id="empty" class="text-center">
+                                        <span class="text-muted">No hay rangos numéricos en la lista.</span>
+                                    </div>
                                 </div>
+                                <hr>
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary" style="width: 150px">Guardar</button>
                                     <a href="{{ route('clients.index') }}" class="btn btn-primary" style="width: 150px">Volver</a>
@@ -56,67 +68,90 @@
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script>
+function removeRange(e) {
+    $(e).parent().parent().parent().closest('div').remove()
+    if($('div[id="range"]').length === 0){
+        $('#empty').show()
+    }
+    return false
+}
 $(document).ready(function(){
     let addRange = $('#add_range')
     addRange.tooltip()
 
     $('#add_range').click(function(){
-        let startNumber = $('#start_number').val()
-        let endNumber = $('#end_number').val()
-        let valSelect = $('#type').val()
-        let textSelect = $('#type option:selected').text()
-
-        $('#range_wrapper')
-        .append(
-            $(document.createElement('div'))
-            .addClass('form-group')
-            .append(
-                $(document.createElement('label'))
-                .text('Rango numérico')
-            )
+        let startNumber = $('#start_number')
+        let endNumber = $('#end_number')
+        let select = $('#type')
+        let option = $('#type option:selected')
+        startNumber.removeClass('is-invalid')
+        endNumber.removeClass('is-invalid')
+        select.removeClass('is-invalid')
+        if(startNumber.val()!='' && endNumber.val()!='' && select.val()!='' && option.text()!=''){
+            $('#range_wrapper')
             .append(
                 $(document.createElement('div'))
-                .addClass('input-group')
+                .attr('id', 'range')
+                .addClass('form-group')
                 .append(
-                    $(document.createElement('input'))
-                    .attr('name', 'start_numbers[]')
-                    .attr('type', 'number')
-                    .attr('readonly', 'true')
-                    .addClass('form-control')
-                    .val(startNumber)
-                )
-                .append(
-                    $(document.createElement('input'))
-                    .attr('name', 'end_numbers[]')
-                    .attr('type', 'number')
-                    .attr('readonly', 'true')
-                    .addClass('form-control')
-                    .val(endNumber)
-                )
-                .append(
-                    $(document.createElement('select'))
-                    .attr('name', 'types[]')
-                    .attr('readonly', 'true')
-                    .addClass('form-control')
-                    .append(
-                        new Option(textSelect, valSelect)
-                    )
+                    $(document.createElement('label'))
+                    .text('Rango numérico')
                 )
                 .append(
                     $(document.createElement('div'))
-                    .addClass('input-group-append')
+                    .addClass('input-group')
                     .append(
-                        $(document.createElement('button'))
-                        .attr('id', '')
-                        .addClass('btn btn-danger')
+                        $(document.createElement('input'))
+                        .attr('name', 'start_numbers[]')
+                        .attr('type', 'number')
+                        .attr('readonly', 'true')
+                        .addClass('form-control')
+                        .val(startNumber.val())
+                    )
+                    .append(
+                        $(document.createElement('input'))
+                        .attr('name', 'end_numbers[]')
+                        .attr('type', 'number')
+                        .attr('readonly', 'true')
+                        .addClass('form-control')
+                        .val(endNumber.val())
+                    )
+                    .append(
+                        $(document.createElement('select'))
+                        .attr('name', 'types[]')
+                        .attr('readonly', 'true')
+                        .addClass('form-control')
                         .append(
-                            $(document.createElement('li'))
-                            .addClass('fas fa-times')
+                            new Option(option.text(), select.val())
+                        )
+                    )
+                    .append(
+                        $(document.createElement('div'))
+                        .addClass('input-group-append')
+                        .append(
+                            $(document.createElement('button'))
+                            .addClass('btn btn-danger')
+                            .attr('onclick', 'return removeRange(this);')
+                            .append(
+                                $(document.createElement('li'))
+                                .addClass('fas fa-times')
+                            )
                         )
                     )
                 )
             )
-        )
+            $('#empty').hide()
+        }else{
+            if(startNumber.val()==''){
+                startNumber.addClass('is-invalid')
+            }
+            if(endNumber.val()==''){
+                endNumber.addClass('is-invalid')
+            }
+            if(select.val()==null || select.val()==''){
+                select.addClass('is-invalid')
+            }
+        }
     })
 })
 </script>

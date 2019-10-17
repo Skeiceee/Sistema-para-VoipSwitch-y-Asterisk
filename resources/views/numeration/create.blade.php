@@ -19,9 +19,9 @@
                             <div class="form-group">
                                 <label>Rango numérico</label>
                                 <div class="input-group">
-                                    <input name="number_start[]" type="number" class="form-control">
-                                    <input name="number_end[]" type="number" class="form-control">
-                                    <select name="type[]" class="form-control">
+                                    <input id="start_number" type="number" class="form-control">
+                                    <input id="end_number" type="number" class="form-control">
+                                    <select id="type" class="form-control">
                                         @foreach ($types as $type)
                                             <option value="{{ $type->id }}">{{ $type->name }}</option>
                                         @endforeach
@@ -39,7 +39,7 @@
                                 <div id="range_wrapper">
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-primary" style="width: 150px">Agregar</button>
+                                    <button type="submit" class="btn btn-primary" style="width: 150px">Guardar</button>
                                     <a href="{{ route('clients.index') }}" class="btn btn-primary" style="width: 150px">Volver</a>
                                 </div>
                             </form>
@@ -59,6 +59,42 @@
 $(document).ready(function(){
     let addRange = $('#add_range')
     addRange.tooltip()
+
+    $('#add_range').click(function(){
+        $('#range_wrapper')
+        .append(
+            $(document.createElement('div'))
+            .addClass('form-group')
+            .append(
+                $(document.createElement('label'))
+                .text('Rango numérico')
+            )
+            .append(
+                $(document.createElement('div'))
+                .addClass('input-group')
+                .append(
+                    $(document.createElement('input'))
+                    .attr('name', 'start_numbers[]')
+                    .attr('type', 'number')
+                    .attr('disabled', 'true')
+                    .addClass('form-control')
+                )
+                .append(
+                    $(document.createElement('input'))
+                    .attr('name', 'end_numbers[]')
+                    .attr('type', 'number')
+                    .attr('disabled', 'true')
+                    .addClass('form-control')
+                )
+                .append(
+                    $(document.createElement('select'))
+                    .attr('name', 'types[]')
+                    .attr('disabled', 'true')
+                    .addClass('form-control')
+                )
+            )
+        )
+    })
 })
 </script>
 @endpush

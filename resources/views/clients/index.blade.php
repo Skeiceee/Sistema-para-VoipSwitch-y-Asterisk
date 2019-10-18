@@ -18,9 +18,7 @@
                             <table id="client" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
-                                        <th>#</th>
                                         <th>Nombre</th>
-                                        <th>Descripción</th>
                                         <th>Creación</th>
                                         <th>Ultima modificación</th>
                                         <th width="10px">Acciones</th>
@@ -60,9 +58,7 @@ $(document).ready(function(){
         language:{ url: SITEURL + 'datatables/spanish' },
         ajax: { url: SITEURL + 'clientes', type: 'GET' },
         columns: [
-            {data: 'id', name: 'id'},
             {data: 'nombre', name: 'name'},
-            {data: 'descripcion', name: 'description'},
             {data: 'creacion', name: 'created_at'},
             {data: 'ult_modificacion', name: 'updated_at'},
             {data: 'action', name: 'action', orderable: false}

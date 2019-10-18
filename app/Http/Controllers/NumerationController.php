@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NumerationStoreRequest;
 use App\Numeration;
 use App\Type;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
 
 class NumerationController extends Controller
 {
@@ -55,8 +57,21 @@ class NumerationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NumerationStoreRequest $request)
     {
+        $start_numbers = $request->start_numbers;
+        $end_numbers = $request->end_numbers;
+        $types = $request->types;
+
+        foreach ($start_numbers as $key => $start_number) {
+            for ($number = $start_number; $number <= $end_numbers[$key]; $number++) { 
+                $numeration = new Numeration();
+                $numeration->number = $number;
+                $numeration->type_id = $types[$key];
+                $numeration->save();
+            }
+        }
+
         return $request;
     }
 

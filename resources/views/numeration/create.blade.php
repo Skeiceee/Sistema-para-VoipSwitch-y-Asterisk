@@ -16,9 +16,6 @@
                         <div class="card-body">
                             <i class="fas fa-stream"></i><span class="font-weight-bold ml-2">Agregar rango numérico</span>
                             <hr>
-                            <div id="errors">
-
-                            </div>
                             <div class="form-group">
                                 <label>Rango numérico</label>
                                 <div class="input-group">
@@ -41,6 +38,16 @@
                     <div class="card mt-3">
                         <div class="card-body">
                             <i class="fas fa-stream"></i><span class="font-weight-bold ml-2">Listado de rangos numéricos</span>
+                            <div id="errors" class="mt-3">
+                                @if($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <span>{{ $errors->first() }}</span>
+                                    </div>
+                                @endif
+                            </div>
                             <hr>
                             <form action="{{ route('numeration.store') }}" method="post">
                                 @csrf

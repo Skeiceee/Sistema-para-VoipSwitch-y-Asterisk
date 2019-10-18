@@ -20,6 +20,7 @@ class CreateNumerationsTable extends Migration
                 ->references('id')->on('types')
                 ->onDelete('cascade');
             $table->string('number', 15);
+            $table->string('status', 1)->default(0);
             $table->timestamps();
         });
     }

@@ -17,7 +17,6 @@
                             <table id="numeration" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
-                                        <th>#</th>
                                         <th>Tipo</th>
                                         <th>Numero</th>
                                         <th>Creación</th>
@@ -59,9 +58,8 @@ $(document).ready(function(){
         language:{ url: SITEURL + 'datatables/spanish' },
         ajax: { url: SITEURL + 'numeracion', type: 'GET' },
         columns: [
-            {data: 'id', name: 'id'},
+            {data: 'tipo_nombre', name: 'types.name'},
             {data: 'numero', name: 'number'},
-            {data: 'tipo_nombre', name: 'name'},
             {data: 'creacion', name: 'created_at'},
             {data: 'ult_modificacion', name: 'updated_at'},
             {data: 'action', name: 'action', orderable: false}

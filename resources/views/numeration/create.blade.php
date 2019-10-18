@@ -59,7 +59,7 @@
                                 <hr>
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary" style="width: 150px">Guardar</button>
-                                    <a href="{{ route('clients.index') }}" class="btn btn-primary" style="width: 150px">Volver</a>
+                                    <a href="{{ route('numeration.index') }}" class="btn btn-primary" style="width: 150px">Volver</a>
                                 </div>
                             </form>
                         </div>

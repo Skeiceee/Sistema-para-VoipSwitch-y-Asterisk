@@ -16,6 +16,24 @@
                             {{ $client->description }}
                         </div>
                     </div>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fas fa-sort-numeric-down"></i><span class="font-weight-bold ml-2">Numeración asignada.</span></div>
+                                <a id="add_numerations" href="{{ route('clients.numerations.add', $client->id) }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar rango de numeración.">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                            <hr>
+                            @forelse ($numerations as $numeration)
+                                dawdwa
+                            @empty
+                                <div class="text-center">
+                                    <span class="text-muted">Este usuario no tiene numeración asignada.</span>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

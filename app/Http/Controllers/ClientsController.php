@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
+use App\Type;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -75,7 +76,8 @@ class ClientsController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
-        return view('clients.show', compact('client'));
+        $numerations = $client->numerations()->get();
+        return view('clients.show', compact('client', 'numerations'));
     }
 
     /**
@@ -118,5 +120,12 @@ class ClientsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function numerations(Request $request, $id)
+    {
+        $client = Client::find($id);
+        $types = Type::all();
+        return view('clients.numerations', compact('types', 'client'));
     }
 }

@@ -13,7 +13,7 @@ class CreateAverageCallsTable extends Migration
      */
     public function up()
     {
-        Schema::create('average_calls', function (Blueprint $table) {
+        Schema::connection('mysql')->create('average_calls', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date');
             $table->bigInteger('avg');
@@ -29,6 +29,6 @@ class CreateAverageCallsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('average_calls');
+        Schema::connection('mysql')->dropIfExists('average_calls');
     }
 }

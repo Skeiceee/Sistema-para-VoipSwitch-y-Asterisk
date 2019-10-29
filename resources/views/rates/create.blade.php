@@ -11,7 +11,7 @@
                     <hr class="my-3">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('clients.store') }}" method="post">
+                            <form action="{{ route('rates.store') }}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label for="ido">Nombre</label>

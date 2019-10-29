@@ -13,9 +13,10 @@ class CreateRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rates', function (Blueprint $table) {
+        Schema::connection('mysql')->create('rates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date');
+            $table->integer('id_port');
             $table->decimal('rate_normal', 12, 4);
             $table->decimal('rate_reduced', 12, 4);
             $table->decimal('rate_night', 12, 4);
@@ -29,6 +30,6 @@ class CreateRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rates');
+        Schema::connection('mysql')->dropIfExists('rates');
     }
 }

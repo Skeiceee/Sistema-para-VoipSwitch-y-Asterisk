@@ -13,7 +13,7 @@ class CreateClientNumerationTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_numeration', function (Blueprint $table) {
+        Schema::connection('mysql')->create('client_numeration', function (Blueprint $table) {
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')
                 ->references('id')->on('clients')
@@ -33,6 +33,6 @@ class CreateClientNumerationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients_numerations');
+        Schema::connection('mysql')->dropIfExists('clients_numerations');
     }
 }

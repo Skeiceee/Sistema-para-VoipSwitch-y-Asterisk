@@ -43,6 +43,11 @@
                                 <a class="nav-link" href="{{ route('numeration.index') }}">Numeración</a>
                             </li>
                         </ul>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('rates.index') }}">Tarifas</a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="d-sm-block d-md-none" style="width: 150px">
                         <div class="text-muted py-1">

@@ -21,18 +21,19 @@
                                     </div>
                                     <hr>
                                     <div id="filter_wrapper" class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input id="date" 
-                                                type="text"
-                                                data-language='es'
-                                                data-min-view="months"
-                                                data-view="months"
-                                                data-date-format="MM - mm/yyyy" 
-                                                class="form-control"
-                                                name="date">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input id="date" 
+                                            type="text"
+                                            data-language='es'
+                                            data-min-view="months"
+                                            data-view="months"
+                                            data-date-format="MM - mm/yyyy" 
+                                            class="form-control"
+                                            name="date"
+                                            autocomplete="off">
                                         </div>
                                     </div>
                                     <canvas id="avgPerHourChart" width="400" height="250"></canvas>

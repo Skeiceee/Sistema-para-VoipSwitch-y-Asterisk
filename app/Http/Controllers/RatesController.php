@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Portador;
 use App\Rate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RatesController extends Controller
@@ -57,7 +58,20 @@ class RatesController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $arr = explode(' - ', $request->date);
+        $date = Carbon::createFromFormat('d/m/Y H:i:s',  '01/'.$arr[1].' 00:00:00');
+        dd($date);
+        $rate = new Rate();
+        
+        $rate->date = Carbon::now();
+        $rate->id_port = $request->ido;
+        $rate->rate_normal = $request->rate_normal;
+        $rate->rate_reduced = $request->rate_reduced;
+        $rate->rate_night = $request->rate_night;
+
+        $rate->save();
+
+        return redirect()->route('rates.create')->with('status', 'Se ha agregado correctamente la tarifa.');
     }
 
     /**

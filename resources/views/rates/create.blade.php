@@ -9,6 +9,7 @@
                         <div><i class="fas fa-money-bill-wave"></i><span class="font-weight-bold ml-2">Agregar nueva tarifa</span></div>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('rates.store') }}" method="post">
@@ -20,6 +21,23 @@
                                             <option value="{{ $portador->id_port }}">{{ $portador->id_port }} - {{ strtoupper($portador->portador) }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Mes</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input id="date" 
+                                        type="text"
+                                        data-language='es'
+                                        data-min-view="months"
+                                        data-view="months"
+                                        data-date-format="MM - mm/yyyy" 
+                                        class="form-control"
+                                        name="date"
+                                        autocomplete="off">
+                                    </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-4">
@@ -53,15 +71,21 @@
 @endsection
 @push('css')
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/chosen.min.js')}}"></script>
+<script src="{{ asset('js/datepicker.min.js') }}"></script>
+<script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
 <script>
 $(document).ready(function(){
     $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
+    $('input[name="date"]').datepicker({
+        todayButton: new Date()
+    })
 })
 </script>
 @endpush

@@ -12,11 +12,15 @@ Route::resource('/consumos', 'RevenuesController', ['only' => ['index','create']
 Route::get('/cargosdeacceso/download/{namefile}', 'AccessChargeController@download')->name('accesscharge.download');
 Route::resource('/cargosdeacceso', 'AccessChargeController')->names(['index' => 'accesscharge.index', 'create' => 'accesscharge.create']);
 
-Route::resource('/tarifas', 'RatesController', ['only' => ['index','create','store']])->names(
+Route::resource('/tarifas', 'RatesController')->names(
     [
         'index' => 'rates.index',
         'create' => 'rates.create',
-        'store' => 'rates.store'
+        'store' => 'rates.store',
+        'edit' => 'rates.edit',
+        'update' => 'rates.update',
+        'show' => 'rates.show',
+        'destroy' => 'rates.destroy'
     ]
 );
 

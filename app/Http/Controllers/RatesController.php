@@ -60,10 +60,9 @@ class RatesController extends Controller
     {
         $arr = explode(' - ', $request->date);
         $date = Carbon::createFromFormat('d/m/Y H:i:s',  '01/'.$arr[1].' 00:00:00');
-        dd($date);
         $rate = new Rate();
         
-        $rate->date = Carbon::now();
+        $rate->date = $date;
         $rate->id_port = $request->ido;
         $rate->rate_normal = $request->rate_normal;
         $rate->rate_reduced = $request->rate_reduced;

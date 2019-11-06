@@ -24,6 +24,7 @@ class RatesController extends Controller
             return datatables()->of(
                 Rate::select(
                     'rates.id',
+                    'rates.id_port',
                     'rates.date',
                     'rates.rate_normal',
                     'rates.rate_reduced',
@@ -36,7 +37,9 @@ class RatesController extends Controller
             ->make(true);
         }
 
-        return view('rates.index');
+        $portadores = Portador::select('id_port', 'portador')->get();
+
+        return view('rates.index', compact('portadores'));
     }
 
     /**
@@ -60,6 +63,7 @@ class RatesController extends Controller
     {
         $arr = explode(' - ', $request->date);
         $date = Carbon::createFromFormat('d/m/Y H:i:s',  '01/'.$arr[1].' 00:00:00');
+
         $rate = new Rate();
         
         $rate->date = $date;

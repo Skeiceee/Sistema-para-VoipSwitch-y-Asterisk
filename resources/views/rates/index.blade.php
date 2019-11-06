@@ -12,6 +12,14 @@
                         </a>
                     </div>
                     <hr class="my-3">
+                    <div class="mb-3"><i class="fas fa-search"></i><span class="font-weight-bold ml-2">Buscar tarifas por el portador</span></div>
+                    <div class="form-group">
+                        <select name="ido" class="form-control form-control-chosen">
+                            @foreach ($portadores as $portador)
+                                <option value="{{ $portador->id_port }}">{{ $portador->id_port }} - {{ strtoupper($portador->portador) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     @include('common.status')
                     <div class="card">
                         <div class="table-responsive card-body">
@@ -35,17 +43,20 @@
 </div>
 @endsection
 @push('css')
+<link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chosen.min.js')}}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script> 
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
+    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

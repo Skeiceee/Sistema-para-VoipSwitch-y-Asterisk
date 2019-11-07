@@ -21,6 +21,7 @@ class RatesController extends Controller
     public function index()
     {
         if(request()->ajax()){
+            $ido = (int) request()->ido;
             return datatables()->of(
                 Rate::select(
                     'rates.id',
@@ -29,7 +30,7 @@ class RatesController extends Controller
                     'rates.rate_normal',
                     'rates.rate_reduced',
                     'rates.rate_night'
-                )
+                )->where('id_port', $ido)
             )
             ->addColumn('action', 'actions.rates')
             ->rawColumns(['action'])

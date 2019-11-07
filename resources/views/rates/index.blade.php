@@ -68,7 +68,7 @@ $(document).ready(function(){
         serverSide: true,
         scrollX: true,
         language:{ url: SITEURL + 'datatables/spanish' },
-        ajax: { url: SITEURL + 'tarifas', type: 'GET' },
+        ajax: { url: SITEURL + 'tarifas?ido='+$('select[name="ido"]').val(), type: 'GET' },
         columns: [
             {data: 'date', name: 'rates.date'},
             {data: 'rate_normal', name: 'rates.rate_normal'},
@@ -76,6 +76,10 @@ $(document).ready(function(){
             {data: 'rate_night', name: 'rates.rate_night'},
             {data: 'action', name: 'action', orderable: false}
         ]
+    })
+
+    $('select[name="ido"]').change(function(){
+        ratesTable.ajax.url(SITEURL+'tarifas?ido='+$(this).val()).load()
     })
 })
 let addRate = $('#add_rate');

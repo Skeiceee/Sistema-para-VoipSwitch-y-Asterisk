@@ -15,7 +15,8 @@ class CreateRatesTable extends Migration
     {
         Schema::connection('mysql')->create('rates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->dateTime('date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->integer('id_port');
             $table->decimal('rate_normal', 12, 4);
             $table->decimal('rate_reduced', 12, 4);

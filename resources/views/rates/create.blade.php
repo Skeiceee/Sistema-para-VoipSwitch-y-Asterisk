@@ -23,21 +23,9 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Mes</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
-                                        </div>
-                                        <input id="date" 
-                                        type="text"
-                                        data-language='es'
-                                        data-min-view="months"
-                                        data-view="months"
-                                        data-date-format="MM - mm/yyyy" 
-                                        class="form-control"
-                                        name="date"
-                                        autocomplete="off">
-                                    </div>
+                                    <label for="range_date">Rango de fechas</label>
+                                    <input id="range_date" type="text" data-language='es' data-multiple-dates-separator=" al " data-date-format="dd/mm/yyyy" class="form-control" name="date" autocomplete="off">
+                                    <span class="invalid-feedback" role="alert">Porfavor, complete el rango de fechas.</span>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-4">
@@ -83,8 +71,10 @@
 <script>
 $(document).ready(function(){
     $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
-    $('input[name="date"]').datepicker({
-        todayButton: new Date()
+    $('#range_date').datepicker({
+        todayButton: new Date(), 
+        range: true, 
+        toggleSelected: false
     })
 })
 </script>

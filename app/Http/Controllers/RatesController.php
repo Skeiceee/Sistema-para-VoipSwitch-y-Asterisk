@@ -26,7 +26,8 @@ class RatesController extends Controller
                 Rate::select(
                     'rates.id',
                     'rates.id_port',
-                    'rates.date',
+                    'rates.start_date',
+                    'rates.end_date',
                     'rates.rate_normal',
                     'rates.rate_reduced',
                     'rates.rate_night'
@@ -62,12 +63,15 @@ class RatesController extends Controller
      */
     public function store(Request $request)
     {
-        $arr = explode(' - ', $request->date);
-        $date = Carbon::createFromFormat('d/m/Y H:i:s',  '01/'.$arr[1].' 00:00:00');
-
+        $arr = explode(' al ', $request->date);
+        
+        $start_date = Carbon::createFromFormat('d/m/Y H:i:s', $arr[0].' 00:00:00');
+        $end_date = Carbon::createFromFormat('d/m/Y H:i:s', $arr[1].' 23:59:59');
+        
         $rate = new Rate();
         
-        $rate->date = $date;
+        $rate->start_date = $start_date;
+        $rate->end_date = $end_date;
         $rate->id_port = $request->ido;
         $rate->rate_normal = $request->rate_normal;
         $rate->rate_reduced = $request->rate_reduced;

@@ -20,13 +20,25 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                            <input id="month" 
+                            type="text"
+                            data-language='es'
+                            data-min-view="months"
+                            data-view="months"
+                            data-date-format="MM - mm/yyyy" 
+                            class="form-control"
+                            name="month"
+                            autocomplete="off">
+                    </div>
                     @include('common.status')
                     <div class="card">
                         <div class="table-responsive card-body">
                             <table id="rates" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
-                                        <th>Fecha</th>
+                                        <th>Fecha de inicio</th>
+                                        <th>Fecha de termino</th>
                                         <th>Tarifa Normal</th>
                                         <th>Tarifa Reducido</th>
                                         <th>Tarifa Nocturno</th>
@@ -44,6 +56,7 @@
 @endsection
 @push('css')
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
@@ -51,6 +64,8 @@
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/chosen.min.js')}}"></script>
+<script src="{{ asset('js/datepicker.min.js') }}"></script>
+<script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script> 
@@ -70,13 +85,18 @@ $(document).ready(function(){
         language:{ url: SITEURL + 'datatables/spanish' },
         ajax: { url: SITEURL + 'tarifas?ido='+$('select[name="ido"]').val(), type: 'GET' },
         columns: [
-            {data: 'date', name: 'rates.date'},
+            {data: 'start_date', name: 'rates.start_date'},
+            {data: 'end_date', name: 'rates.end_date'},
             {data: 'rate_normal', name: 'rates.rate_normal'},
             {data: 'rate_reduced', name: 'rates.rate_reduced'},
             {data: 'rate_night', name: 'rates.rate_night'},
             {data: 'action', name: 'action', orderable: false}
         ]
     })
+
+    $('input[name="month"]').datepicker({
+        todayButton: new Date()
+    }).data('datepicker').selectDate(new Date());
 
     $('select[name="ido"]').change(function(){
         ratesTable.ajax.url(SITEURL+'tarifas?ido='+$(this).val()).load()

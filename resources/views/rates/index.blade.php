@@ -106,13 +106,13 @@ $(document).ready(function(){
             if(typeof date === 'object' && date !== null){
                 month = date.getMonth() + 1
                 year = date.getFullYear()
+                ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
             }else{
                 dateNow = new Date()
                 month = dateNow.getMonth() + 1
                 year = dateNow.getFullYear()
-                $('input[name="month"]').data('datepicker').selectDate(dateNow)
+                $('input[name="month"]').data('datepicker').selectDate(dateNow) // Hace una llamada a onSelect.
             }
-            ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
         }
     });
 

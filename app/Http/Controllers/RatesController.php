@@ -6,6 +6,7 @@ use App\Portador;
 use App\Rate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RatesController extends Controller
 {
@@ -22,6 +23,14 @@ class RatesController extends Controller
     {
         if(request()->ajax()){
             $ido = (int) request()->ido;
+            $year = (int) request()->year;
+            $month = (int) request()->month;
+
+            $strDate = $year.'-'.$month.'-01 00:00:00';
+            
+            $date_start = Carbon::createFromFormat('Y-m-d H:i:s', $strDate, 'America/Santiago');
+            $date_end = (Carbon::createFromFormat('Y-m-d H:i:s', $strDate, 'America/Santiago'))->endOfMonth();
+
             return datatables()->of(
                 Rate::select(
                     'rates.id',
@@ -31,7 +40,15 @@ class RatesController extends Controller
                     'rates.rate_normal',
                     'rates.rate_reduced',
                     'rates.rate_night'
-                )->where('id_port', $ido)
+                )
+                ->where('id_port', $ido)
+                ->whereBetween(
+                    'start_date',
+                    [
+                        DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
+                    ]
+                )
             )
             ->addColumn('action', 'actions.rates')
             ->rawColumns(['action'])

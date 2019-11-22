@@ -101,19 +101,18 @@ $(document).ready(function(){
     let dp = $('input[name="month"]').datepicker({
         todayButton: new Date(),
         onSelect: function(fd, date){
+            let month, year
+            let ido = $('select[name="ido"]').val()
             if(typeof date === 'object' && date !== null){
-                let ido = $('select[name="ido"]').val()
-                let month = date.getMonth() + 1
-                let year = date.getFullYear()
-                ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
+                month = date.getMonth() + 1
+                year = date.getFullYear()
             }else{
                 dateNow = new Date()
-                let ido = $('select[name="ido"]').val()
-                let month = dateNow.getMonth() + 1
-                let year = dateNow.getFullYear()
+                month = dateNow.getMonth() + 1
+                year = dateNow.getFullYear()
                 $('input[name="month"]').data('datepicker').selectDate(dateNow)
-                ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
             }
+            ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
         }
     });
 

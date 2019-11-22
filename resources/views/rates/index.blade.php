@@ -94,12 +94,34 @@ $(document).ready(function(){
         ]
     })
 
-    $('input[name="month"]').datepicker({
-        todayButton: new Date()
-    }).data('datepicker').selectDate(new Date());
+    function ratesPerMonthAndIDO(param){
+        ratesTable.ajax.url(param.url).load()
+    }
+
+    let dp = $('input[name="month"]').datepicker({
+        todayButton: new Date(),
+        onSelect: function(fd, date){
+            if(typeof date === 'object' && date !== null){
+                let ido = $('select[name="ido"]').val()
+                let month = date.getMonth() + 1
+                let year = date.getFullYear()
+                ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
+            }else{
+                dateNow = new Date()
+                let ido = $('select[name="ido"]').val()
+                let month = dateNow.getMonth() + 1
+                let year = dateNow.getFullYear()
+                $('input[name="month"]').data('datepicker').selectDate(dateNow)
+                ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
+            }
+        }
+    });
+
+    dp.data('datepicker').selectDate(new Date())
 
     $('select[name="ido"]').change(function(){
-        ratesTable.ajax.url(SITEURL+'tarifas?ido='+$(this).val()).load()
+        let ido = $(this).val()
+        ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido})
     })
 })
 let addRate = $('#add_rate');

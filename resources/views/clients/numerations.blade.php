@@ -24,15 +24,6 @@
                                     <span class="invalid-feedback">Debe ingresar los dos rangos numéricos.</span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="type">Tipo de rango numérico</label>
-                                <select id="type" class="form-control">
-                                    @foreach ($types as $type)
-                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="invalid-feedback">El campo tipo de rango numérico es obligatorio.</span>
-                            </div>
                         </div>
                     </div>
                     <div class="card mt-3">
@@ -94,7 +85,7 @@ $(document).ready(function(){
         startNumber.removeClass('is-invalid')
         endNumber.removeClass('is-invalid')
         select.removeClass('is-invalid')
-        if(startNumber.val()!='' && endNumber.val()!='' && select.val()!='' && option.text()!=''){
+        if(startNumber.val()!='' && endNumber.val()!=''){
             $('#range_wrapper')
             .append(
                 $(document.createElement('div'))
@@ -124,15 +115,6 @@ $(document).ready(function(){
                         .val(endNumber.val())
                     )
                     .append(
-                        $(document.createElement('select'))
-                        .attr('name', 'types[]')
-                        .attr('readonly', 'true')
-                        .addClass('form-control')
-                        .append(
-                            new Option(option.text(), select.val())
-                        )
-                    )
-                    .append(
                         $(document.createElement('div'))
                         .addClass('input-group-append')
                         .append(
@@ -154,9 +136,6 @@ $(document).ready(function(){
             }
             if(endNumber.val()==''){
                 endNumber.addClass('is-invalid')
-            }
-            if(select.val()==null || select.val()==''){
-                select.addClass('is-invalid')
             }
         }
     })

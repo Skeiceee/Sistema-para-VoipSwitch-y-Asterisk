@@ -4,8 +4,10 @@
 
 * Dashboard
     * Se muestran llamadas activas con grafico.
+<<<<<<< HEAD
     * Se muestran llamadas procesadas con grafico.
     * Se muestran llamadas cursadas solo por movistar.
+>>>>>>> 5a84a428f995e84b14feb73d3ce287e6f7c9a742
     
 * Trafico
     * Se muestra el promedio de llamadas activas por hora en un grafico.

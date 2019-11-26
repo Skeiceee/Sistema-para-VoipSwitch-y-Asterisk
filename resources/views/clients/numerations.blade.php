@@ -80,11 +80,8 @@ $(document).ready(function(){
     $('#add_range').click(function(){
         let startNumber = $('#start_number')
         let endNumber = $('#end_number')
-        let select = $('#type')
-        let option = $('#type option:selected')
         startNumber.removeClass('is-invalid')
         endNumber.removeClass('is-invalid')
-        select.removeClass('is-invalid')
         if(startNumber.val()!='' && endNumber.val()!=''){
             $('#range_wrapper')
             .append(

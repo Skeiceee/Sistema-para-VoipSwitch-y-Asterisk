@@ -40,7 +40,8 @@ Route::resource('/numeracion', 'NumerationController')->names(
     [
         'index' => 'numeration.index',
         'create' => 'numeration.create',
-        'store' => 'numeration.store'
+        'store' => 'numeration.store',
+        'destroy' => 'numeration.destroy'
     ]
 );
 

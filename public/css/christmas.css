@@ -1,0 +1,9 @@
+.card .helper {
+    background: url("../img/hat-christmas.png") no-repeat transparent;
+    position: absolute;
+    right: -15px;
+    top: -10px;
+    z-index: 5;
+    width: 50px;
+    height: 55px;
+ }

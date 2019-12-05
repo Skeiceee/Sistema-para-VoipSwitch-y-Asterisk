@@ -25,6 +25,7 @@ Route::resource('/tarifas', 'RatesController')->names(
 );
 
 Route::get('/clientes/numeracion/{cliente}', 'ClientsController@numerations')->name('clients.numerations.add');
+Route::post('/clientes/numeracion/{cliente}', 'ClientsController@saveNumerations')->name('clients.numerations.save');
 Route::resource('/clientes', 'ClientsController')->names(
     [
         'index' => 'clients.index',

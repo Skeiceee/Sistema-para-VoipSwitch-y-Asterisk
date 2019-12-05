@@ -7,14 +7,16 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-sort-numeric-down"></i><span class="font-weight-bold ml-2">Agregar nueva numeración a {{ $client->name }}</span></div>
-                        <a href="javascript:void(0);" id="add_range" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo rango numérico.">
-                            <i class="fas fa-plus"></i>
-                        </a>
                     </div>
                     <hr class="my-3">
                     <div class="card">
                         <div class="card-body">
-                            <i class="fas fa-stream"></i><span class="font-weight-bold ml-2">Agregar rango numérico</span>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fas fa-stream"></i><span class="font-weight-bold ml-2">Agregar rango numérico</span></div>
+                                <a href="javascript:void(0);" id="add_range" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo rango numérico.">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
                             <hr>
                             <div class="form-group">
                                 <label>Rango numérico</label>
@@ -40,7 +42,7 @@
                                 @endif
                             </div>
                             <hr>
-                            <form action="" method="post">
+                            <form action="{{ route('clients.numerations.save', $client->id) }}" method="post">
                                 @csrf
                                 <div id="range_wrapper">
                                     <div id="empty" class="text-center">
@@ -49,7 +51,7 @@
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-primary" style="width: 150px">Guardar</button>
+                                    <button id="btnSave" type="submit" class="btn btn-primary" style="width: 150px">Guardar</button>
                                     <a href="{{ route('clients.show', $client->id) }}" class="btn btn-primary" style="width: 150px">Volver</a>
                                 </div>
                             </form>

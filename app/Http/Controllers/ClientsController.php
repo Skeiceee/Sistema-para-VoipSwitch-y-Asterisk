@@ -128,4 +128,9 @@ class ClientsController extends Controller
         $types = Type::all();
         return view('clients.numerations', compact('types', 'client'));
     }
+
+    public function saveNumerations(Request $request, $id)
+    {
+        return $request;
+    }
 }

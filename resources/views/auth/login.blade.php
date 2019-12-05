@@ -4,6 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                {{-- <span class="helper"></span> --}}
                 <div class="card-body">
                     <i class="fas fa-sign-in-alt"></i><span class="font-weight-bold ml-2">Iniciar sesión</span>
                     <hr class="my-3">
@@ -51,6 +52,9 @@
     </div>
 </div>
 @endsection
+@push('css')
+{{-- <link href="{{ asset('css/christmas.css') }}" rel="stylesheet"> --}}
+@endpush
 @push('scripts')
 <footer class="text-center mt-4">
     <span class="text-muted">Copyright &copy; 2019 - Vozdigital</span>

@@ -131,6 +131,7 @@ class ClientsController extends Controller
 
     public function saveNumerations(Request $request, $id)
     {
+        dd($request, $id);
         return $request;
     }
 }

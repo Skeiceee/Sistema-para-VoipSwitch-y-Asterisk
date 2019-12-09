@@ -12,6 +12,7 @@
                         </a>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div class="card">
                         <div class="table-responsive card-body">
                             <table id="numeration" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">

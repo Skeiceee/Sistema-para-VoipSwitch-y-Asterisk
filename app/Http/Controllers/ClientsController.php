@@ -119,7 +119,7 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //  
     }
 
     public function numerations(Request $request, $id)

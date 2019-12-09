@@ -6,7 +6,6 @@ use App\Http\Requests\NumerationStoreRequest;
 use App\Numeration;
 use App\Type;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Foreach_;
 
 class NumerationController extends Controller
 {
@@ -117,6 +116,8 @@ class NumerationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $numeration = Numeration::find($id);
+        $numeration->delete();
+        return redirect()->route('numeration.index')->with('status','Se ha eliminado el numero exitosamente.');
     }
 }

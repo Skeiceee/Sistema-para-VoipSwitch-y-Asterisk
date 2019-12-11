@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Http\Requests\ClientSaveNumerationsRequest;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
+use App\Numeration;
 use App\Type;
 use Illuminate\Http\Request;
 
@@ -129,9 +131,27 @@ class ClientsController extends Controller
         return view('clients.numerations', compact('types', 'client'));
     }
 
-    public function saveNumerations(Request $request, $id)
+    public function saveNumerations(ClientSaveNumerationsRequest $request, $id)
     {
-        dd($request, $id);
+        $start_numbers = $request->start_numbers;
+        $end_numbers = $request->end_numbers;
+        dd($start_numbers, $end_numbers);
+        foreach ($start_numbers as $key => $start_number) {
+            $end_number = $end_numbers[$key];
+            for ($number = $start_number; $number <= $end_number; $number++) {
+                $numeration = Numeration::where('number', $number)->first();
+
+                if($numeration->status == 0){
+
+                }else{
+                    return redirect()->route('clients.numerations.add')->with('status', 'El ');
+                }
+                dd($numeration);
+                echo '<span>'.$number.'</span></br>';
+            }
+            echo '<span>-----------------------------------------------</span></br>';
+        }
+        dd();
         return $request;
     }
 }

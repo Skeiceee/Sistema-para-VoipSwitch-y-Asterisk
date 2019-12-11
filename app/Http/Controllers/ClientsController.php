@@ -133,25 +133,30 @@ class ClientsController extends Controller
 
     public function saveNumerations(ClientSaveNumerationsRequest $request, $id)
     {
+        
+        $client = Client::find($id);
+
         $start_numbers = $request->start_numbers;
         $end_numbers = $request->end_numbers;
-        dd($start_numbers, $end_numbers);
+
+
         foreach ($start_numbers as $key => $start_number) {
             $end_number = $end_numbers[$key];
             for ($number = $start_number; $number <= $end_number; $number++) {
                 $numeration = Numeration::where('number', $number)->first();
 
                 if($numeration->status == 0){
+                    $client->numerations()->save($numeration);
 
+                    $numeration->status = 1;
+                    $numeration->save();
                 }else{
-                    return redirect()->route('clients.numerations.add')->with('status', 'El ');
+                    return redirect()->route('clients.numerations.add', $client->id)->with('status', 'Algo fallo :(');
                 }
-                dd($numeration);
-                echo '<span>'.$number.'</span></br>';
             }
-            echo '<span>-----------------------------------------------</span></br>';
         }
-        dd();
-        return $request;
+
+        $status = 'Los números han sigo agregados con exitosamente.';
+        return redirect()->route('clients.numerations.add', $client->id)->with(compact('status'));
     }
 }

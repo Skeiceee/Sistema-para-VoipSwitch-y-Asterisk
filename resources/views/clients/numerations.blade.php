@@ -9,6 +9,7 @@
                         <div><i class="fas fa-sort-numeric-down"></i><span class="font-weight-bold ml-2">Agregar nueva numeración a {{ $client->name }}</span></div>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">

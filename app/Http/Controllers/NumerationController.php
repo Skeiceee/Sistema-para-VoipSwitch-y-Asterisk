@@ -71,7 +71,7 @@ class NumerationController extends Controller
             }
         }
 
-        return $request;
+        return redirect()->route('numeration.index')->with('status','Se han agregado los numeros exitosamente.');
     }
 
     /**

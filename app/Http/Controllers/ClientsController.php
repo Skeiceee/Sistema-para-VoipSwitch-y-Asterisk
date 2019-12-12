@@ -139,9 +139,9 @@ class ClientsController extends Controller
         $start_numbers = $request->start_numbers;
         $end_numbers = $request->end_numbers;
 
-
         foreach ($start_numbers as $key => $start_number) {
             $end_number = $end_numbers[$key];
+            
             for ($number = $start_number; $number <= $end_number; $number++) {
                 $numeration = Numeration::where('number', $number)->first();
 

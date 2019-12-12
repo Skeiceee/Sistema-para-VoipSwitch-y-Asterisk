@@ -26,7 +26,7 @@
                             </div>
                             <hr>
                             @forelse ($numerations as $numeration)
-                                dawdwa
+                                {{ $numeration->number }}
                             @empty
                                 <div class="text-center">
                                     <span class="text-muted">Este usuario no tiene numeración asignada.</span>

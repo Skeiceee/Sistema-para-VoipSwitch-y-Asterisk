@@ -78,29 +78,8 @@ class ClientsController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
-        
-        $numerations = $client->numerations()->get();
-        $numerations = $numerations->sortBy('number');
 
-        if($numerations->count() != 0){
-            $intervals = [];
-            $intervalIndex = 0;
-
-            foreach ($numerations as $key => $numeration) {
-                if(!isset($intervals[$intervalIndex][0])){
-                    $intervals[$intervalIndex][] = $numeration->number;
-                }
-
-                if($key != 0){
-                    if($numeration->number == ($numerations[$key - 1]->number + 1)){
-                        $intervals[$intervalIndex][1] = $numeration->number;
-                    }else{
-                        $intervalIndex++;
-                        $intervals[$intervalIndex][0] = $numeration->number;
-                    }
-                }
-            }
-        }
+        $intervals = $client->intervals();
 
         return view('clients.show', compact('client', 'intervals'));
     }
@@ -185,6 +164,21 @@ class ClientsController extends Controller
 
     public function deleteNumerations(Request $request, $id)
     {
-        return $request;
+        $client = Client::find($id);
+
+        $start_range = $request->start_range;
+        $end_range = $request->end_range;
+
+        for ($i = $start_range; $i <= $end_range; $i++) {
+            $numeration = Numeration::where('number', $i)->first();
+            $numeration->status = 0;
+
+            $numeration->save();
+            $client->numerations()->detach($numeration->id);
+        }
+
+        $intervals = $client->intervals();
+        $status = 'Se ha eliminado el rango de numeración del '.$start_range.' al '.$end_range.' exitosamente.';
+        return redirect()->route('clients.show', $client->id)->with(compact('status', 'intervals'));
     }
 }

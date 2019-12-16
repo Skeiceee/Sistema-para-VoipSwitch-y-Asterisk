@@ -9,6 +9,7 @@
                         <div><i class="fas fa-user"></i><span class="font-weight-bold ml-2">{{ $client->name }}</span></div>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div class="card">
                         <div class="card-body">
                             <span class="font-weight-bold">Descripción</span>

@@ -117,7 +117,12 @@ class NumerationController extends Controller
     public function destroy($id)
     {
         $numeration = Numeration::find($id);
-        $numeration->delete();
-        return redirect()->route('numeration.index')->with('status','Se ha eliminado el numero exitosamente.');
+        
+        if($numeration->status == 0){
+            $numeration->delete();
+            return redirect()->route('numeration.index')->with('status','Se ha eliminado el numero exitosamente.');
+        }else{
+            return redirect()->route('numeration.index')->with('error','No se ha eliminado, el numero se encuentra ocupado por un cliente.');
+        }
     }
 }

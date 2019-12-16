@@ -25,8 +25,16 @@
                                 </a>
                             </div>
                             <hr>
-                            @forelse ($numerations as $numeration)
-                                {{ $numeration->number }}
+                            @forelse ($intervals as $interval)
+                                <form action="" method="post" class="mt-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="{{ $interval[0] }}" readonly>
+                                        <input type="text" class="form-control" value="{{ (isset($interval[1])) ? $interval[1] : $interval[0] }}" readonly>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-danger"><li class="fas fa-times"></li></button>
+                                        </div>
+                                    </div>
+                                </form>
                             @empty
                                 <div class="text-center">
                                     <span class="text-muted">Este usuario no tiene numeración asignada.</span>

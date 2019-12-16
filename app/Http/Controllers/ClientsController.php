@@ -78,8 +78,31 @@ class ClientsController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
+        
         $numerations = $client->numerations()->get();
-        return view('clients.show', compact('client', 'numerations'));
+        $numerations = $numerations->sortBy('number');
+
+        if($numerations->count() != 0){
+            $intervals = [];
+            $intervalIndex = 0;
+
+            foreach ($numerations as $key => $numeration) {
+                if(!isset($intervals[$intervalIndex][0])){
+                    $intervals[$intervalIndex][] = $numeration->number;
+                }
+
+                if($key != 0){
+                    if($numeration->number == ($numerations[$key - 1]->number + 1)){
+                        $intervals[$intervalIndex][1] = $numeration->number;
+                    }else{
+                        $intervalIndex++;
+                        $intervals[$intervalIndex][0] = $numeration->number;
+                    }
+                }
+            }
+        }
+
+        return view('clients.show', compact('client', 'intervals'));
     }
 
     /**
@@ -158,5 +181,10 @@ class ClientsController extends Controller
 
         $status = 'Los números han sigo agregados con exitosamente.';
         return redirect()->route('clients.numerations.add', $client->id)->with(compact('status'));
+    }
+
+    public function deleteNumerations($request, $id)
+    {
+        return $request;
     }
 }

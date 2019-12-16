@@ -183,7 +183,7 @@ class ClientsController extends Controller
         return redirect()->route('clients.numerations.add', $client->id)->with(compact('status'));
     }
 
-    public function deleteNumerations($request, $id)
+    public function deleteNumerations(Request $request, $id)
     {
         return $request;
     }

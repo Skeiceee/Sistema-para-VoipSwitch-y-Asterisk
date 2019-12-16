@@ -26,10 +26,12 @@
                             </div>
                             <hr>
                             @forelse ($intervals as $interval)
-                                <form action="" method="post" class="mt-3">
+                                <form action="{{ route('clients.numerations.delete', $client->id) }}" method="post" class="mt-3">
+                                    @csrf
+                                    @method('DELETE')
                                     <div class="input-group">
-                                        <input type="text" class="form-control" value="{{ $interval[0] }}" readonly>
-                                        <input type="text" class="form-control" value="{{ (isset($interval[1])) ? $interval[1] : $interval[0] }}" readonly>
+                                        <input name="start_range" type="text" class="form-control" value="{{ $interval[0] }}" readonly>
+                                        <input name="end_range" type="text" class="form-control" value="{{ (isset($interval[1])) ? $interval[1] : $interval[0] }}" readonly>
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-danger"><li class="fas fa-times"></li></button>
                                         </div>

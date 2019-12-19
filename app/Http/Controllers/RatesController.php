@@ -118,7 +118,8 @@ class RatesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $rate = Rate::find($id);
+        return view('rates.edit', compact('rate'));
     }
 
     /**
@@ -130,7 +131,14 @@ class RatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rate = Rate::find($id);
+
+        $rate->rate_normal = $request->rate_normal;
+        $rate->rate_reduced = $request->rate_reduced;
+        $rate->rate_night = $request->rate_night;
+
+        $rate->save();
+        return redirect()->route('rates.index')->with('status', 'Se ha modificado correctamente la tarifa.');
     }
 
     /**

@@ -212,7 +212,7 @@ class Kernel extends ConsoleKernel
                     ]
                 )
                 ->where('c.client_type', '=' , DB::raw('i.Type'))
-                ->whereRaw('(id_client != 1 AND client_type != 32)')
+                ->whereRaw('(id_client != 1)')
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
@@ -284,7 +284,7 @@ class Kernel extends ConsoleKernel
             $revenue->save();
 
         })->dailyAt('05:00')->timezone('America/Santiago');
-
+            
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {
             $startYesterday = Carbon::yesterday()->toDateTimeString();

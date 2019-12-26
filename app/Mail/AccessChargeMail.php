@@ -11,14 +11,15 @@ class AccessChargeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -28,6 +29,11 @@ class AccessChargeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+
+        return $this->from('noreply@capa1.cl')
+                    ->to($this->data['to'])
+                    ->subject($this->data['subject'])
+                    ->attachFromStorage('/revenues/'.$this->data['file_date'].'.xlsx')
+                    ->view('mails.accesscharge');
     }
 }

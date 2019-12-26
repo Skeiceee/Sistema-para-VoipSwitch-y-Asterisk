@@ -317,6 +317,8 @@ class Kernel extends ConsoleKernel
             DB::connection('mysql')->table('average_calls')->insert($toInsert);
 
         })->dailyAt('05:00')->timezone('America/Santiago');
+
+        $schedule->command('email:accesscharge')->dailyAt('08:00')->timezone('America/Santiago');
     }
 
     /**

@@ -53,3 +53,5 @@ Route::post('/configuracion/guardar', 'ConfigurationController@save')->name('con
 Route::get('/trafico', 'ReportsController@index')->name('traffic.index');
 Route::post('/trafico/avg/hr/calls', 'ReportsController@avgperhrcalls')->name('reports.avgperhrcalls');
 Route::post('/trafico/processed/calls', 'ReportsController@processedcalls')->name('reports.processedcalls');
+
+Route::get('/procedimientos', 'ProceduresController@index')->name('procedures.index');

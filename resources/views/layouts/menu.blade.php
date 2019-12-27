@@ -49,6 +49,14 @@
                             </li>
                         </ul>
                     </div>
+                    <div style="width: 150px">
+                        <div class="text-muted py-1">
+                            <i class="fas fa-folder"></i><span class="ml-2 font-weight-bold">Documentación</span>
+                        </div>
+                        <ul class="nav flex-column">
+                            <a class="nav-link" href="{{ route('procedures.index') }}">Procedimientos</a>
+                        </ul>
+                    </div>
                     <div class="d-sm-block d-md-none" style="width: 150px">
                         <div class="text-muted py-1">
                             <i class="fas fa-user"></i><span class="ml-2 font-weight-bold">Cuenta</span>

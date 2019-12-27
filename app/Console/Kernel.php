@@ -33,50 +33,46 @@ class Kernel extends ConsoleKernel
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
             ];
-            $spreadsheet->getActiveSheet()->getStyle('A:I')->getAlignment()->applyFromArray($center);
+            $spreadsheet->getActiveSheet()->getStyle('A:G')->getAlignment()->applyFromArray($center);
         }else{
             $pos++;
         }
 
         $sheet->setCellValue('A'.$pos, $title);
-        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':I'.$pos);
+        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':G'.$pos);
         $styleArray = array(
             'font'  => array(
                 'color' => array('rgb' => 'FFFFFF'),
                 'bold' => true
         ));
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');  
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');  
 
         $pos++;
         $sheet->setCellValue('A'.$pos, 'Cliente');
         $sheet->setCellValue('B'.$pos, 'Minutos reales');
-        $sheet->setCellValue('C'.$pos, 'Segundos reales');
-        $sheet->setCellValue('D'.$pos, 'Segundos reales totales');
-        $sheet->setCellValue('E'.$pos, 'Minutos efectivos');
-        $sheet->setCellValue('F'.$pos, 'Segundos efectivos');
-        $sheet->setCellValue('G'.$pos, 'Segundos efectivos totales');
-        $sheet->setCellValue('H'.$pos, 'Venta');
-        $sheet->setCellValue('I'.$pos, 'Costo');
+        $sheet->setCellValue('C'.$pos, 'Segundos reales totales');
+        $sheet->setCellValue('D'.$pos, 'Minutos efectivos');
+        $sheet->setCellValue('E'.$pos, 'Segundos efectivos totales');
+        $sheet->setCellValue('F'.$pos, 'Venta');
+        $sheet->setCellValue('G'.$pos, 'Costo');
 
         $pos++;
         foreach ($revenues as $offset => $revenue) {
             $sheet->setCellValue('A'.$pos, $revenue->customer);
             $sheet->setCellValue('B'.$pos, $revenue->minutes_real);
-            $sheet->setCellValue('C'.$pos, $revenue->seconds_real);
-            $sheet->setCellValue('D'.$pos, $revenue->seconds_real_total);
-            $sheet->setCellValue('E'.$pos, $revenue->minutes_effective);
-            $sheet->setCellValue('F'.$pos, $revenue->seconds_effective);
-            $sheet->setCellValue('G'.$pos, $revenue->seconds_effective_total);
-            $sheet->setCellValue('H'.$pos, $revenue->sale);
-            $sheet->setCellValue('I'.$pos, $revenue->cost);
+            $sheet->setCellValue('C'.$pos, $revenue->seconds_real_total);
+            $sheet->setCellValue('D'.$pos, $revenue->minutes_effective);
+            $sheet->setCellValue('E'.$pos, $revenue->seconds_effective_total);
+            $sheet->setCellValue('F'.$pos, $revenue->sale);
+            $sheet->setCellValue('G'.$pos, $revenue->cost);
             if($pos % 2 != 0){
-                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f2f2f2');   
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f2f2f2');   
             }
             $pos++;
         }
         
-        foreach (range('A', 'I') as $column) {
+        foreach (range('A', 'G') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
 
@@ -88,8 +84,8 @@ class Kernel extends ConsoleKernel
                 'color' => array('rgb' => 'FFFFFF'),
                 'bold' => true
         ));
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':I'.$posHeader)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':I'.$posHeader)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':G'.$posHeader)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':G'.$posHeader)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
         
         $styleArray = [
             'borders' => [
@@ -100,11 +96,11 @@ class Kernel extends ConsoleKernel
             ],
         ];
 
-        foreach (range('A', 'I') as $column) {
+        foreach (range('A', 'G') as $column) {
             $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.$pos)->applyFromArray($styleArray);
         }
         
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
         $sheet->setCellValue('A'.$pos, 'Total');
 
         $styleArray = array(
@@ -114,16 +110,16 @@ class Kernel extends ConsoleKernel
             )
         );
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':I'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f79646');  
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f79646');  
         
         $spreadsheet->getActiveSheet()
-            ->getStyle('B'.$posFirstRevenue.':G'.$pos)
+            ->getStyle('B'.$posFirstRevenue.':E'.$pos)
             ->getNumberFormat()
             ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
 
         $spreadsheet->getActiveSheet()
-            ->getStyle('H'.$posFirstRevenue.':I'.$pos)
+            ->getStyle('F'.$posFirstRevenue.':G'.$pos)
             ->getNumberFormat()
             ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
         
@@ -133,11 +129,11 @@ class Kernel extends ConsoleKernel
         ];
 
         $spreadsheet->getActiveSheet()
-            ->getStyle('B'.$posFirstRevenue.':I'.$pos)
+            ->getStyle('B'.$posFirstRevenue.':G'.$pos)
             ->getAlignment()
             ->applyFromArray($styleArray);
 
-        foreach (range('B', 'I') as $column) {
+        foreach (range('B', 'G') as $column) {
             $sheet->setCellValue($column.$pos, '=SUM('.$column.$posFirstRevenue.':'.$column.($pos-1).')');
         }
 
@@ -150,11 +146,9 @@ class Kernel extends ConsoleKernel
                 ->select(
                     'c.id_client as id_customer', 
                     'cs.login as customer',
-                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_real'),
-                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_real'),
+                    DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                     DB::raw('round(sum(c.duration)) as seconds_real_total'),
-                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_effective'),
-                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_effective'),
+                    DB::raw('round((sum(c.duration)/60)) as minutes_effective'),
                     DB::raw('round(sum(c.duration)) as seconds_effective_total'), 
                     DB::raw('round(sum(c.cost), 2) as sale'), 
                     DB::raw('round(sum(c.costD), 4) as cost')
@@ -194,13 +188,11 @@ class Kernel extends ConsoleKernel
                 ->select(
                     'c.id_client as id_customer', 
                     'i.Login as customer',
-                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_real'),
-                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_real'),
+                    DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                     DB::raw('round(sum(c.duration)) as seconds_real_total'),
-                    DB::raw('truncate((sum(c.effective_duration)/60), 0) as minutes_effective'),
-                    DB::raw('round(sum(c.effective_duration)) - truncate((sum( c.effective_duration )/60), 0)*60 as seconds_effective'),
-                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
-                    DB::raw('round(sum(c.cost), 2) as sale'), 
+                    DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
+                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'),
+                    DB::raw('round(sum(c.cost), 2) as sale'),
                     DB::raw('round(sum(c.costD), 4) as cost')
                 )
                 ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
@@ -222,11 +214,9 @@ class Kernel extends ConsoleKernel
                 ->select(
                     'c.id_client as id_customer', 
                     'i.Login as customer',
-                    DB::raw('truncate((sum(c.duration)/60), 0) as minutes_real'),
-                    DB::raw('round(sum(c.duration)) - truncate((sum( c.duration )/60), 0)*60 as seconds_real'),
+                    DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                     DB::raw('round(sum(c.duration)) as seconds_real_total'),
-                    DB::raw('truncate((sum(c.effective_duration)/60), 0) as minutes_effective'),
-                    DB::raw('round(sum(c.effective_duration)) - truncate((sum( c.effective_duration )/60), 0)*60 as seconds_effective'),
+                    DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
                     DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
                     DB::raw('round(sum(c.cost), 2) as sale'), 
                     DB::raw('round(sum(c.costD), 4) as cost')
@@ -283,7 +273,8 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->dailyAt('05:00')->timezone('America/Santiago');
+        })->everyMinute();    
+        // })->dailyAt('05:00')->timezone('America/Santiago');
             
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {

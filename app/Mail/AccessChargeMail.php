@@ -29,7 +29,6 @@ class AccessChargeMail extends Mailable
      */
     public function build()
     {
-
         return $this->from('noreply@capa1.cl')
                     ->to($this->data['to'])
                     ->subject($this->data['subject'])

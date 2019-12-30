@@ -233,6 +233,28 @@ class Kernel extends ConsoleKernel
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
+            
+            $revenuesSistek = DB::connection('asterisk')
+                ->table('cdr as c')
+                ->select(
+                    DB::raw('"Sistek" AS customer'),
+                    DB::raw('sum( c.duration )/ 60 AS minutes_real'),
+                    DB::raw('sum( c.duration ) AS seconds_real_total'),
+                    DB::raw('sum( c.billsec )/ 60 AS minutes_effective'),
+                    DB::raw('sum( c.billsec ) AS seconds_effective_total'),
+                    DB::raw('sum( c.billsec ) * 0.1166 AS sale'),
+                    DB::raw('"0" AS cost')
+                )
+                ->where('c.channel', 'like', '%SIP/Sistek%')
+                ->where('c.disposition', '=', 'ANSWERED')
+                ->whereBetween(
+                    'c.calldate', 
+                    [
+                        DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
+                    ]
+                )
+                ->get();
 
             $revenuesHeavyuser = $this::revenuesCondellQuery('heavyuser', $startYesterday, $endYesterday);
             $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
@@ -254,6 +276,9 @@ class Kernel extends ConsoleKernel
             if($revenuesRetail->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesRetail, 'Retail', $pos);
             }
+            if($revenuesSistek->count() > 0){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesSistek, 'Sistek', $pos);
+            }
 
             ob_start();
             $writer->save('php://output');
@@ -272,7 +297,6 @@ class Kernel extends ConsoleKernel
             $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[((int)$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
             $revenue->file_name = $nameFile;
             $revenue->save();
-
         })->dailyAt('05:00')->timezone('America/Santiago');
             
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.

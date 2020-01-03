@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 Route::get('/', 'GeneralController@redirectRootPath');
 Route::get('/datatables/spanish', 'GeneralController@datatablesSpanish')->name('datatables.spanish');
@@ -53,5 +56,7 @@ Route::post('/configuracion/guardar', 'ConfigurationController@save')->name('con
 Route::get('/trafico', 'ReportsController@index')->name('traffic.index');
 Route::post('/trafico/avg/hr/calls', 'ReportsController@avgperhrcalls')->name('reports.avgperhrcalls');
 Route::post('/trafico/processed/calls', 'ReportsController@processedcalls')->name('reports.processedcalls');
+
+Route::get('/facturas', 'InvoicesController@index')->name('invoices.index');
 
 Route::get('/procedimientos', 'ProceduresController@index')->name('procedures.index');

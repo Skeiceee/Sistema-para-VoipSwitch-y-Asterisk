@@ -25,21 +25,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Dirección</label>
-                                    <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}">
+                                    <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror" value="{{ empty(old('address')) ? $client->address : old('address') }}">
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="name">País</label>
-                                    <input type="text" name="country" id="country" class="form-control @error('country') is-invalid @enderror" value="{{ old('country') }}">
+                                    <input type="text" name="country" id="country" class="form-control @error('country') is-invalid @enderror" value="{{ empty(old('country')) ? $client->country : old('country') }}">
                                     @error('country')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Ciudad</label>
-                                    <input type="text" name="city" id="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}">
+                                    <input type="text" name="city" id="city" class="form-control @error('city') is-invalid @enderror" value="{{ empty(old('city')) ? $client->city : old('city') }}">
                                     @error('city')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror

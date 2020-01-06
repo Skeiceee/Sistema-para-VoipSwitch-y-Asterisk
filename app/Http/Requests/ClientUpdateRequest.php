@@ -26,7 +26,10 @@ class ClientUpdateRequest extends FormRequest
         $id = $this->route('cliente');
         return [
             'name' => 'required|string|min:1|max:50|unique:mysql.clients,name,'.$id,
-            'description' => 'required|string|min:1|max:500'
+            'description' => 'required|string|min:1|max:500',
+            'address' => 'required|string|min:1|max:150',
+            'city' => 'required|string|min:1|max:150',
+            'country' => 'required|string|min:1|max:150',
         ];
     }
 }

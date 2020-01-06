@@ -150,6 +150,9 @@ return [
         'name' => 'nombre',
         'description' => 'descripción',
         'lastName' => 'apellido',
+        'address' => 'direccion',
+        'country' => 'pais',
+        'ciudad' => 'city'
     ],
 
 ];

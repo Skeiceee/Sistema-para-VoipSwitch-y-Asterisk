@@ -25,7 +25,10 @@ class ClientStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:1|max:50|unique:mysql.clients,name',
-            'description' => 'required|string|min:1|max:500'
+            'description' => 'required|string|min:1|max:500',
+            'address' => 'required|string|min:1|max:150',
+            'city' => 'required|string|min:1|max:150',
+            'country' => 'required|string|min:1|max:150',
         ];
     }
 }

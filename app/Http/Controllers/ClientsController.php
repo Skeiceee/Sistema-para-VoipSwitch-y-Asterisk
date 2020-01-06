@@ -62,6 +62,9 @@ class ClientsController extends Controller
         $client = new Client();
 
         $client->name = $request->name;
+        $client->address = $request->address;
+        $client->country = $request->country;
+        $client->city = $request->city;
         $client->description = $request->description;
 
         $client->save();
@@ -108,6 +111,9 @@ class ClientsController extends Controller
         $client = Client::find($id);
 
         $client->name = $request->name;
+        $client->address = $request->address;
+        $client->country = $request->country;
+        $client->city = $request->city;
         $client->description = $request->description;
 
         $client->save();

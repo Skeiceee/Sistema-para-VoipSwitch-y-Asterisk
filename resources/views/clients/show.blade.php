@@ -12,9 +12,20 @@
                     @include('common.status')
                     <div class="card">
                         <div class="card-body">
-                            <span class="font-weight-bold">Descripción</span>
+                            <i class="far fa-id-card"></i><span class="font-weight-bold ml-2">Información del cliente</span>
                             <hr>
-                            {{ $client->description }}
+                            <div>
+                                <span class="font-weight-bold">Dirección</span>
+                                <div>
+                                    {{ $client->country }}, {{ $client->city }}, {{ $client->address }}
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <span class="font-weight-bold">Descripción</span>
+                                <div>
+                                    {{ $client->description }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card mt-3">

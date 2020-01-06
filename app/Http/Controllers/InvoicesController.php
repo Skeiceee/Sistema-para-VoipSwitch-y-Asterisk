@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
 {
     public function index()
     {
-        return view('invoices.index');
+        $clients = Client::all();
+        return view('invoices.index', compact('clients'));
     }
 }

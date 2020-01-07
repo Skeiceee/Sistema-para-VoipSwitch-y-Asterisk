@@ -24,6 +24,20 @@
                             </div>
                         </div>    
                     </div>
+                    <div class="card mt-3">
+                        <div class="table-responsive card-body">
+                            <div class="form-group">
+                                <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Información del cliente</span>
+                                <hr>
+                                <label for="name">Cliente</label>
+                                <select name="client" id="client" class="form-control">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id}}">{{ $client->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>    
+                    </div>
                 </div>
             </div>
         </div>

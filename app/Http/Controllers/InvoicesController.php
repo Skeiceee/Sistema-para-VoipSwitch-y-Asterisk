@@ -44,7 +44,6 @@ class InvoicesController extends Controller
 
         $data = [
             'id_customer' => $client->id_customer,
-            'customer' => $client->name,
             'address' => $client->address,
             'city' => $client->city,
             'country' => $client->country,

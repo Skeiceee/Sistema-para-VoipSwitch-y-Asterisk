@@ -29,7 +29,24 @@
                                         <span class="fa fa-spinner fa-spin" style="font-size: 40px"></span>
                                     </div>
                                     <div id="info">
-
+                                        <ul id="list_info_client" class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex border justify-content-between">
+                                                <span>dwadawawd</span>
+                                                <span>dawdaw</span>
+                                            </li>
+                                            <li class="list-group-item d-flex border justify-content-between">
+                                                <span>dwadawawd</span>
+                                                <span>dawdaw</span>
+                                            </li>
+                                            <li class="list-group-item d-flex border justify-content-between">
+                                                <span>dwadawawd</span>
+                                                <span>dawdaw</span>
+                                            </li>
+                                            <li class="list-group-item d-flex border justify-content-between">
+                                                <span>dwadawawd</span>
+                                                <span>dawdaw</span>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>    
@@ -61,6 +78,7 @@ $(document).ready(function(){
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
     $('select[name="id_client"]').change(function(){
         $('#info-client-load').removeClass('d-none').addClass('d-flex')
+        $('#list_info_client').empty()
         let id_client = $(this).val()
         searchClient({url: SITEURL+'facturas/search/client', id_client})
     }).trigger('change');
@@ -72,8 +90,31 @@ $(document).ready(function(){
             data: { id_client: param.id_client },
             dataType: "json",
             success: function(data){
+                $('#list_info_client').empty()
                 $('#info-client-load').removeClass('d-flex').addClass('d-none')
-                console.log(data)
+                let listInfoClient = $('#list_info_client')
+
+                let trad = {
+                    'id_customer' : 'Identificador del cliente',
+                    'address' : 'Dirección',
+                    'city' : 'Ciudad',
+                    'country' : 'País'
+                }
+
+                for (var k in data){
+                    if (data.hasOwnProperty(k)) {
+                        listInfoClient.append(
+                            $(document.createElement('li'))
+                            .addClass('list-group-item d-flex border justify-content-between')
+                            .append(
+                                $(document.createElement('span'))
+                                    .append(trad[k]), 
+                                $(document.createElement('span'))
+                                    .append(data[k])
+                            )
+                        )
+                    }
+                }
             }
         })
     }

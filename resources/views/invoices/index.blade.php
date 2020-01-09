@@ -10,29 +10,32 @@
                     </div>
                     <hr class="my-3">
                     @include('common.status')
-                    <div class="card">
-                        <div class="table-responsive card-body">
-                            <div class="form-group">
-                                <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Información del cliente</span>
-                                <hr>
-                                <label for="name">Cliente</label>
-                                <select name="client" id="client" class="form-control">
-                                    @foreach ($clients as $client)
+                    <form action="" method="post">
+                        <div class="card">
+                            <div class="table-responsive card-body">
+                                <div class="form-group">
+                                    <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Información del cliente</span>
+                                    <hr>
+                                    <label for="name">Cliente</label>
+                                    <select name="client" id="client" class="form-control">
+                                        @foreach ($clients as $client)
                                         <option value="{{ $client->id}}">{{ $client->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>    
-                    </div>
-                    <div class="card mt-3">
-                        <div class="table-responsive card-body">
-                            <div class="form-group">
-                                <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Voipswitch</span>
-                                <hr>
-
-                            </div>
-                        </div>    
-                    </div>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="card mt-3">
+                            <div class="table-responsive card-body">
+                                <div class="form-group">
+                                    <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Voipswitch</span>
+                                    <hr>
+                                    
+                                </div>
+                            </div>    
+                        </div>
+                        <button class="btn btn-primary btn-block mt-3" type="submit">Descargar</button>
+                    </form>
                 </div>
             </div>
         </div>

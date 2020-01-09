@@ -14,8 +14,19 @@ class InvoicesController extends Controller
         return view('invoices.index', compact('clients'));
     }
 
-    public function download()
+    public function download(Request $request)
     {
+        $data = [
+            'date' => '',
+            'invoice_support_n' => '',
+            'id_customer' => '',
+            'customer' => '',
+            'address' => '',
+            'city' => '',
+            'country' => '',
+            'period' => ''
+        ];
+
         $pdf = PDF::loadView('invoices.pdf')->setPaper('tabloid');
         return $pdf->download('invoice.pdf');
     }

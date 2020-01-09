@@ -42,15 +42,15 @@
                 <table style="width: 100%">
                     <tr>
                         <th style="text-align: right; width: auto;">Date:</th>
-                        <td style="text-align: left; width: 1px;">awawddwadaw</td>    
+                        <td style="text-align: left; width: 1px;">{{ $data['date'] }}</td>    
                     </tr>
                     <tr>
                         <th style="text-align: right; width: auto;">Invoice support N°:</th>    
-                        <td style="text-align: left; width: auto;">awawddwadaw</td>       
+                        <td style="text-align: left; width: auto;">{{ $data['invoice_support_n'] }}</td>       
                     </tr>
                     <tr>
                         <th style="text-align: right; width: auto;">Id. Customer:</th>  
-                        <td style="text-align: left; width: auto;">awawddwadaw</td>      
+                        <td style="text-align: left; width: auto;">{{ $data['id_customer'] }}</td>
                     </tr>
                 </table>
             </th>
@@ -64,23 +64,23 @@
         <tr>
             <th rowspan=5 style="width: 1em;"></th>
             <th style="text-align: right; width: 1px;">Customer:</th>
-            <td style="text-align: left; width: auto;">awdwaddwawadwadaw</td>    
+            <td style="text-align: left; width: auto;">{{ $data['customer'] }}</td>    
         </tr>
         <tr>
             <th style="text-align: right; width: 1px;">Address:</th>    
-            <td style="text-align: left; width: auto;">awdwaddwawadwadaw</td>    
+            <td style="text-align: left; width: auto;">{{ $data['address'] }}</td>    
         </tr>
         <tr>
             <th style="text-align: right; width: 1px;">City:</th>  
-            <td style="text-align: left; width: auto;">awdwaddwawadwadaw</td>    
+            <td style="text-align: left; width: auto;">{{ $data['city'] }}</td>    
         </tr>
         <tr>
             <th style="text-align: right; width: 1px;">Country:</th>  
-            <td style="text-align: left; width: auto;">awdwaddwawadwadaw</td>    
+            <td style="text-align: left; width: auto;">{{ $data['country']}}</td>    
         </tr>
         <tr>
             <th style="text-align: right; width: 1px;">Period:</th>  
-            <td style="text-align: left; width: auto;">awdwaddwawadwadaw</td>    
+            <td style="text-align: left; width: auto;">{{ $data['period'] }}</td>    
         </tr>
     </table>
 

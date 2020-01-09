@@ -32,7 +32,7 @@ class InvoicesController extends Controller
         ];
 
         // dd($client, $request);
-        return view('invoices.pdf', $data);
+        // return view('invoices.pdf', $data);
         $view = View::make('invoices.pdf', $data)->render();
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
         return $pdf->stream('invoice.pdf');

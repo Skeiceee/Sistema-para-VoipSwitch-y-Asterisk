@@ -42,15 +42,15 @@
                 <table style="width: 100%">
                     <tr>
                         <th style="text-align: right; width: auto;">Date:</th>
-                        <td style="text-align: right;">{{ $data['date'] }}</td>    
+                        <td style="text-align: right; width: 1px;">{{ $data['date'] }}</td>    
                     </tr>
                     <tr>
                         <th style="text-align: right; width: auto;">Invoice support N°:</th>    
-                        <td style="text-align: right;">{{ $data['invoice_support_n'] }}</td>       
+                        <td style="text-align: right; width: 1px;">{{ $data['invoice_support_n'] }}</td>       
                     </tr>
                     <tr>
                         <th style="text-align: right; width: auto;">Id. Customer:</th>  
-                        <td style="text-align: right;">{{ $data['id_customer'] }}</td>
+                        <td style="text-align: right; width: 1px;">{{ $data['id_customer'] }}</td>
                     </tr>
                 </table>
             </th>

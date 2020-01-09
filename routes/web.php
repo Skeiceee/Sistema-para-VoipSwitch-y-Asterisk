@@ -58,5 +58,6 @@ Route::post('/trafico/avg/hr/calls', 'ReportsController@avgperhrcalls')->name('r
 Route::post('/trafico/processed/calls', 'ReportsController@processedcalls')->name('reports.processedcalls');
 
 Route::get('/facturas', 'InvoicesController@index')->name('invoices.index');
+Route::post('/facturas', 'InvoicesController@download')->name('invoices.download');
 
 Route::get('/procedimientos', 'ProceduresController@index')->name('procedures.index');

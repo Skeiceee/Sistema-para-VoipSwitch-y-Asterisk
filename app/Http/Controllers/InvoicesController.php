@@ -16,18 +16,22 @@ class InvoicesController extends Controller
 
     public function download(Request $request)
     {
+        $client = Client::find($request->id_client);
         $data = [
-            'date' => '',
-            'invoice_support_n' => '',
-            'id_customer' => '',
-            'customer' => '',
-            'address' => '',
-            'city' => '',
-            'country' => '',
-            'period' => ''
+            'data' => [
+                'date' => '',
+                'invoice_support_n' => '',
+                'id_customer' => '',
+                'customer' => $client->name,
+                'address' => $client->address,
+                'city' => $client->city,
+                'country' => $client->country,
+                'period' => '',
+            ]
         ];
 
-        $pdf = PDF::loadView('invoices.pdf')->setPaper('tabloid');
-        return $pdf->download('invoice.pdf');
+        // dd($client, $request);
+        $pdf = PDF::loadView('invoices.pdf', $data)->setPaper('tabloid');
+        return $pdf->stream('invoice.pdf');
     }
 }

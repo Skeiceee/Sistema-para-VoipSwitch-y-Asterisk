@@ -10,14 +10,15 @@
                     </div>
                     <hr class="my-3">
                     @include('common.status')
-                    <form action="" method="post">
+                    <form action="{{ route('invoices.download') }}" method="post">
+                        @csrf
                         <div class="card">
                             <div class="table-responsive card-body">
                                 <div class="form-group">
                                     <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Información del cliente</span>
                                     <hr>
                                     <label for="name">Cliente</label>
-                                    <select name="client" id="client" class="form-control">
+                                    <select name="id_client" id="id_client" class="form-control">
                                         @foreach ($clients as $client)
                                         <option value="{{ $client->id}}">{{ $client->name }}</option>
                                         @endforeach

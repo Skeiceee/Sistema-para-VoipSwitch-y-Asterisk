@@ -38,19 +38,19 @@
                 <h2 style="font-weight: 700;">Sociedad de Telecomunicaciones y Servicios SpA</h2>
                 <div>Nos mueve, nos motiva, nos gusta la comunicación.</div>
             </th>
-            <th style="text-align:right;">
+            <th style="text-align:right; margin-right: 0px;">
                 <table style="width: 100%">
                     <tr>
                         <th style="text-align: right; width: auto;">Date:</th>
-                        <td style="text-align: left; width: 1px;">{{ $data['date'] }}</td>    
+                        <td style="text-align: right;">{{ $data['date'] }}</td>    
                     </tr>
                     <tr>
                         <th style="text-align: right; width: auto;">Invoice support N°:</th>    
-                        <td style="text-align: left; width: auto;">{{ $data['invoice_support_n'] }}</td>       
+                        <td style="text-align: right;">{{ $data['invoice_support_n'] }}</td>       
                     </tr>
                     <tr>
                         <th style="text-align: right; width: auto;">Id. Customer:</th>  
-                        <td style="text-align: left; width: auto;">{{ $data['id_customer'] }}</td>
+                        <td style="text-align: right;">{{ $data['id_customer'] }}</td>
                     </tr>
                 </table>
             </th>

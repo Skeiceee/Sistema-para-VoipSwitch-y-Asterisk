@@ -23,6 +23,7 @@
                             <div class="mt-3">
                                 <span class="font-weight-bold">Descripción</span>
                                 <div>
+                                    Identificador del cliente: {{ $client->id_customer }}
                                     {{ $client->description }}
                                 </div>
                             </div>

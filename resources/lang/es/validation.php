@@ -152,7 +152,8 @@ return [
         'lastName' => 'apellido',
         'address' => 'direccion',
         'country' => 'pais',
-        'ciudad' => 'city'
+        'ciudad' => 'city',
+        'id_customer' => 'identificador del cliente',
     ],
 
 ];

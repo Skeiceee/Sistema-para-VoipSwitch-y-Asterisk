@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class InvoicesController extends Controller
 {
@@ -21,7 +22,7 @@ class InvoicesController extends Controller
             'data' => [
                 'date' => '',
                 'invoice_support_n' => '',
-                'id_customer' => '',
+                'id_customer' => $client->id_customer,
                 'customer' => $client->name,
                 'address' => $client->address,
                 'city' => $client->city,
@@ -31,7 +32,9 @@ class InvoicesController extends Controller
         ];
 
         // dd($client, $request);
-        $pdf = PDF::loadView('invoices.pdf', $data)->setPaper('tabloid');
+        return view('invoices.pdf', $data);
+        $view = View::make('invoices.pdf', $data)->render();
+        $pdf = PDF::loadHtml($view)->setPaper('tabloid');
         return $pdf->stream('invoice.pdf');
     }
 }

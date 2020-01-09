@@ -22,6 +22,13 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label for="id_customer">Identificador del cliente</label>
+                                    <input type="text" name="id_customer" id="id_customer" class="form-control @error('id_customer') is-invalid @enderror" value="{{ empty(old('id_customer')) ? $client->id_customer : old('id_customer') }}">
+                                    @error('id_customer')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label for="name">Dirección</label>
                                     <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror" value="{{ empty(old('address')) ? $client->address : old('address') }}">
                                     @error('address')

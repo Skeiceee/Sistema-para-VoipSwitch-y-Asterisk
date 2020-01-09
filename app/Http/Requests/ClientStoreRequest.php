@@ -29,6 +29,7 @@ class ClientStoreRequest extends FormRequest
             'address' => 'required|string|min:1|max:150',
             'city' => 'required|string|min:1|max:150',
             'country' => 'required|string|min:1|max:150',
+            'id_customer' => 'required|string|min:1|max:150',
         ];
     }
 }

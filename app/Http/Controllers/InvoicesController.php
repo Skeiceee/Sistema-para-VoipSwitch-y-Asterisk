@@ -37,4 +37,19 @@ class InvoicesController extends Controller
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
         return $pdf->stream('invoice.pdf');
     }
+
+    public function searchclient(Request $request)
+    {
+        $client = Client::find($request->id_client);
+
+        $data = [
+            'id_customer' => $client->id_customer,
+            'customer' => $client->name,
+            'address' => $client->address,
+            'city' => $client->city,
+            'country' => $client->country,
+        ];
+
+        return response()->json($data);
+    }
 }

@@ -46,6 +46,9 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="text-muted mb-3">Llamadas procesadas por dia</span>
                                     </div>
+                                    <div id="info-client-load" style="background-color: rgba(0, 0, 0, 0.05); height: 100px;" class="d-flex flex-column justify-content-center align-items-center rounded text-white">
+                                        <span class="fa fa-spinner fa-spin" style="font-size: 40px"></span>
+                                    </div>
                                     <ul id="list_processeed_calls" class="list-group list-group-flush">
                                     </ul>
                                 </div>
@@ -105,13 +108,13 @@ $(document).ready(function(){
 
     function numberWithDot(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");}
     function maxProcessedCalls(param){
-
         $.ajax({
             type: "post",
             url: param.url,
             data: { month: param.month, year: param.year },
             dataType: "json",
             success: function(data){
+                $('#info-client-load').removeClass('d-flex').addClass('d-none')
                 let listProcesseedCalls = $('#list_processeed_calls').empty()
                 let total = 0
                 data.forEach(function(e){
@@ -172,6 +175,8 @@ $(document).ready(function(){
         todayButton: new Date(),
         onSelect: function(fd, date){
             if(typeof date === 'object' && date !== null){
+                $('#info-client-load').removeClass('d-none').addClass('d-flex')
+                $('#list_processeed_calls').empty()
                 let month = date.getMonth() + 1
                 let year = date.getFullYear()
                 maxProcessedCalls({url : SITEURL+'trafico/processed/calls', month, year})

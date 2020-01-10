@@ -56,20 +56,18 @@
                                 <div class="form-group">
                                     <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Voipswitch</span>
                                     <hr>
-
                                     <div class="form-check form-check-inline custom-radio">
                                         <input class="form-check-input d-none" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" checked>
-                                        <label class="form-check-label" for="inlineRadio1">Argentina</label>
+                                        <label class="form-check-label noselect" for="inlineRadio1">Argentina</label>
                                     </div>
                                     <div class="form-check form-check-inline custom-radio">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
-                                        <label class="form-check-label" for="inlineRadio2">Chile</label>
+                                        <label class="form-check-label noselect" for="inlineRadio2">Chile</label>
                                     </div>
                                     <div class="form-check form-check-inline custom-radio">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
-                                        <label class="form-check-label" for="inlineRadio3">Wholesale</label>
+                                        <label class="form-check-label noselect" for="inlineRadio3">Wholesale</label>
                                     </div>
-
                                 </div>
                             </div>    
                         </div>
@@ -81,38 +79,6 @@
     </div>
 </div>
 @endsection
-@push('css')
-<style>
-.custom-radio input {
-    display: none;
-}
-.custom-radio label {
-    position: relative;
-    color: #656565;
-    padding: .75em ;
-    padding-left: 1.25em;
-    padding-right: 1.25em;
-    border-radius: 4px;
-    line-height: 1em;
-    transition: .3s;
-    font-weight: 600;
-    cursor: pointer;
-}
-.custom-radio input:checked ~ label {
-    background-color: #3490dc;
-    color: #fff;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-}
-.custom-radio label:hover {
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-    color: #909090;
-}
-
-.custom-radio input:not(:checked) ~ label:hover:before {
-    color: #909090;
-}
-</style>
-@endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>

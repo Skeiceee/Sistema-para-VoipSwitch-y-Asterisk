@@ -125,10 +125,49 @@ div#menu_toggle div.d-flex.justify-content-between.align-items-center,
     user-select: none;
 }
 
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}
+
 div#menu_wrapper{
     display: none;
 }
 
 .custom-file-label:after{
     content: "Buscar";
+}
+
+.custom-radio input {
+    display: none;
+}
+.custom-radio label {
+    position: relative;
+    color: #000;
+    padding: .75em ;
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+    border-radius: 4px;
+    line-height: 1em;
+    transition: .3s;
+    font-weight: 600;
+    cursor: pointer;
+}
+.custom-radio input:checked ~ label {
+    background-color: #3490dc;
+    color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.custom-radio label:hover {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    color: #909090;
+}
+
+.custom-radio input:not(:checked) ~ label:hover:before {
+    color: #909090;
 }

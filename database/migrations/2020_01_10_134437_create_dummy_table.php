@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCityColumnToClientsTable extends Migration
+class CreateDummyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddCityColumnToClientsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql')->create('clients', function (Blueprint $table) {
-            $table->string('city', 150);
+        Schema::connection('mysql')->create('dummy', function (Blueprint $table) {
+            //Se usa para asignarle un numero o id a la factura emitida.
+            $table->string('invoice_support_number');
         });
     }
 
@@ -25,8 +26,6 @@ class AddCityColumnToClientsTable extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('dummy');
     }
 }

@@ -6,6 +6,7 @@ use App\Client;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class InvoicesController extends Controller
@@ -20,10 +21,14 @@ class InvoicesController extends Controller
     {
         $now = (Carbon::now())->format('d/m/Y');
         $client = Client::find($request->id_client);
+        $invoice_support_n = DB::connection('mysql')
+            ->table('dummy')
+            ->value('invoice_support_number');
+
         $data = [
             'data' => [
                 'date' => $now,
-                'invoice_support_n' => '',
+                'invoice_support_n' => $invoice_support_n,
                 'id_customer' => $client->id_customer,
                 'customer' => $client->name,
                 'address' => $client->address,

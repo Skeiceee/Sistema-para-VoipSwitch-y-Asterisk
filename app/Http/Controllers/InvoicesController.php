@@ -19,6 +19,7 @@ class InvoicesController extends Controller
 
     public function download(Request $request)
     {
+        dd($request);
         $now = (Carbon::now())->format('d/m/Y');
         $client = Client::find($request->id_client);
         $invoice_support_n = DB::connection('mysql')
@@ -37,7 +38,7 @@ class InvoicesController extends Controller
                 'period' => '',
             ]
         ];
-        dd($request);
+
         $view = View::make('invoices.pdf', $data)->render();
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
         return $pdf->stream('invoice.pdf');

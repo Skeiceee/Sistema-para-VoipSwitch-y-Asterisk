@@ -75,6 +75,19 @@
                                 </div>
                             </div>    
                         </div>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <div>
+                                    <i class="far fa-calendar-alt"></i><span class="font-weight-bold ml-2">Periodo</span>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label for="range_date">Rango de fechas</label>
+                                        <input id="range_date" type="text" data-language='es' data-multiple-dates-separator=" al " data-date-format="dd/mm/yyyy" class="form-control" name="date" autocomplete="off">
+                                        <span class="invalid-feedback" role="alert">Porfavor, complete el rango de fechas.</span>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
                         <button class="btn btn-primary btn-block mt-3" type="submit">Descargar</button>
                     </form>
                 </div>
@@ -84,6 +97,7 @@
 </div>
 @endsection
 @push('css')
+<link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
@@ -91,11 +105,14 @@
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/chosen.min.js')}}"></script>
+<script src="{{ asset('js/datepicker.min.js') }}"></script>
+<script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
 <script>
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
     $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
+    $('#range_date').datepicker({ todayButton: new Date(), range: true, toggleSelected: false })
     $('select[name="id_client"]').change(function(){
         $('#info-client-load').removeClass('d-none').addClass('d-flex')
         $('#list_info_client').empty()

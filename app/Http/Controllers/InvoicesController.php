@@ -37,9 +37,7 @@ class InvoicesController extends Controller
                 'period' => '',
             ]
         ];
-
-        // dd($client, $request);
-        // return view('invoices.pdf', $data);
+        dd($request);
         $view = View::make('invoices.pdf', $data)->render();
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
         return $pdf->stream('invoice.pdf');
@@ -57,5 +55,23 @@ class InvoicesController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function searchvps(Request $request)
+    {
+        $database_name = [
+            1 => 'argentina',
+            2 => 'chile',
+            3 => 'wholesale'
+        ];
+
+        $clients = DB::connection($database_name[$request->vps])
+            ->table('invoiceclients')
+            ->select('IdClient', 'Type', 'Login')
+            ->where('IdClient','!=', '1')
+            ->orWhere('Type','!=', '32')
+            ->get();
+
+        return response()->json($clients);
     }
 }

@@ -18,7 +18,7 @@
                                     <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Información del cliente</span>
                                     <hr>
                                     <label for="id_client">Cliente</label>
-                                    <select name="id_client" id="id_client" class="form-control">
+                                    <select name="id_client" id="id_client" class="form-control form-control-chosen">
                                         @foreach ($clients as $client)
                                         <option value="{{ $client->id}}">{{ $client->name }}</option>
                                         @endforeach
@@ -52,22 +52,26 @@
                             </div>    
                         </div>
                         <div class="card mt-3">
-                            <div class="table-responsive card-body">
-                                <div class="form-group">
+                            <div class="card-body">
+                                <div>
                                     <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Voipswitch</span>
                                     <hr>
-                                    <div class="form-check form-check-inline custom-radio">
-                                        <input class="form-check-input d-none" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" checked>
-                                        <label class="form-check-label noselect" for="inlineRadio1">Argentina</label>
+                                    <div class="mb-3">
+                                        <div class="form-check form-check-inline custom-radio">
+                                            <input class="form-check-input d-none" type="radio" name="vps" id="vps1" value="1" checked>
+                                            <label class="form-check-label noselect" for="vps1">Argentina</label>
+                                        </div>
+                                        <div class="form-check form-check-inline custom-radio">
+                                            <input class="form-check-input" type="radio" name="vps" id="vps2" value="2">
+                                            <label class="form-check-label noselect" for="vps2">Chile</label>
+                                        </div>
+                                        <div class="form-check form-check-inline custom-radio">
+                                            <input class="form-check-input" type="radio" name="vps" id="vps3" value="3">
+                                            <label class="form-check-label noselect" for="vps3">Wholesale</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline custom-radio">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
-                                        <label class="form-check-label noselect" for="inlineRadio2">Chile</label>
-                                    </div>
-                                    <div class="form-check form-check-inline custom-radio">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
-                                        <label class="form-check-label noselect" for="inlineRadio3">Wholesale</label>
-                                    </div>
+                                    <select class="form-control form-control-chosen" name="vps_client" id="vps_client">
+                                    </select>
                                 </div>
                             </div>    
                         </div>
@@ -79,19 +83,24 @@
     </div>
 </div>
 @endsection
+@push('css')
+<link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
+@endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chosen.min.js')}}"></script>
 <script>
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
+    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
     $('select[name="id_client"]').change(function(){
         $('#info-client-load').removeClass('d-none').addClass('d-flex')
         $('#list_info_client').empty()
         let id_client = $(this).val()
-        searchClient({url: SITEURL+'facturas/search/client', id_client})
+        searchClient({url: SITEURL+'/facturas/buscar/cliente', id_client})
     }).trigger('change');
 
     function searchClient(param){
@@ -129,6 +138,30 @@ $(document).ready(function(){
             }
         })
     }
+
+    $('input[name="vps"]').on( 'click', function() {
+        let select = $(this)
+        if( select.is(':checked') ){
+            let vps = select.val()
+            $.ajax({
+                type: "post",
+                url: SITEURL+'/facturas/buscar/vps',
+                data: { vps },
+                dataType: "json",
+                success: function(data){
+                    $('#vps_client').empty()
+                    console.log(data)
+                    data.forEach(e => {
+                        console.log(e.Login)
+                        $('#vps_client').append(new Option(e.Login, e.IdClient + ';' + e.Type))
+                        $('#vps_client').trigger('chosen:updated');
+                    })
+                }
+            })
+        }
+    })
+    
+    $('#vps1').trigger('click');
 })
 </script>
 @endpush

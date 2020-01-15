@@ -59,6 +59,7 @@ Route::post('/trafico/processed/calls', 'ReportsController@processedcalls')->nam
 
 Route::get('/facturas', 'InvoicesController@index')->name('invoices.index');
 Route::post('/facturas', 'InvoicesController@download')->name('invoices.download');
-Route::post('/facturas/search/client', 'InvoicesController@searchclient')->name('invoices.searchclient');
+Route::post('/facturas/buscar/cliente', 'InvoicesController@searchclient')->name('invoices.searchclient');
+Route::post('/facturas/buscar/vps', 'InvoicesController@searchvps')->name('invoices.searchvps');
 
 Route::get('/procedimientos', 'ProceduresController@index')->name('procedures.index');

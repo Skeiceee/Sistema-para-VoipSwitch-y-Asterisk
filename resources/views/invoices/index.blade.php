@@ -56,19 +56,35 @@
                                 <div>
                                     <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Voipswitch</span>
                                     <hr>
-                                    <div class="mb-3">
-                                        <div class="form-check form-check-inline custom-radio">
-                                            <input class="form-check-input d-none" type="radio" name="vps" id="vps1" value="1" checked>
-                                            <label class="form-check-label noselect" for="vps1">Argentina</label>
+                                    <div class="mb-3 border rounded p-2 d-flex justify-content-between align-items-center">
+                                        <div class="ml-3">
+                                            <div class="form-check form-check-inline custom-radio">
+                                                <input class="form-check-input d-none" type="radio" name="vps" id="vps1" value="1" checked>
+                                                <label class="form-check-label noselect" for="vps1">Argentina</label>
+                                            </div>
+                                            <div class="form-check form-check-inline custom-radio">
+                                                <input class="form-check-input" type="radio" name="vps" id="vps2" value="2">
+                                                <label class="form-check-label noselect" for="vps2">Wholesale</label>
+                                            </div>
                                         </div>
-                                        <div class="form-check form-check-inline custom-radio">
-                                            <input class="form-check-input" type="radio" name="vps" id="vps2" value="2">
-                                            <label class="form-check-label noselect" for="vps2">Chile</label>
+                                        <span class="font-weight-bold text-muted p-3 mr-3">Internacionales</span>
+                                    </div>
+                                    <div class="mb-3 border rounded p-2 d-flex justify-content-between align-items-center">
+                                        <div class="ml-3">
+                                            <div class="form-check form-check-inline custom-radio">
+                                                <input class="form-check-input" type="radio" name="vps" id="vps3" value="3">
+                                                <label class="form-check-label noselect" for="vps3">Heavyuser</label>
+                                            </div>
+                                            <div class="form-check form-check-inline custom-radio">
+                                                <input class="form-check-input" type="radio" name="vps" id="vps4" value="4">
+                                                <label class="form-check-label noselect" for="vps4">Synergo</label>
+                                            </div>
+                                            <div class="form-check form-check-inline custom-radio">
+                                                <input class="form-check-input" type="radio" name="vps" id="vps5" value="5">
+                                                <label class="form-check-label noselect" for="vps5">Retail</label>
+                                            </div>
                                         </div>
-                                        <div class="form-check form-check-inline custom-radio">
-                                            <input class="form-check-input" type="radio" name="vps" id="vps3" value="3">
-                                            <label class="form-check-label noselect" for="vps3">Wholesale</label>
-                                        </div>
+                                        <span class="font-weight-bold text-muted p-3 mr-3">Chile</span>
                                     </div>
                                     <select class="form-control form-control-chosen" name="vps_client" id="vps_client">
                                     </select>

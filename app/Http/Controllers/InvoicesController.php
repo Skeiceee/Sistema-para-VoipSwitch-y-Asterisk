@@ -62,16 +62,33 @@ class InvoicesController extends Controller
     {
         $database_name = [
             1 => 'argentina',
-            2 => 'chile',
-            3 => 'wholesale'
+            2 => 'wholesale',
+            3 => 'condell.heavyuser',
+            4 => 'condell.synergo',
+            5 => 'condell.retail',
         ];
 
-        $clients = DB::connection($database_name[$request->vps])
+        if($request->vps > 2){
+            $clients = DB::connection($database_name[$request->vps])
+            ->table('clientsip')
+            ->select(
+                'id_client as IdClient', 
+                DB::raw('0 as Type'), 
+                'Login'
+            )
+            ->get();
+        }else{
+            $clients = DB::connection($database_name[$request->vps])
             ->table('invoiceclients')
-            ->select('IdClient', 'Type', 'Login')
+            ->select(
+                'IdClient', 
+                'Type', 
+                'Login'
+            )
             ->where('IdClient','!=', '1')
             ->orWhere('Type','!=', '32')
             ->get();
+        }
 
         return response()->json($clients);
     }

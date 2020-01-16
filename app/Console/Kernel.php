@@ -238,8 +238,8 @@ class Kernel extends ConsoleKernel
                 ->table('cdr as c')
                 ->select(
                     DB::raw('"Sistek" AS customer'),
-                    DB::raw('sum( c.duration )/ 60 AS minutes_real'),
-                    DB::raw('sum( c.duration ) AS seconds_real_total'),
+                    DB::raw('sum( c.billsec )/ 60 AS minutes_real'),
+                    DB::raw('sum( c.billsec ) AS seconds_real_total'),
                     DB::raw('sum( c.billsec )/ 60 AS minutes_effective'),
                     DB::raw('sum( c.billsec ) AS seconds_effective_total'),
                     DB::raw('sum( c.billsec ) * 0.1166 AS sale'),

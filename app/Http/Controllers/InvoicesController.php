@@ -19,13 +19,44 @@ class InvoicesController extends Controller
 
     public function download(Request $request)
     {
-        dd($request);
+        // dd($request);
         $now = (Carbon::now())->format('d/m/Y');
         $client = Client::find($request->id_client);
+
         $invoice_support_n = DB::connection('mysql')
             ->table('dummy')
             ->value('invoice_support_number');
 
+        $date = $request->date;
+
+        $dates = explode(' al ', $date);
+        $start_date = $dates[0];
+        $end_date = $dates[1];
+
+        $database_name = [
+            1 => 'argentina',
+            2 => 'wholesale',
+            3 => 'condell.heavyuser',
+            4 => 'condell.synergo',
+            5 => 'condell.retail',
+        ];
+
+        $vps = $request->vps;
+        if($vps <= 2){
+            $clients = DB::connection($database_name[$vps])
+                ->table('invoiceclients')
+                ->select(
+                    'IdClient', 
+                    'Type', 
+                    'Login'
+                )
+                ->where('IdClient','!=', '1')
+                ->orWhere('Type','!=', '32')
+                ->get();
+        }else{
+            
+        }
+        dd();
         $data = [
             'data' => [
                 'date' => $now,
@@ -35,7 +66,7 @@ class InvoicesController extends Controller
                 'address' => $client->address,
                 'city' => $client->city,
                 'country' => $client->country,
-                'period' => '',
+                'period' => $date,
             ]
         ];
 
@@ -68,26 +99,27 @@ class InvoicesController extends Controller
             5 => 'condell.retail',
         ];
 
-        if($request->vps > 2){
-            $clients = DB::connection($database_name[$request->vps])
-            ->table('clientsip')
-            ->select(
-                'id_client as IdClient', 
-                DB::raw('0 as Type'), 
-                'Login'
-            )
-            ->get();
+        $vps = $request->vps;
+        if($vps < 2){
+            $clients = DB::connection($database_name[$vps])
+                ->table('invoiceclients')
+                ->select(
+                    'IdClient', 
+                    'Type', 
+                    'Login'
+                )
+                ->where('IdClient','!=', '1')
+                ->orWhere('Type','!=', '32')
+                ->get();
         }else{
-            $clients = DB::connection($database_name[$request->vps])
-            ->table('invoiceclients')
-            ->select(
-                'IdClient', 
-                'Type', 
-                'Login'
-            )
-            ->where('IdClient','!=', '1')
-            ->orWhere('Type','!=', '32')
-            ->get();
+            $clients = DB::connection($database_name[$vps])
+                ->table('clientsip')
+                ->select(
+                    'id_client as IdClient', 
+                    DB::raw('0 as Type'), 
+                    'Login'
+                )
+                ->get();
         }
 
         return response()->json($clients);

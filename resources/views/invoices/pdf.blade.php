@@ -145,11 +145,11 @@
         <tr>
             <th rowspan=2 style="width: 1em !important;"></th>
             <th style="margin: 0px; padding: 0px;"><small>Bank Name:</small></th>    
-            <td style="margin: 0px; padding: 0px">Sociedad de telecomunicaciones y servicios SpA</td>    
+            <td style="margin: 0px; padding: 0px">Citibank NA</td>    
         </tr>
         <tr>
             <th style="margin: 0px; padding: 0px;"><small>Swift:</small></th>  
-            <td style="margin: 0px; padding: 0px">Condell 1190, oficina 81, Valparaíso, Región de Valparaíso, Chile</td>    
+            <td style="margin: 0px; padding: 0px">CITIUS33</td>    
         </tr>
     </table>
 

@@ -94,24 +94,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th>3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>twitter</td>
-            </tr>
-            <tr>
-                <th>3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>twitter</td>
-            </tr>
-            <tr>
-                <th>3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>twitter</td>
-            </tr>
+            @foreach ($data['trunks'] as $trunk)
+                <tr>
+                    <td>{{ $trunk->trunk }}</td>
+                    <td>{{ $trunk->processed_calls }}</td>
+                    <td>{{ $trunk->effective_duration }}</td>
+                    <td>{{ $trunk->amount }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

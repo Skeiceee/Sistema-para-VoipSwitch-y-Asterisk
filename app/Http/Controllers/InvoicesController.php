@@ -19,7 +19,6 @@ class InvoicesController extends Controller
 
     public function download(Request $request)
     {
-        // dd($request);
         $now = (Carbon::now())->format('d/m/Y');
         $client = Client::find($request->id_client);
 
@@ -28,10 +27,11 @@ class InvoicesController extends Controller
             ->value('invoice_support_number');
 
         $date = $request->date;
-
         $dates = explode(' al ', $date);
-        $start_date = $dates[0];
-        $end_date = $dates[1];
+        $start_date = trim($dates[0]).' 00:00:00';
+        $end_date = trim($dates[1]).' 23:59:59';
+
+        $vps_client = explode(';', $request->vps_client);
 
         $database_name = [
             1 => 'argentina',
@@ -43,20 +43,31 @@ class InvoicesController extends Controller
 
         $vps = $request->vps;
         if($vps <= 2){
-            $clients = DB::connection($database_name[$vps])
-                ->table('invoiceclients')
+            $trunks = DB::connection($database_name[$vps])
+                ->table('calls as c')
                 ->select(
-                    'IdClient', 
-                    'Type', 
-                    'Login'
+                    'tariffdesc as trunk', 
+                    DB::raw('count(id_call) as processed_calls'),
+                    DB::raw('format(sum(effective_duration), 0) as effective_duration'),
+                    DB::raw('format(sum(cost), 2) as amount')
                 )
-                ->where('IdClient','!=', '1')
-                ->orWhere('Type','!=', '32')
+                ->join('invoiceclients as ic', 'ic.IdClient', 'c.id_client')
+                ->whereBetween(
+                    'c.call_start',
+                    [
+                        DB::raw('str_to_date("'.$start_date.'", "%d/%m/%Y %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$end_date.'", "%d/%m/%Y %H:%i:%s")')
+                    ]
+                )
+                ->where('ic.Type', '=', DB::raw('c.client_type'))
+                ->where('ic.IdClient', $vps_client[0])
+                ->where('ic.Type', $vps_client[1])
+                ->groupBy('trunk')
                 ->get();
         }else{
             
         }
-        dd();
+
         $data = [
             'data' => [
                 'date' => $now,
@@ -67,12 +78,13 @@ class InvoicesController extends Controller
                 'city' => $client->city,
                 'country' => $client->country,
                 'period' => $date,
+                'trunks' => $trunks
             ]
         ];
 
         $view = View::make('invoices.pdf', $data)->render();
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
-        return $pdf->stream('invoice.pdf');
+        return $pdf->download('invoice.pdf');
     }
 
     public function searchclient(Request $request)

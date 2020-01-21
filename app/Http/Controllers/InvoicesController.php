@@ -65,7 +65,25 @@ class InvoicesController extends Controller
                 ->groupBy('trunk')
                 ->get();
         }else{
-            
+            $trunks = DB::connection($database_name[$vps])
+            ->table('calls as c')
+            ->select(
+                'tariffdesc as trunk', 
+                DB::raw('count(id_call) as processed_calls'),
+                DB::raw('format(sum(duration), 0) as effective_duration'),
+                DB::raw('format(sum(cost), 2) as amount')
+            )
+            ->join('clientsip as ci', 'ci.id_client', 'c.id_client')
+            ->whereBetween(
+                'c.call_start',
+                [
+                    DB::raw('str_to_date("'.$start_date.'", "%d/%m/%Y %H:%i:%s")'),
+                    DB::raw('str_to_date("'.$end_date.'", "%d/%m/%Y %H:%i:%s")')
+                ]
+            )
+            ->where('ci.id_client', $vps_client[0])
+            ->groupBy('trunk')
+            ->get();
         }
 
         $data = [
@@ -84,7 +102,8 @@ class InvoicesController extends Controller
 
         $view = View::make('invoices.pdf', $data)->render();
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
-        return $pdf->download('invoice.pdf');
+        $name_pdf = $client->name.'_invoice'.'.pdf';
+        return $pdf->download($name_pdf);
     }
 
     public function searchclient(Request $request)

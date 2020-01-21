@@ -144,12 +144,12 @@
         </tr>
         <tr>
             <th rowspan=2 style="width: 1em !important;"></th>
-            <th style="margin: 0px; padding: 0px;"><small>Bank Name:</small></th>    
-            <td style="margin: 0px; padding: 0px">Citibank NA</td>    
+            <th style="margin: 0px; padding: 0px;"><small>Bank Name:</small></th>
+            <td style="margin: 0px; padding: 0px">Citibank NA</td>
         </tr>
         <tr>
-            <th style="margin: 0px; padding: 0px;"><small>Swift:</small></th>  
-            <td style="margin: 0px; padding: 0px">CITIUS33</td>    
+            <th style="margin: 0px; padding: 0px;"><small>Swift:</small></th>
+            <td style="margin: 0px; padding: 0px">CITIUS33</td>  
         </tr>
     </table>
 

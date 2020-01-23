@@ -13,7 +13,7 @@
                     <form action="{{ route('invoices.download') }}" method="post">
                         @csrf
                         <div class="card">
-                            <div class="table-responsive card-body">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <i class="fas fa-user"></i><span class="font-weight-bold ml-2">Información del cliente</span>
                                     <hr>
@@ -30,22 +30,6 @@
                                     </div>
                                     <div id="info">
                                         <ul id="list_info_client" class="list-group list-group-flush">
-                                            <li class="list-group-item d-flex border justify-content-between">
-                                                <span>dwadawawd</span>
-                                                <span>dawdaw</span>
-                                            </li>
-                                            <li class="list-group-item d-flex border justify-content-between">
-                                                <span>dwadawawd</span>
-                                                <span>dawdaw</span>
-                                            </li>
-                                            <li class="list-group-item d-flex border justify-content-between">
-                                                <span>dwadawawd</span>
-                                                <span>dawdaw</span>
-                                            </li>
-                                            <li class="list-group-item d-flex border justify-content-between">
-                                                <span>dwadawawd</span>
-                                                <span>dawdaw</span>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>

@@ -13,7 +13,7 @@ class AddCountryColumnToClientsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql')->create('clients', function (Blueprint $table) {
+        Schema::connection('mysql')->table('clients', function (Blueprint $table) {
             $table->string('country', 150);
         });
     }

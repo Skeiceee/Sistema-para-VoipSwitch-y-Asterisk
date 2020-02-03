@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     <label for="category">Categoria</label>
                                     <select id="category" name="category" class="form-control">
-
+                                        
                                     </select>
                                 </div>
                                 <div class="form-group">

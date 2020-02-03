@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Documentos</span></div>
+                        <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Categorias</span></div>
                         <div>
                             <a id="categories" href="{{ route('documents.categories.index') }}" class="btn btn-primary mr-2" style="width: 50px" data-placement="left" data-toggle="tooltip" data-original-title="Ver categorias.">
                                 <i class="fas fa-boxes"></i>

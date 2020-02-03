@@ -13,9 +13,10 @@ class DocumentsCategoriesController extends Controller
      */
     public function index()
     {
-        //
+        dd($lala = 100);
+        return view('categories.index');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -23,9 +24,10 @@ class DocumentsCategoriesController extends Controller
      */
     public function create()
     {
+        return 'lalalala';
         //
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -34,6 +36,7 @@ class DocumentsCategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        return 'lalalala';
         //
     }
 

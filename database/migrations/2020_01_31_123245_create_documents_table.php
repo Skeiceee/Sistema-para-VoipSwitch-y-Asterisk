@@ -13,7 +13,7 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::connection('mysql')->create('documents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_category');
             $table->string('name', 150);

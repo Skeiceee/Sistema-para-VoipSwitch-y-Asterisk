@@ -70,11 +70,12 @@ Route::resource('/documentos', 'DocumentsController')->names(
         'destroy' => 'documents.destroy'
     ]
 );
-Route::resource('/documentos/categorias', 'DocumentsCategoriesController')->names(
+
+Route::resource('/categorias/documentos', 'DocumentsCategoriesController')->names(
     [
-        'index' => 'documents.categories.index',
-        'create' => 'documents.categories.create',
-        'store' => 'documents.categories.store',
-        'destroy' => 'documents.categories.destroy'
+        'index' => 'categories.documents.index',
+        'create' => 'categories.documents.create',
+        'store' => 'categories.documents.store',
+        'destroy' => 'categories.documents.destroy'
     ]
 );;

@@ -6,12 +6,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Categorias</span></div>
+                        <div><i class="fas fa-boxes"></i><span class="font-weight-bold ml-2">Categorias</span></div>
                         <div>
-                            <a id="categories" href="{{ route('documents.categories.index') }}" class="btn btn-primary mr-2" style="width: 50px" data-placement="left" data-toggle="tooltip" data-original-title="Ver categorias.">
-                                <i class="fas fa-boxes"></i>
-                            </a>
-                            <a id="add_document" href="{{ route('documents.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo documento.">
+                            <a id="add_category" href="{{ route('categories.documents.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva categoria.">
                                 <i class="fas fa-plus"></i>
                             </a>
                         </div>
@@ -41,12 +38,12 @@
             }
         });
     
-        let clientTable = $('#client').DataTable({
+        let clientTable = $('#').DataTable({
             processing: true,
             serverSide: true,
             scrollX: true,
             language:{ url: SITEURL + 'datatables/spanish' },
-            ajax: { url: SITEURL + 'clientes', type: 'GET' },
+            ajax: { url: SITEURL + '', type: 'GET' },
             columns: [
                 {data: 'nombre', name: 'name'},
                 {data: 'creacion', name: 'created_at'},
@@ -56,9 +53,7 @@
         })
     })
     
-    let addClient = $('#add_document');
-    let categories = $('#categories');
+    let addClient = $('#add_category');
     addClient.tooltip()
-    categories.tooltip()
 </script>
 @endpush

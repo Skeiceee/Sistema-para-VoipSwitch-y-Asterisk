@@ -25,7 +25,9 @@
                             data-view="months"
                             data-date-format="MM - mm/yyyy" 
                             class="form-control"
-                            name="date">
+                            name="date"
+                            autocomplete="off"
+                            >
                         </div>
                     </div>
 

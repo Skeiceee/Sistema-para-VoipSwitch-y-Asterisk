@@ -44,4 +44,13 @@
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script>
+$(document).ready(function(){
+    $('#file').on('change',function(){
+        var fileName = $(this).val();
+        fileName = fileName.replace("C:\\fakepath\\", "");
+        $(this).next('.custom-file-label').html(fileName);
+    })
+})
+</script>
 @endpush

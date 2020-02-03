@@ -13,7 +13,6 @@ class DocumentsCategoriesController extends Controller
      */
     public function index()
     {
-        dd($lala = 100);
         return view('categories.index');
     }
     
@@ -24,7 +23,7 @@ class DocumentsCategoriesController extends Controller
      */
     public function create()
     {
-        return 'lalalala';
+        return view('categories.create');
         //
     }
     
@@ -36,7 +35,6 @@ class DocumentsCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        return 'lalalala';
         //
     }
 

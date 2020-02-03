@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DocumentsController extends Controller
+class DocumentsCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        return view('Documents.index');
+        //
     }
 
     /**
@@ -23,7 +23,7 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        return view('Documents.create');
+        //
     }
 
     /**

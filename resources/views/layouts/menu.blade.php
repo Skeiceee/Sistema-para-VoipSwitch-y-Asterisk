@@ -38,6 +38,11 @@
                         </div>
                         <ul class="nav flex-column">
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('documents.index') }}">Documentación</a>
+                            </li>
+                        </ul>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
                             </li>
                         </ul>
@@ -50,14 +55,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('rates.index') }}">Tarifas</a>
                             </li>
-                        </ul>
-                    </div>
-                    <div style="width: 150px">
-                        <div class="text-muted py-1">
-                            <i class="fas fa-folder"></i><span class="ml-2 font-weight-bold">Documentación</span>
-                        </div>
-                        <ul class="nav flex-column">
-                            <a class="nav-link" href="{{ route('procedures.index') }}">Procedimientos</a>
                         </ul>
                     </div>
                     <div class="d-sm-block d-md-none" style="width: 150px">

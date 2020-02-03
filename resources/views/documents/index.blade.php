@@ -7,6 +7,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Documentos</span></div>
+                        <a id="add_document" href="{{ route('documents.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo documento.">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
                     <hr class="my-3">
                     <div class="card">
@@ -24,4 +27,31 @@
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script> 
+    var SITEURL = '{{ URL::to('').'/' }}'
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    
+        let clientTable = $('#client').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            language:{ url: SITEURL + 'datatables/spanish' },
+            ajax: { url: SITEURL + 'clientes', type: 'GET' },
+            columns: [
+                {data: 'nombre', name: 'name'},
+                {data: 'creacion', name: 'created_at'},
+                {data: 'ult_modificacion', name: 'updated_at'},
+                {data: 'action', name: 'action', orderable: false}
+            ]
+        })
+    })
+    
+    let addClient = $('#add_document');
+    addClient.tooltip()
+</script>
 @endpush

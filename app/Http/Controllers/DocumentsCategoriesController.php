@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class DocumentsCategoriesController extends Controller
@@ -13,6 +14,19 @@ class DocumentsCategoriesController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()){
+            return datatables()->of(
+                Category::select(
+                    'id',
+                    'name'
+                )
+            )
+            ->addColumn('action', 'actions.categories')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+
         return view('categories.index');
     }
     
@@ -24,7 +38,6 @@ class DocumentsCategoriesController extends Controller
     public function create()
     {
         return view('categories.create');
-        //
     }
     
     /**
@@ -35,7 +48,13 @@ class DocumentsCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+
+        $category->name = $request->name;
+
+        $category->save();
+        
+        return redirect()->route('categories.documents.index')->with('status', 'Se ha agregado correctamente la categoria.');
     }
 
     /**

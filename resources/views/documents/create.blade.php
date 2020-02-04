@@ -30,7 +30,10 @@
                                         <label class="custom-file-label" for="file">Seleccionar Archivo</label>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary btn-block" type="submit">Guardar</button>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-primary" style="width: 150px" >Agregar</button>
+                                    <a class="btn btn-primary" style="width: 150px" href="{{ route('documents.index') }}">Volver</a>
+                                </div>
                             </form>
                         </div>
                     </div>

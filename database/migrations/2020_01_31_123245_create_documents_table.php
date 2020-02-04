@@ -18,6 +18,7 @@ class CreateDocumentsTable extends Migration
             $table->bigInteger('id_category');
             $table->string('name', 150);
             $table->string('description', 300);
+            $table->string('path', 300);
             $table->timestamps();
         });
     }

@@ -15,8 +15,15 @@
                     </div>
                     <hr class="my-3">
                     <div class="card">
-                        <div class="card-body">
-                            
+                        <div class="table-responsive card-body">
+                            <table id="categories" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
+                                <thead class="theader-danger">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -25,10 +32,15 @@
     </div>
 </div>
 @endsection
+@push('css')
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script> 
     var SITEURL = '{{ URL::to('').'/' }}'
     $(document).ready(function(){
@@ -38,17 +50,15 @@
             }
         });
     
-        let clientTable = $('#').DataTable({
+        let categoriesTable = $('#categories').DataTable({
             processing: true,
             serverSide: true,
             scrollX: true,
             language:{ url: SITEURL + 'datatables/spanish' },
-            ajax: { url: SITEURL + '', type: 'GET' },
+            ajax: { url: SITEURL + '/categorias/documentos', type: 'GET' },
             columns: [
-                {data: 'nombre', name: 'name'},
-                {data: 'creacion', name: 'created_at'},
-                {data: 'ult_modificacion', name: 'updated_at'},
-                {data: 'action', name: 'action', orderable: false}
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
             ]
         })
     })

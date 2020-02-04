@@ -11,9 +11,17 @@
                     <hr class="my-3">
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                
-                            </div>
+                            <form action="{{ route('categories.documents.store') }}" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="name">Nombre</label>
+                                    <input id="name" name="name" type="text" class="form-control">
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-primary">Agregar</button>
+                                    <a href="{{ route('categories.documents.index') }}" class="btn btn-primary">Volver</a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

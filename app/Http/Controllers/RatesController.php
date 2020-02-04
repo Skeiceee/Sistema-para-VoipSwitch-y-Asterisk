@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RateStoreRequest;
 use App\Portador;
 use App\Rate;
 use Carbon\Carbon;
@@ -78,9 +79,9 @@ class RatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RateStoreRequest $request)
     {
-        $arr = explode(' al ', $request->date);
+        $arr = explode(' al ', $request->range_date);
         
         $start_date = Carbon::createFromFormat('d/m/Y H:i:s', $arr[0].' 00:00:00');
         $end_date = Carbon::createFromFormat('d/m/Y H:i:s', $arr[1].' 23:59:59');

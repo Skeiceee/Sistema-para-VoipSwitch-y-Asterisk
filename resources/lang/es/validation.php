@@ -154,6 +154,11 @@ return [
         'country' => 'pais',
         'ciudad' => 'city',
         'id_customer' => 'identificador del cliente',
+        'ido' => 'identificador del operador',
+        'range_date' => 'rango de fechas',
+        'rate_normal' => 'tarifa normal',
+        'rate_reduced' => 'tarifa reducida',
+        'rate_night' => 'tarifa nocturna',
     ],
 
 ];

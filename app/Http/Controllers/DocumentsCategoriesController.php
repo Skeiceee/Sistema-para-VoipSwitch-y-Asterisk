@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\DocumentsCategoriesStoreRequest;
 use Illuminate\Http\Request;
 
 class DocumentsCategoriesController extends Controller
@@ -46,7 +47,7 @@ class DocumentsCategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DocumentsCategoriesStoreRequest $request)
     {
         $category = new Category();
 

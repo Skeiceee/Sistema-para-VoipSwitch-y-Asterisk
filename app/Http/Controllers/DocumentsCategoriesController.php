@@ -55,7 +55,7 @@ class DocumentsCategoriesController extends Controller
 
         $category->save();
         
-        return redirect()->route('categories.documents.index')->with('status', 'Se ha agregado correctamente la categoria.');
+        return redirect()->route('categories.documents.create')->with('status', 'Se ha agregado correctamente la categoria.');
     }
 
     /**

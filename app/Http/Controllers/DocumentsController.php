@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use Illuminate\Http\Request;
 
 class DocumentsController extends Controller
@@ -13,6 +14,23 @@ class DocumentsController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()){
+            return datatables()->of(
+                Document::select(
+                    'id',
+                    'id_category',
+                    'name',
+                    'description',
+                    'path',
+                    'created_at',
+                    'updated_at'
+                )
+            )
+            ->addColumn('action', 'actions.documents')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
         return view('documents.index');
     }
 

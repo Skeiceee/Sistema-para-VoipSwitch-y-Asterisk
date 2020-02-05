@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Document;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,8 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        return view('documents.create');
+        $categories = Category::all();
+        return view('documents.create', compact('categories'));
     }
 
     /**

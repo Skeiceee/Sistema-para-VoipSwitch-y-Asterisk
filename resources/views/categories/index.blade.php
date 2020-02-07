@@ -8,6 +8,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-boxes"></i><span class="font-weight-bold ml-2">Categorias</span></div>
                         <div>
+                            <a id="documents" href="{{ route('documents.index') }}" class="btn btn-primary mr-2" data-placement="left" data-toggle="tooltip" data-original-title="Ver documentos.">
+                                <i class="fas fa-folder"></i>
+                            </a>
                             <a id="add_category" href="{{ route('categories.documents.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva categoria.">
                                 <i class="fas fa-plus"></i>
                             </a>
@@ -19,7 +22,6 @@
                             <table id="categories" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
-                                        <th>ID</th>
                                         <th>Nombre</th>
                                     </tr>
                                 </thead>
@@ -57,13 +59,14 @@
             language:{ url: SITEURL + 'datatables/spanish' },
             ajax: { url: SITEURL + '/categorias/documentos', type: 'GET' },
             columns: [
-                {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
             ]
         })
     })
     
     let addClient = $('#add_category');
+    let documents = $('#documents');
     addClient.tooltip()
+    documents.tooltip()
 </script>
 @endpush

@@ -6,9 +6,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-folder"></i></i><span class="font-weight-bold ml-2">Documentos</span></div>
+                        <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Documentos</span></div>
                         <div>
-                            <a id="categories" href="{{ route('categories.documents.index') }}" class="btn btn-primary mr-2" style="width: 50px" data-placement="left" data-toggle="tooltip" data-original-title="Ver categorias.">
+                            <a id="categories" href="{{ route('categories.documents.index') }}" class="btn btn-primary mr-2" data-placement="left" data-toggle="tooltip" data-original-title="Ver categorias.">
                                 <i class="fas fa-boxes"></i>
                             </a>
                             <a id="add_document" href="{{ route('documents.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nuevo documento.">
@@ -22,7 +22,6 @@
                             <table id="documents" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
-                                        <th>ID</th>
                                         <th>Categoria</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
@@ -65,7 +64,6 @@
             language:{ url: SITEURL + 'datatables/spanish' },
             ajax: { url: SITEURL + '/documentos', type: 'GET' },
             columns: [
-                {data: 'id', name: 'id'},
                 {data: 'id_category', name: 'id_category'},
                 {data: 'name', name: 'name'},
                 {data: 'description', name: 'description'},

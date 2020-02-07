@@ -242,7 +242,7 @@ class Kernel extends ConsoleKernel
                     DB::raw('sum( c.billsec ) AS seconds_real_total'),
                     DB::raw('sum( c.billsec )/ 60 AS minutes_effective'),
                     DB::raw('sum( c.billsec ) AS seconds_effective_total'),
-                    DB::raw('sum( c.billsec ) * 0.1166 AS sale'),
+                    DB::raw('sum( c.billsec ) * 0.11666666666 AS sale'),
                     DB::raw('"0" AS cost')
                 )
                 ->where('c.channel', 'like', '%SIP/Sistek%')

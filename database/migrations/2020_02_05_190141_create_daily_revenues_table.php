@@ -13,7 +13,7 @@ class CreateDailyRevenuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('daily_revenues', function (Blueprint $table) {
+        Schema::connection('mysql')->create('daily_revenues', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date');
             $table->integer('id_client');

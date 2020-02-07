@@ -124,11 +124,11 @@ class DailyRevenues extends Command
             ->select(
                 DB::raw('"0" as id_client'),
                 DB::raw('"Sistek" as Login'),
-                DB::raw('sum( c.billsec )/ 60 as minutes_real'),
+                DB::raw('sum( c.billsec )/60 as minutes_real'),
                 DB::raw('sum( c.billsec ) as seconds_real_total'),
-                DB::raw('sum( c.billsec )/ 60 as minutes_effective'),
+                DB::raw('sum( c.billsec )/60 as minutes_effective'),
                 DB::raw('sum( c.billsec ) as seconds_effective_total'),
-                DB::raw('sum( c.billsec ) * 0.1166 as sale'),
+                DB::raw('sum( c.billsec )/60*7 as sale'),
                 DB::raw('"0" as cost')
             )
             ->where('c.channel', 'like', '%SIP/Sistek%')

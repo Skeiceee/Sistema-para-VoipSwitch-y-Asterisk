@@ -15,15 +15,15 @@ class CreateDailyRevenuesTable extends Migration
     {
         Schema::create('daily_revenues', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->dateTime('date');
             $table->integer('id_client');
-            $table->integer('login');
+            $table->string('login', 100);
             $table->bigInteger('minutes_real');
             $table->bigInteger('seconds_real_total');
-            $table->bigInteger('minutes_affective');
+            $table->bigInteger('minutes_effective');
             $table->bigInteger('seconds_effective_total');
             $table->decimal('sale', 12, 4);
             $table->decimal('cost', 12, 4);
-            $table->timestamps();
         });
     }
 

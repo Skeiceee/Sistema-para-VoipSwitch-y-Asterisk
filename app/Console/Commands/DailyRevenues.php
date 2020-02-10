@@ -38,7 +38,7 @@ class DailyRevenues extends Command
             ->table('calls as c')
             ->select(
                 'c.id_client as id_client', 
-                'cs.login as customer',
+                'cs.login as Login',
                 DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                 DB::raw('round(sum(c.duration)) as seconds_real_total'),
                 DB::raw('round((sum(c.duration)/60)) as minutes_effective'),
@@ -145,20 +145,31 @@ class DailyRevenues extends Command
         $revenuesHeavyuser = $this::revenuesCondellQuery('heavyuser', $startYesterday, $endYesterday);
         $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
         $revenuesRetail = $this::revenuesCondellQuery('retail', $startYesterday, $endYesterday);
-
         
-        foreach ($revenuesArgentina as $revenue) {
-            DailyRevenue::create([
-                'id_client' => $revenue->id_client,
-                'date' => Carbon::yesterday(),
-                'login' => $revenue->Login,
-                'minutes_real' => $revenue->minutes_real,
-                'seconds_real_total' => $revenue->seconds_real_total,
-                'minutes_effective' => $revenue->minutes_effective,
-                'seconds_effective_total' => $revenue->seconds_effective_total,
-                'sale' => $revenue->sale,
-                'cost' => $revenue->cost
-            ]);
+
+        $all = [
+            $revenuesArgentina,
+            $revenuesWholesale,
+            $revenuesSistek,
+            $revenuesHeavyuser,
+            $revenuesSynergo,
+            $revenuesRetail
+        ];
+
+        foreach ($all as $revenues) {
+            foreach ($revenues as $revenue) {
+                DailyRevenue::create([
+                    'id_client' => $revenue->id_client,
+                    'date' => Carbon::yesterday(),
+                    'login' => $revenue->Login,
+                    'minutes_real' => $revenue->minutes_real,
+                    'seconds_real_total' => $revenue->seconds_real_total,
+                    'minutes_effective' => $revenue->minutes_effective,
+                    'seconds_effective_total' => $revenue->seconds_effective_total,
+                    'sale' => $revenue->sale,
+                    'cost' => $revenue->cost
+                ]);
+            }
         }
     }
 }

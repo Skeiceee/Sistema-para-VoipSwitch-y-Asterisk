@@ -16,7 +16,7 @@ class CreateVoipswitchsTable extends Migration
         Schema::create('voipswitchs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100);
-            $table->string('db_name', 50);
+            $table->string('conn_name', 50);
             $table->string('version', 50);
             $table->timestamps();
         });

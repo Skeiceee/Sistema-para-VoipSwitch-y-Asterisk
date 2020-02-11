@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(
             [
-                TypesTableSeeder::class
+                TypesTableSeeder::class,
+                VoipswitchsTableSeeder::class
             ]
         );
     }

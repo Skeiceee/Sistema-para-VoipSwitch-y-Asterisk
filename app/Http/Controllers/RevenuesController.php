@@ -71,7 +71,7 @@ class RevenuesController extends Controller
 
         return view('revenues.index');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *

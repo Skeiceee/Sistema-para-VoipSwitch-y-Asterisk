@@ -161,7 +161,7 @@ class ClientsController extends Controller
                     $numeration->status = 1;
                     $numeration->save();
                 }else{
-                    return redirect()->route('clients.numerations.add', $client->id)->with('status', 'Algo fallo :(');
+                    return redirect()->route('clients.numerations.add', $client->id)->with('status', 'Este número ya esta asignado.');
                 }
             }
         }

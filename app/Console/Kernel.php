@@ -333,8 +333,8 @@ class Kernel extends ConsoleKernel
         })->dailyAt('05:00')->timezone('America/Santiago');
 
         // Agrega a la tabla 'daily_revenue' los consumos diarios.
-        // $schedule->command('daily:revenues')->dailyAt('08:00')->timezone('America/Santiago');
-        $schedule->command('daily:revenues')->everyMinute()->timezone('America/Santiago');
+        $schedule->command('daily:revenues')->dailyAt('08:00')->timezone('America/Santiago');
+
         $schedule->command('email:accesscharge')->dailyAt('08:00')->timezone('America/Santiago');
     }
 

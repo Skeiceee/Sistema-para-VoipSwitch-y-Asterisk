@@ -89,7 +89,7 @@ class DailyRevenues extends Command
                 ]
             )
             ->where('c.client_type', '=' , DB::raw('i.Type'))
-            ->whereRaw('(id_client != 1)')
+            ->whereRaw('(id_client != 1 OR client_type != 32)')
             ->groupBy('c.id_client', 'c.client_type', 'i.Login')
             ->orderBy('sale', 'desc')
             ->get();
@@ -102,8 +102,8 @@ class DailyRevenues extends Command
                 DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                 DB::raw('round(sum(c.duration)) as seconds_real_total'),
                 DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
-                DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
-                DB::raw('round(sum(c.cost), 2) as sale'), 
+                DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'),
+                DB::raw('round(sum(c.cost), 2) as sale'),
                 DB::raw('round(sum(c.costD), 4) as cost')
             )
             ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
@@ -115,6 +115,7 @@ class DailyRevenues extends Command
                 ]
             )
             ->where('c.client_type', '=' , DB::raw('i.Type'))
+            ->whereRaw('(id_client != 1 OR client_type != 32)')
             ->groupBy('c.id_client', 'c.client_type', 'i.Login')
             ->orderBy('sale', 'desc')
             ->get();

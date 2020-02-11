@@ -7,12 +7,16 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-wallet"></i><span class="font-weight-bold ml-2">Consumos</span></div>
-                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
-                            <i class="fas fa-filter"></i>
-                        </button>
+                        <div>
+                            <form class="d-inline mr-2" action="" method="post">
+                                <button class="btn btn-success" type="submit">Descargar acomulado del mes</button>
+                            </form>
+                            <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
                     </div>
                     <hr class="my-3">
-
                     <div id="filter_wrapper" class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">

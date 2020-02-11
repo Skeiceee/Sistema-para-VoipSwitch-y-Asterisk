@@ -155,8 +155,6 @@ class ClientsController extends Controller
             for ($number = $start_number; $number <= $end_number; $number++) {
                 $numeration = Numeration::where('number', $number)->first();
 
-                dd($numeration->status);
-
                 if($numeration->status == 0){
                     $client->numerations()->save($numeration);
 

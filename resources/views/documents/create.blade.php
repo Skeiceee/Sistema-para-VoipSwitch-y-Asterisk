@@ -11,7 +11,7 @@
                     <hr class="my-3">
                     <div class="card">
                         <div class="card-body">
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Nombre</label>
@@ -28,9 +28,13 @@
                                 <div class="form-group">
                                     <label for="file">Archivo</label>
                                     <div class="custom-file">
-                                        <input id="file" type="file" class="custom-file-input" accept="application/msword, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/pdf, text/plain, .csv">
+                                        <input id="file" name="file" type="file" class="custom-file-input" accept="application/msword, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/pdf, text/plain, .csv">
                                         <label class="custom-file-label" for="file">Seleccionar Archivo</label>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Descripción</label>
+                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button class="btn btn-primary" style="width: 150px" >Agregar</button>

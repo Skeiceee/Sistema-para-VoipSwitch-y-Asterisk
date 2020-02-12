@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentsController extends Controller
 {
@@ -54,7 +55,22 @@ class DocumentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
+
+        $document = new Document();
+
+        $extension = $request->file->extension();
+        $original_name = basename($request->file->getClientOriginalName(), ".".$extension);
+        $path = basename($request->file->store('documents'));
+        
+        $document->name = $request->name;
+        $document->id_category = $request->category;
+        $document->description = $request->description;
+        $document->extension = $extension;
+        $document->name_for_download = $original_name;
+        $document->path = $path;
+
+        $document->save();
     }
 
     /**

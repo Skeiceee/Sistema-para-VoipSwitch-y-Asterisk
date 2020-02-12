@@ -149,25 +149,37 @@ class ClientsController extends Controller
         $start_numbers = $request->start_numbers;
         $end_numbers = $request->end_numbers;
 
+        $assigned_numeration = [];
         foreach ($start_numbers as $key => $start_number) {
             $end_number = $end_numbers[$key];
-            
+
             for ($number = $start_number; $number <= $end_number; $number++) {
                 $numeration = Numeration::where('number', $number)->first();
 
-                if($numeration->status == 0){
-                    $client->numerations()->save($numeration);
+                if($numeration){
 
-                    $numeration->status = 1;
-                    $numeration->save();
+                    if($numeration->status == 0){
+                        $client->numerations()->save($numeration);
+                        
+                        $numeration->status = 1;
+                        $numeration->save();
+                    }else{
+                        $assigned_numeration[] = [
+                            'number' => $number,
+                            'status' => 'Ocupado.',
+                        ];
+                    }
                 }else{
-                    return redirect()->route('clients.numerations.add', $client->id)->with('status', 'Este número ya esta asignado.');
+                    $assigned_numeration[] = [
+                        'number' => $number,
+                        'status' => 'No existe.'
+                    ];
                 }
             }
         }
 
         $status = 'Los números han sigo agregados con exitosamente.';
-        return redirect()->route('clients.numerations.add', $client->id)->with(compact('status'));
+        return redirect()->route('clients.numerations.add', $client->id)->with(compact('status', 'assgined_numeration'));
     }
 
     public function deleteNumerations(Request $request, $id)

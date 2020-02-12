@@ -101,6 +101,7 @@ class DailyRevenues extends Command
             foreach ($revenues as $revenue) {
                 DailyRevenue::create([
                     'id_client' => $revenue->id_client,
+                    'id_voipswitch' => $voipswitch->id,
                     'date' => Carbon::yesterday(),
                     'login' => $revenue->Login,
                     'minutes_real' => $revenue->minutes_real,
@@ -139,6 +140,7 @@ class DailyRevenues extends Command
         foreach ($revenuesSistek as $revenue) {
             DailyRevenue::create([
                 'id_client' => $revenue->id_client,
+                'id_voipswitch' => 0,
                 'date' => Carbon::yesterday(),
                 'login' => $revenue->Login,
                 'minutes_real' => $revenue->minutes_real,

@@ -15,7 +15,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Nombre</label>
-                                    <input class="form-control @error('name') is-invalid @enderror" name="name" id="name" type="text">
+                                    <input class="form-control @error('name') is-invalid @enderror" name="name" id="name" type="text" value="{{ old('name')}}">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
@@ -24,7 +24,7 @@
                                     <label for="category">Categoria</label>
                                     <select class="form-control form-control-chosen @error('category') is-invalid @enderror" id="category" name="category">
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}" @if(old('category') == $category->id) selected @endif>{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('category')
@@ -41,19 +41,21 @@
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group d-flex flex-column">
                                     <label for="description">Descripción</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="5" maxlength=300></textarea>
-                                    <div class="text-muted d-flex justify-content-end mt-1" id="counter">Quedan 300 caracteres</div>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="5" maxlength=300>{{ old('description') }}</textarea>
                                     @error('description')
-                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                     @enderror
+                                    <div class="mt-1"><span class="text-muted" id="counter">Quedan 300 caracteres</span> </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button class="btn btn-primary" style="width: 150px" >Agregar</button>
                                     <a class="btn btn-primary" style="width: 150px" href="{{ route('documents.index') }}">Volver</a>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>

@@ -62,6 +62,7 @@ Route::post('/facturas', 'InvoicesController@download')->name('invoices.download
 Route::post('/facturas/buscar/cliente', 'InvoicesController@searchclient')->name('invoices.searchclient');
 Route::post('/facturas/buscar/vps', 'InvoicesController@searchvps')->name('invoices.searchvps');
 
+Route::get('/documentos/download/{id}', 'DocumentsController@download')->name('documents.download');
 Route::resource('/documentos', 'DocumentsController')->names(
     [
         'index' => 'documents.index',

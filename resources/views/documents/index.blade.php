@@ -25,9 +25,6 @@
                                         <th>Categoria</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
-                                        <th>Ruta</th>
-                                        <th>Creación</th>
-                                        <th>Ultima modificación</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -66,10 +63,7 @@
             columns: [
                 {data: 'id_category', name: 'id_category'},
                 {data: 'name', name: 'name'},
-                {data: 'description', name: 'description'},
-                {data: 'path', name: 'path'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'updated_at', name: 'updated_at'}
+                {data: 'description', name: 'description'}
             ]
         })
     })

@@ -24,10 +24,8 @@ class DocumentsController extends Controller
                     'id_category',
                     'name',
                     'description',
-                    'path',
-                    'created_at',
-                    'updated_at'
                 )
+                ->join('documents_categories', 'documents.id_category', 'documents_categories.id')
             )
             ->addColumn('action', 'actions.documents')
             ->rawColumns(['action'])
@@ -46,6 +44,15 @@ class DocumentsController extends Controller
     {
         $categories = Category::all();
         return view('documents.create', compact('categories'));
+    }
+
+    public function download($id)
+    {
+        $document = Document::find($id);
+        $file_name = $document->path;
+        $name_for_download = $document->name_for_download.'.'.$document->extension;
+        $fullpath = storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'documents'.DIRECTORY_SEPARATOR.$file_name;
+        return response()->download($fullpath, $name_for_download);
     }
 
     /**

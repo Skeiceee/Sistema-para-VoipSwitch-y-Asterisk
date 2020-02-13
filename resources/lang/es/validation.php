@@ -159,6 +159,7 @@ return [
         'rate_normal' => 'tarifa normal',
         'rate_reduced' => 'tarifa reducida',
         'rate_night' => 'tarifa nocturna',
+        'category' => 'categoria',
     ],
 
 ];

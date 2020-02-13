@@ -15,26 +15,39 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Nombre</label>
-                                    <input id="name" name="name" class="form-control" type="text">
+                                    <input class="form-control @error('name') is-invalid @enderror" name="name" id="name" type="text">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="category">Categoria</label>
-                                    <select id="category" name="category" class="form-control">
+                                    <select class="form-control form-control-chosen @error('category') is-invalid @enderror" id="category" name="category">
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="file">Archivo</label>
                                     <div class="custom-file">
-                                        <input id="file" name="file" type="file" class="custom-file-input" accept="application/msword, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/pdf, text/plain, .csv">
+                                        <input class="custom-file-input @error('file') is-invalid @enderror" name="file" id="file" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/pdf, text/plain, .csv">
                                         <label class="custom-file-label" for="file">Seleccionar Archivo</label>
                                     </div>
+                                    @error('file')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
-                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="5" maxlength=300></textarea>
+                                    <div class="text-muted d-flex justify-content-end mt-1" id="counter">Quedan 300 caracteres</div>
+                                    @error('description')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button class="btn btn-primary" style="width: 150px" >Agregar</button>
@@ -49,12 +62,18 @@
     </div>
 </div>
 @endsection
+@push('css')
+<link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
+@endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chosen.min.js')}}"></script>
+<script src="{{ asset('js/textareaLimit.js') }}"></script>
 <script>
 $(document).ready(function(){
+    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
     $('#file').on('change',function(){
         var fileName = $(this).val();
         fileName = fileName.replace("C:\\fakepath\\", "");

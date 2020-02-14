@@ -25,6 +25,7 @@
                                         <th>Categoria</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
+                                        <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -61,11 +62,16 @@
             language:{ url: SITEURL + 'datatables/spanish' },
             ajax: { url: SITEURL + '/documentos', type: 'GET' },
             columns: [
-                {data: 'id_category', name: 'id_category'},
-                {data: 'name', name: 'name'},
-                {data: 'description', name: 'description'}
+                {data: 'name_category', name: 'documents_categories.name'},
+                {data: 'nombre', name: 'name'},
+                {data: 'descripcion', name: 'description'} ,
+                {data: 'action', name: 'action', orderable: false}
             ]
         })
+        $('body').on('click', '.download', function () {
+            var file_id = $(this).data('id')
+            window.location = SITEURL + 'documentos/download/'+ file_id
+        }); 
     })
     
     let addClient = $('#add_document');

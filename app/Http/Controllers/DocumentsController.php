@@ -20,10 +20,10 @@ class DocumentsController extends Controller
         if(request()->ajax()){
             return datatables()->of(
                 Document::select(
-                    'id',
-                    'id_category',
-                    'name',
-                    'description',
+                    'documents.id',
+                    'documents_categories.name as name_category',
+                    'documents.name as nombre',
+                    'documents.description as descripcion',
                 )
                 ->join('documents_categories', 'documents.id_category', 'documents_categories.id')
             )

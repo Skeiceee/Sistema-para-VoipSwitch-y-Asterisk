@@ -22,9 +22,9 @@
                             <table id="documents" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
-                                        <th>Categoria</th>
-                                        <th>Nombre</th>
+                                        <th>Nombre</th> 
                                         <th>Descripción</th>
+                                        <th>Categoria</th>
                                         <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
@@ -62,9 +62,9 @@
             language:{ url: SITEURL + 'datatables/spanish' },
             ajax: { url: SITEURL + '/documentos', type: 'GET' },
             columns: [
+                {data: 'nombre', name: 'documents.name'},
+                {data: 'descripcion', name: 'documents.description'} ,
                 {data: 'name_category', name: 'documents_categories.name'},
-                {data: 'nombre', name: 'name'},
-                {data: 'descripcion', name: 'description'} ,
                 {data: 'action', name: 'action', orderable: false}
             ]
         })

@@ -67,7 +67,7 @@
                     data: 'descripcion', 
                     name: 'documents.description', 
                     render: function(data){
-                        res = data.substring(0, 15);
+                        res = data.substring(0, 35);
                         if (data.length !== res.length) {
                             res += '...'
                             res = '<div data-placement="right" title="' + data + '">' + res + '</div>'

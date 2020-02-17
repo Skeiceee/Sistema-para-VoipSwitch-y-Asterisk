@@ -70,7 +70,7 @@
                         res = data.substring(0, 15);
                         if (data.length !== res.length) {
                             res += '...'
-                            res = '<div title="' + data + '">' + res + '</div>'
+                            res = '<div data-placement="right" title="' + data + '">' + res + '</div>'
                         }
                         return res
                     }

@@ -70,6 +70,8 @@
                         res = data.substring(0, 35);
                         if (data.length !== res.length) {
                             res += '...'
+                            res = '<div data-placement="bottom" data-toggle="tooltip" data-original-title="' + data + '">' + res + '</div>'
+                            $('[data-toggle="tooltip"]').tooltip()
                         }
                         return res
                     }
@@ -82,8 +84,9 @@
             var file_id = $(this).data('id')
             window.location = SITEURL + 'documentos/download/'+ file_id
         }); 
+
     })
-    
+
     let addClient = $('#add_document');
     let categories = $('#categories');
     addClient.tooltip()

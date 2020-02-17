@@ -63,6 +63,7 @@
                                     name="date_accomulated"
                                     data-range="true"
                                     data-multiple-dates-separator=" al "
+                                    data-position="top left"
                                     autocomplete="off"
                                     >
                                     <div class="input-group-append" id="button-addon4">

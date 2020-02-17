@@ -7,14 +7,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-wallet"></i><span class="font-weight-bold ml-2">Consumos</span></div>
-                        <div>
-                            <form class="d-inline mr-2" action="" method="post">
-                                <button class="btn btn-success" type="submit">Descargar acomulado del mes</button>
-                            </form>
-                            <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
-                                <i class="fas fa-filter"></i>
-                            </button>
-                        </div>
+                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
+                            <i class="fas fa-filter"></i>
+                        </button>
                     </div>
                     <hr class="my-3">
                     <div id="filter_wrapper" class="form-group">
@@ -47,6 +42,35 @@
                                 </thead>
                             </table>
                         </div>    
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fas fa-layer-group"></i><span class="font-weight-bold ml-2">Consumos acomulados</span></div>
+                            </div>
+                            <hr class="my-3">
+                            <form action="{{ route('revenues.accomulated.download') }}" method="post">
+                                @csrf
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                                    <input id="date_accomulated"
+                                    type="text"
+                                    data-language="es"
+                                    class="form-control"
+                                    name="date_accomulated"
+                                    data-range="true"
+                                    data-multiple-dates-separator=" al "
+                                    autocomplete="off"
+                                    >
+                                    <div class="input-group-append" id="button-addon4">
+                                        <button class="btn btn-success" type="submit">Descargar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                 </div>
@@ -100,7 +124,13 @@ $(document).ready(function(){
                 let year = date.getFullYear()
                 revenuesTable.ajax.url(SITEURL+'consumos?month='+month+'&year='+year).load();
             }
-        }
+        },
+        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
+    })
+
+    $('input[name="date_accomulated"]').datepicker({
+        todayButton: new Date(),
+        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
     })
 
     let filterToggle = $("#filter_toggle")

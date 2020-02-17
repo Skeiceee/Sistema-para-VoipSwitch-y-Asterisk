@@ -67,18 +67,20 @@
                     data: 'descripcion', 
                     name: 'documents.description', 
                     render: function(data){
-                        res = data.substring(0, 35);
+                        res = data.substring(0, 15);
                         if (data.length !== res.length) {
                             res += '...'
-                            res = '<div data-placement="bottom" data-toggle="tooltip" data-original-title="' + data + '">' + res + '</div>'
-                            $('[data-toggle="tooltip"]').tooltip()
+                            res = '<div title="' + data + '">' + res + '</div>'
                         }
                         return res
                     }
                 },
                 { data: 'name_category', name: 'documents_categories.name' },
                 { data: 'action', name: 'action', orderable: false }
-            ]
+            ],
+            drawCallback: function(settings, json) {
+                $('[title]').tooltip();
+            },
         })
         $('body').on('click', '.download', function () {
             var file_id = $(this).data('id')

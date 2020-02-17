@@ -24,10 +24,11 @@ class ResponseMacroServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('excel', function ($content) {
+        Response::macro('excel', function ($content, $filename) {
 
             $headers = [
-                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="'.$filename.'.xlsx"',
             ];
         
             return Response::make($content, 200, $headers);

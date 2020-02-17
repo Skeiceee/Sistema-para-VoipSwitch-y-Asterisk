@@ -197,9 +197,11 @@ class RevenuesController extends Controller
         $content = ob_get_contents();
         ob_end_clean();
         
-        return response()->excel($content);
+        $file_name = 'Consumos_acomulados_del_';
+        $file_name .= str_replace('/', '_', $request->date_accomulated);
+        $file_name = str_replace(' ', '_', $file_name);
 
-        dd($dailyRevenues);
+        return response()->excel($content, $file_name);
     }
     /**
      * Display a listing of the resource.

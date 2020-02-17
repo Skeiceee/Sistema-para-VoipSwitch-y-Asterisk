@@ -62,10 +62,20 @@
             language:{ url: SITEURL + 'datatables/spanish' },
             ajax: { url: SITEURL + '/documentos', type: 'GET' },
             columns: [
-                {data: 'nombre', name: 'documents.name'},
-                {data: 'descripcion', name: 'documents.description'} ,
-                {data: 'name_category', name: 'documents_categories.name'},
-                {data: 'action', name: 'action', orderable: false}
+                { data: 'nombre', name: 'documents.name' },
+                {
+                    data: 'descripcion', 
+                    name: 'documents.description', 
+                    render: function(data){
+                        res = data.substring(0, 35);
+                        if (data.length !== res.length) {
+                            res += '...'
+                        }
+                        return res
+                    }
+                },
+                { data: 'name_category', name: 'documents_categories.name' },
+                { data: 'action', name: 'action', orderable: false }
             ]
         })
         $('body').on('click', '.download', function () {

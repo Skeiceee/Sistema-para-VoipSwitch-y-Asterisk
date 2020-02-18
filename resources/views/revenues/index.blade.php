@@ -131,7 +131,8 @@ $(document).ready(function(){
 
     $('input[name="date_accomulated"]').datepicker({
         todayButton: new Date(),
-        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
+        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date),
+        minDate: new Date(2020, 1, 12) {{-- /* TODO: Conseguir este valor directamente desde la base de datos. */ --}}
     })
 
     let filterToggle = $("#filter_toggle")

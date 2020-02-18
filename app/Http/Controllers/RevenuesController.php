@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DailyRevenue;
+use App\Http\Requests\DownloadAccomulatedRequest;
 use App\Revenue;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -31,12 +32,14 @@ class RevenuesController extends Controller
         return response()->download($fullpath, $file_name, $headers);
     }
 
-    public function donwloadAccomulated(Request $request)
+    public function downloadAccomulated(DownloadAccomulatedRequest $request)
     {
         $dates = explode(' al ',$request->date_accomulated);
+
         foreach ($dates as $key => $date) {
             $dates[$key] = str_replace('/', '-', $date);
         }
+
         $dailyRevenues = DailyRevenue::select(
             'login',
             DB::raw('sum( minutes_real ) AS minutes_real'),

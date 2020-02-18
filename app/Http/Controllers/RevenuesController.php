@@ -106,6 +106,7 @@ class RevenuesController extends Controller
                 
                 $posHeader = $pos++;
             }
+
             $sheet->setCellValue('A'.$pos, $dailyRevenue->login);
             $sheet->setCellValue('B'.$pos, $dailyRevenue->minutes_real);
             $sheet->setCellValue('C'.$pos, $dailyRevenue->seconds_real_total);
@@ -123,7 +124,6 @@ class RevenuesController extends Controller
             ->getStyle('F'.$pos.':G'.$pos)
             ->getNumberFormat()
             ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
-        
             
             if(isset($dailyRevenues[$key+1])){
                 if($old_name_voip !=  $dailyRevenues[$key+1]->name){

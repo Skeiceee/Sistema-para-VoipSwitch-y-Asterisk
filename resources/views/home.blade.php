@@ -7,7 +7,6 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-chart-line"></i><span class="font-weight-bold ml-2">Dashboard</span></div>
-                        <a id="dashboard_toggle" href="javascript:void(0);" class="btn btn-primary"><i class="fas fa-expand"></i></a>
                     </div>
                     <hr class="my-3">
                     <div class="row">
@@ -19,8 +18,8 @@
                                         <i class="fas fa-fw fa-phone-alt fa-stack-1x fa-inverse faa-shake animated"></i>
                                     </span>
                                     <span class="text-muted">Llamadas activas</span>
-                                    <div>
-                                        <span id="active" class="size-20 mr-3">0</span><span id="indicator"></span>
+                                    <div class="d-flex align-items-center">
+                                        <span id="active" style="font-size: 30px;">0</span><span class="ml-2" id="indicator"></span>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +32,7 @@
                                         <i class="fas fa-fw fa-phone-alt fa-stack-1x fa-inverse fa-rotate-90 faa-shake "></i>
                                     </span>
                                     <span class="text-muted">Llamadas procesadas</span>
-                                    <span id="processed" class="size-20">0</span>
+                                    <span id="processed" style="font-size: 30px;">0</span>
                                 </div>
                             </div>
                         </div>
@@ -80,20 +79,6 @@
 $(document).ready(function(){
     var i = null;
 
-    $('#dashboard_toggle').click(function (){
-        if($(this).attr('data') === undefined){
-            $(this).html('<i class="fas fa-compress"></i>').attr('data','hide')
-            $('#stadistic').removeClass('col-md-12').addClass('col-md-12')
-            $('#active').removeClass('size-20').addClass('size-35')
-            $('#processed').removeClass('size-20').addClass('size-35')
-        }else{
-            $(this).html('<i class="fas fa-expand"></i>').removeAttr('data')
-            $('#stadistic').removeClass('col-md-12').addClass('col-md-12')
-            $('#active').removeClass('size-35').addClass('size-20')
-            $('#processed').removeClass('size-35').addClass('size-20')
-        }
-    });
-    
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }

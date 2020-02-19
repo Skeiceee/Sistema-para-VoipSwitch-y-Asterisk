@@ -38,8 +38,8 @@
                                     </div>
                                     <canvas id="avgPerHourChart" width="400" height="250"></canvas>
                                     <div class="d-flex justify-content-center mt-3">
-                                        <button id='btnHide' class="btn btn-primary mr-3"><i class="fas fa-eye-slash mr-2"></i>Ocultar todo</button>
-                                        <button id='btnShow' class="btn btn-primary"><i class="fas fa-eye mr-2"></i>Mostrar todo</button>
+                                        <button id='btnHide' class="btn btn-sm btn-primary mr-3"><i class="fas fa-eye-slash mr-2"></i>Ocultar todo</button>
+                                        <button id='btnShow' class="btn btn-sm btn-primary"><i class="fas fa-eye mr-2"></i>Mostrar todo</button>
                                     </div>
                                 </div>
                             </div>
@@ -48,8 +48,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-muted mb-3">Llamadas procesadas por dia</span>
+                                        <span class="text-muted">Llamadas procesadas por dia</span>
                                     </div>
+                                    <hr class="my-3">
                                     <div id="info-client-load" style="background-color: rgba(0, 0, 0, 0.05); height: 100px;" class="d-flex flex-column justify-content-center align-items-center rounded text-white">
                                         <span class="fa fa-spinner fa-spin" style="font-size: 40px"></span>
                                     </div>

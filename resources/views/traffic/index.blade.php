@@ -37,6 +37,10 @@
                                         </div>
                                     </div>
                                     <canvas id="avgPerHourChart" width="400" height="250"></canvas>
+                                    <div class="d-flex justify-content-center mt-3">
+                                        <button id='btnHide' class="btn btn-primary mr-3"><i class="fas fa-eye-slash mr-2"></i>Ocultar todo</button>
+                                        <button id='btnShow' class="btn btn-primary"><i class="fas fa-eye mr-2"></i>Mostrar todo</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -183,6 +187,20 @@ $(document).ready(function(){
                 avgPerHourGraph({url : SITEURL+'trafico/avg/hr/calls', month, year})
             }
         }
+    })
+
+    $('#btnHide').click(function(){
+        avgPerHourChart.data.datasets.forEach(function(ds) {
+            ds.hidden = true
+        })
+        avgPerHourChart.update();
+    })
+
+    $('#btnShow').click(function(){
+        avgPerHourChart.data.datasets.forEach(function(ds) {
+            ds.hidden = false
+        })
+        avgPerHourChart.update();
     })
 
     let filterToggle = $("#filter_toggle")

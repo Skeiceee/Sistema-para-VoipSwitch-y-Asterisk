@@ -19,7 +19,7 @@
                                     </span>
                                     <span class="text-muted">Llamadas activas</span>
                                     <div class="d-flex align-items-center">
-                                        <span id="active" style="font-size: 30px;">0</span><span class="ml-2" id="indicator"></span>
+                                        <span id="active" style="font-size: 30px;">0</span><span class="ml-3" id="indicator"></span>
                                     </div>
                                 </div>
                             </div>

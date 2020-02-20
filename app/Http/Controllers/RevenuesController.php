@@ -85,6 +85,7 @@ class RevenuesController extends Controller
                         'color' => array('rgb' => 'FFFFFF'),
                         'bold' => true
                 ));
+                
                 $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
                 $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');        
                 $pos++;
@@ -101,6 +102,7 @@ class RevenuesController extends Controller
                         'color' => array('rgb' => 'FFFFFF'),
                         'bold' => true
                 ));
+
                 $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
                 $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
                 
@@ -185,9 +187,9 @@ class RevenuesController extends Controller
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
         
-        $center= [ 
-            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
-            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
+        $center= [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
         ];
 
         $spreadsheet->getActiveSheet()

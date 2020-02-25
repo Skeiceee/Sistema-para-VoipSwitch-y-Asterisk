@@ -84,7 +84,7 @@ class ClientsController extends Controller
         $client = Client::find($id);
 
         $intervals = $client->intervals();
-
+        dd($intervals);
         return view('clients.show', compact('client', 'intervals'));
     }
 

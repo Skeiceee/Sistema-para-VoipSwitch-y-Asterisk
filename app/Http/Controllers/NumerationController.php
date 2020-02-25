@@ -27,7 +27,8 @@ class NumerationController extends Controller
                     'types.name as tipo_nombre',
                     'numerations.number as numero', 
                     'numerations.created_at as creacion', 
-                    'numerations.updated_at as ult_modificacion'
+                    'numerations.updated_at as ult_modificacion',
+                    'numerations.status as estado'
                 )
                 ->join('types', 'numerations.type_id', 'types.id')
             )

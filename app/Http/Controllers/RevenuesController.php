@@ -85,7 +85,7 @@ class RevenuesController extends Controller
                         'color' => array('rgb' => 'FFFFFF'),
                         'bold' => true
                 ));
-                
+
                 $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
                 $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');        
                 $pos++;
@@ -251,6 +251,7 @@ class RevenuesController extends Controller
             
         }
 
+        $clients = '';
         return view('revenues.index');
     }
     

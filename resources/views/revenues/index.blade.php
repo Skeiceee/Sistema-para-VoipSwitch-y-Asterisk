@@ -44,33 +44,75 @@
                         </div>    
                     </div>
 
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div><i class="fas fa-layer-group"></i><span class="font-weight-bold ml-2">Consumos acomulados</span></div>
-                            </div>
-                            <hr class="my-3">
-                            <form action="{{ route('revenues.accomulated.download') }}" method="post">
-                                @csrf
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div><i class="fas fa-layer-group"></i><span class="font-weight-bold ml-2">Consumos acomulados</span></div>
                                     </div>
-                                    <input id="date_accomulated"
-                                    type="text"
-                                    data-language="es"
-                                    class="form-control"
-                                    name="date_accomulated"
-                                    data-range="true"
-                                    data-multiple-dates-separator=" al "
-                                    data-position="top left"
-                                    autocomplete="off"
-                                    >
-                                    <div class="input-group-append" id="button-addon4">
-                                        <button class="btn btn-success" type="submit">Descargar</button>
-                                    </div>
+                                    <hr class="my-3">
+                                    <form action="{{ route('revenues.accomulated.download') }}" method="post">
+                                        @csrf
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input id="date" 
+                                            type="text"
+                                            data-language='es'
+                                            data-min-view="months"
+                                            data-view="months"
+                                            data-date-format="MM - mm/yyyy" 
+                                            class="form-control"
+                                            name="date"
+                                            autocomplete="off"
+                                            >
+                                            <div class="input-group-append" id="button-addon4">
+                                                <button class="btn btn-success" type="submit">Descargar</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class=card>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div><i class="fas fa-layer-group mr-1"></i><i class="fas fa-user"></i><span class="font-weight-bold ml-2">Consumos mensual de un cliente</span></div>
+                                    </div>
+                                    <hr class="my-3">
+                                    <form action="{{ route('revenues.accomulated.download') }}" method="post">
+                                        @csrf
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input id="date_month" 
+                                            type="text"
+                                            data-language='es'
+                                            data-min-view="months"
+                                            data-view="months"
+                                            data-date-format="MM - mm/yyyy" 
+                                            class="form-control"
+                                            name="date_month"
+                                            autocomplete="off"
+                                            >
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <select class="form-control" name="id_client" id="">
+
+                                            </select>
+                                            <div class="input-group-append" id="button-addon4">
+                                                <button class="btn btn-success" type="submit">Descargar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -126,6 +168,11 @@ $(document).ready(function(){
                 revenuesTable.ajax.url(SITEURL+'consumos?month='+month+'&year='+year).load();
             }
         },
+        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
+    })
+
+    $('input[name="date_month"]').datepicker({
+        todayButton: new Date(),
         maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
     })
 

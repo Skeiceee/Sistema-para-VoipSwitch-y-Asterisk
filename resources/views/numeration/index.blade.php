@@ -23,6 +23,7 @@
                                         <th>Numero</th>
                                         <th>Creación</th>
                                         <th>Ultima modificación</th>
+                                        <th>Estados</th>
                                         <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,18 @@ $(document).ready(function(){
             {data: 'numero', name: 'number'},
             {data: 'creacion', name: 'created_at'},
             {data: 'ult_modificacion', name: 'updated_at'},
+            {
+                data: 'estado', 
+                name: 'status',
+                render: function(data){
+                    if (data !== 0) {
+                        res = 'Libre'
+                    }else{
+                        res = 'Ocupado'
+                    }
+                    return res
+                }
+            },
             {data: 'action', name: 'action', orderable: false}
         ]
     })

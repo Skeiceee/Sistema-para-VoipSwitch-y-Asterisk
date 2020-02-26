@@ -66,6 +66,7 @@
                                             data-range="true"
                                             data-multiple-dates-separator=" al "
                                             data-position="top left"
+                                            autocomplete="off"
                                             >
                                             <div class="input-group-append" id="button-addon4">
                                                 <button class="btn btn-success" type="submit">Descargar</button>
@@ -97,6 +98,7 @@
                                             data-date-format="MM - mm/yyyy" 
                                             class="form-control"
                                             name="date_month"
+                                            data-position="top left"
                                             autocomplete="off"
                                             >
                                             <div class="input-group-prepend">

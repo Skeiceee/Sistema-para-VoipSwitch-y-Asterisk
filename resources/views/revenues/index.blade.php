@@ -58,7 +58,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
                                             </div>
-                                            <input id="date" 
+                                            <input id="date_accomulated" 
                                             type="text"
                                             data-language='es'
                                             data-min-view="months"

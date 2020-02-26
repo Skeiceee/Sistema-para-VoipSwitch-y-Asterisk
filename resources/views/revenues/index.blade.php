@@ -84,7 +84,7 @@
                                         <div><i class="fas fa-layer-group mr-1"></i><i class="fas fa-user"></i><span class="font-weight-bold ml-2">Consumos mensual de un cliente</span></div>
                                     </div>
                                     <hr class="my-3">
-                                    <form action="{{ route('') }}" method="post">
+                                    <form action="{{  }}" method="post">
                                         @csrf
                                         <div class="input-group">
                                             <div class="input-group-prepend">

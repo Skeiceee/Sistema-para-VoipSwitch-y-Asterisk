@@ -178,7 +178,7 @@ class ClientsController extends Controller
             }
         }
 
-        $status = 'Los números han sigo agregados con exitosamente.';
+        $status = 'Los números han sigo agregados exitosamente.';
         return redirect()->route('clients.numerations.add', $client->id)->with(compact('status', 'assigned_numeration'));
     }
 

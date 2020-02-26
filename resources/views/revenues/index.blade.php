@@ -65,7 +65,7 @@
                                             data-view="months"
                                             data-date-format="MM - mm/yyyy" 
                                             class="form-control"
-                                            name="date"
+                                            name="date_accomulated"
                                             autocomplete="off"
                                             >
                                             <div class="input-group-append" id="button-addon4">

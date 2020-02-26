@@ -58,15 +58,14 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
                                             </div>
-                                            <input id="date_accomulated" 
+                                            <input id="date_accomulated"
                                             type="text"
-                                            data-language='es'
-                                            data-min-view="months"
-                                            data-view="months"
-                                            data-date-format="MM - mm/yyyy" 
+                                            data-language="es"
                                             class="form-control"
                                             name="date_accomulated"
-                                            autocomplete="off"
+                                            data-range="true"
+                                            data-multiple-dates-separator=" al "
+                                            data-position="top left"
                                             >
                                             <div class="input-group-append" id="button-addon4">
                                                 <button class="btn btn-success" type="submit">Descargar</button>

@@ -251,8 +251,17 @@ class RevenuesController extends Controller
             
         }
 
-        $clients = '';
-        return view('revenues.index');
+        $clients = DB::connection('mysql')
+            ->table('daily_revenues as dr')
+            ->select(
+                'dr.id_client', 
+                'dr.login', 
+                'vs.name'
+            )
+            ->leftJoin('voipswitchs as vs', 'vs.id', 'dr.id_voipswitch')
+            ->distinct()
+            ->get();
+        return view('revenues.index', compact('clients'));
     }
     
     /**

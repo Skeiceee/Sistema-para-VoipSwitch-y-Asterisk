@@ -41,7 +41,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                        </div>    
+                        </div>
                     </div>
 
                     <div class="row mt-3">
@@ -69,7 +69,7 @@
                                             autocomplete="off"
                                             >
                                             <div class="input-group-append" id="button-addon4">
-                                                <button class="btn btn-success" type="submit">Descargar</button>
+                                                <button class="btn btn-success font-weight-bold" type="submit">Descargar</button>
                                             </div>
                                         </div>
                                     </form>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-6">
+                        <div class="col-sm-12 col-md-6 mt-3 mt-md-0">
                             <div class=card>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
@@ -86,6 +86,16 @@
                                     <hr class="my-3">
                                     <form action="" method="post">
                                         @csrf
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <select class="form-control form-control-chosen" style="border-top-left-radius: 0px" name="id_client" id="id_client">
+                                                @foreach ($clients as $client)
+                                                    <option value="">{{ $client->id_client }} - {{ $client->login }} - {{ $client->name == '' ? 'Interconexion directa' : $client->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
@@ -101,14 +111,9 @@
                                             data-position="top left"
                                             autocomplete="off"
                                             >
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
-                                            </div>
-                                            <select class="form-control" name="id_client" id="">
 
-                                            </select>
                                             <div class="input-group-append" id="button-addon4">
-                                                <button class="btn btn-success" type="submit">Descargar</button>
+                                                <button class="btn btn-success font-weight-bold" type="submit">Descargar</button>
                                             </div>
                                         </div>
                                     </form>
@@ -127,11 +132,13 @@
 <link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/font-awesome-animation.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chosen.min.js')}}"></script>
 <script src="{{ asset('js/moment/moment.js') }}"></script>
 <script src="{{ asset('js/datepicker.min.js') }}"></script>
 <script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
@@ -145,6 +152,7 @@ $(document).ready(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
 
     let revenuesTable = $('#revenues').DataTable({
         processing: true,

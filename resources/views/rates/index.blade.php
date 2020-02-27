@@ -120,7 +120,7 @@ $(document).ready(function(){
 
     $('select[name="ido"]').change(function(){
         let ido = $(this).val()
-        ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido})
+        ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
     })
 })
 let addRate = $('#add_rate');

@@ -19,7 +19,7 @@
                             </div>
                             <input id="date" 
                             type="text"
-                            data-language='es'
+                            data-language="es"
                             data-min-view="months"
                             data-view="months"
                             data-date-format="MM - mm/yyyy" 
@@ -84,7 +84,7 @@
                                         <div><i class="fas fa-layer-group mr-1"></i><i class="fas fa-user"></i><span class="font-weight-bold ml-2">Consumos mensual de un cliente</span></div>
                                     </div>
                                     <hr class="my-3">
-                                    <form action="" method="post">
+                                    <form action="{{ route('revenues.client.download') }}" method="post">
                                         @csrf
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
@@ -92,7 +92,7 @@
                                             </div>
                                             <select class="form-control form-control-chosen" style="border-top-left-radius: 0px" name="id_client" id="id_client">
                                                 @foreach ($clients as $client)
-                                                    <option value="">{{ $client->id_client }} - {{ $client->login }} - {{ $client->name == '' ? 'Interconexion directa' : $client->name }}</option>
+                                                    <option value="{{ $client->id_client }};{{ $client->login }};{{ $client->id_voipswitch }}">{{ $client->login }} - {{ $client->name == '' ? 'Interconexion directa' : $client->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -100,9 +100,9 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
                                             </div>
-                                            <input id="date_month" 
+                                            <input id="date_month"
                                             type="text"
-                                            data-language='es'
+                                            data-language="es"
                                             data-min-view="months"
                                             data-view="months"
                                             data-date-format="MM - mm/yyyy" 

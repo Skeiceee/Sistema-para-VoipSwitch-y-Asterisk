@@ -208,6 +208,47 @@ class RevenuesController extends Controller
 
         return response()->excel($content, $file_name);
     }
+
+    public function downloadPerClient(Request $request)
+    {
+        list($id_client, $name_client, $id_voipswitch) = explode(';', $request->id_client);
+
+        $date = str_replace(' ', '', $request->date_month);
+        list($month, $year) = explode('/', substr($date, (strpos($date, '-') + 1)));
+
+        $start_date = Carbon::create($year, $month, 1, 0, 0, 0, 'America/Santiago');
+        $end_date = (Carbon::create($year, $month, 1, 0, 0, 0, 'America/Santiago'))->endOfMonth();
+        
+        $consumos = DB::connection('mysql')
+            ->table('daily_revenues as dr')
+            ->select(
+                'date',
+                'login',
+                DB::raw('dr.minutes_real AS minutes_real'),
+                DB::raw('dr.seconds_real_total AS seconds_real_total'),
+                DB::raw('dr.minutes_effective AS minutes_effective'),
+                DB::raw('dr.seconds_effective_total AS seconds_effective_total'),
+                DB::raw('dr.sale AS sale'),
+                DB::raw('dr.cost AS cost')
+            )
+            ->leftJoin('voipswitchs as vs', 'vs.id', 'dr.id_voipswitch')
+            ->where('id_client', $id_client)
+            ->where('login', 'like', '%'.$name_client.'%')
+            ->where('id_voipswitch', $id_voipswitch)
+            ->whereBetween(
+                'date',
+                [
+                    $start_date->toDateString(),
+                    $end_date->toDateString()
+                ]
+            )
+            ->get();
+        
+        $vs_name = DB::connection('mysql')->table('voipswitchs')->where('id', $id_voipswitch)->value('name');
+        $vs_name = $vs_name != null ? $vs_name : 'Interconexion directa';
+
+        return [$consumos, $vs_name];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -256,11 +297,13 @@ class RevenuesController extends Controller
             ->select(
                 'dr.id_client', 
                 'dr.login', 
+                'dr.id_voipswitch',
                 'vs.name'
             )
             ->leftJoin('voipswitchs as vs', 'vs.id', 'dr.id_voipswitch')
             ->distinct()
             ->get();
+
         return view('revenues.index', compact('clients'));
     }
     

@@ -149,7 +149,9 @@ class RatesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $rate = Rate::findOrFail($id);
+        $rate->delete();
+        return redirect()->route('rates.index')->with('status', 'Se ha eliminado correctamente la tarifa.');
     }
 }

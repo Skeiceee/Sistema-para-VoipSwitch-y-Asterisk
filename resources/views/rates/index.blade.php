@@ -120,6 +120,9 @@ $(document).ready(function(){
 
     $('select[name="ido"]').change(function(){
         let ido = $(this).val()
+        let month, year
+        month = dp.data('datepicker').selectedDates[0].getMonth() + 1
+        year = dp.data('datepicker').selectedDates[0].getFullYear()
         ratesPerMonthAndIDO({url : SITEURL+'tarifas?ido='+ido+'&month='+month+'&year='+year})
     })
 })

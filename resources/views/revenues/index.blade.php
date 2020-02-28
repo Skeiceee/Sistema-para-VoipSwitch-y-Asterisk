@@ -135,7 +135,6 @@
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
 <style>
     #id_client_chosen.chosen-container .chosen-drop {
-        border-bottom: 0;
         border-top: 1px solid #aaa;
         top: auto;
         bottom: 40px;
@@ -156,15 +155,13 @@
         border-bottom-right-radius: 0px;
 
         border-top-color: #80BDFF;
-        
+        border-bottom-color: #80BDFF;
+
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         
-        padding-bottom: 10px;
-
         box-shadow: none;
-        
-        margin-bottom: -16px;
+        margin-bottom: -5px;
     }
 </style>
 @endpush

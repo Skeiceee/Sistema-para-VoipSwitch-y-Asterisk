@@ -133,6 +133,40 @@
 <link href="{{ asset('css/font-awesome-animation.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
+<style>
+    #id_client_chosen.chosen-container .chosen-drop {
+        border-bottom: 0;
+        border-top: 1px solid #aaa;
+        top: auto;
+        bottom: 40px;
+    }
+
+    #id_client_chosen.chosen-container.chosen-with-drop .chosen-single {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+
+        background-image: none;
+    }
+
+    #id_client_chosen.chosen-container.chosen-with-drop .chosen-drop {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+
+        border-top-color: #80BDFF;
+        
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        
+        padding-bottom: 10px;
+
+        box-shadow: none;
+        
+        margin-bottom: -16px;
+    }
+</style>
 @endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>

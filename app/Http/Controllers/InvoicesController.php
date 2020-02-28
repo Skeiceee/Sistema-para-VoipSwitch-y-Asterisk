@@ -103,6 +103,15 @@ class InvoicesController extends Controller
         $view = View::make('invoices.pdf', $data)->render();
         $pdf = PDF::loadHtml($view)->setPaper('tabloid');
         $name_pdf = $client->name.'_invoice'.'.pdf';
+
+        DB::connection('mysql')
+            ->table('dummy')
+            ->update(
+                [
+                    'invoice_support_number' => ($invoice_support_n + 1)
+                ]
+            );
+
         return $pdf->download($name_pdf);
     }
 

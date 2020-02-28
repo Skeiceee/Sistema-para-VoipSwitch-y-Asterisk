@@ -219,7 +219,7 @@ class RevenuesController extends Controller
         $start_date = Carbon::create($year, $month, 1, 0, 0, 0, 'America/Santiago');
         $end_date = (Carbon::create($year, $month, 1, 0, 0, 0, 'America/Santiago'))->endOfMonth();
         
-        $consumos = DB::connection('mysql')
+        $revenues = DB::connection('mysql')
             ->table('daily_revenues as dr')
             ->select(
                 'date',
@@ -246,8 +246,132 @@ class RevenuesController extends Controller
         
         $vs_name = DB::connection('mysql')->table('voipswitchs')->where('id', $id_voipswitch)->value('name');
         $vs_name = $vs_name != null ? $vs_name : 'Interconexion directa';
+        
+        $pos = 1;
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $writer = new Xlsx($spreadsheet);
 
-        return [$consumos, $vs_name];
+        $sheet->setCellValue('A'.$pos, $vs_name);
+        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':H'.$pos);
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':H'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':H'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');        
+        
+        $pos++;
+
+        $sheet->setCellValue('A'.$pos, 'Fecha');
+        $sheet->setCellValue('B'.$pos, 'Cliente');
+        $sheet->setCellValue('C'.$pos, 'Minutos reales');
+        $sheet->setCellValue('D'.$pos, 'Segundos reales totales');
+        $sheet->setCellValue('E'.$pos, 'Minutos efectivos');
+        $sheet->setCellValue('F'.$pos, 'Segundos efectivos totales');
+        $sheet->setCellValue('G'.$pos, 'Venta');
+        $sheet->setCellValue('H'.$pos, 'Costo');
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':H'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':H'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
+        
+        $posHeader = $pos++;
+
+        foreach ($revenues as $revenue) {
+            $sheet->setCellValue('A'.$pos, $revenue->date);
+            $sheet->setCellValue('B'.$pos, $revenue->login);
+            $sheet->setCellValue('C'.$pos, $revenue->minutes_real);
+            $sheet->setCellValue('D'.$pos, $revenue->seconds_real_total);
+            $sheet->setCellValue('E'.$pos, $revenue->minutes_effective);
+            $sheet->setCellValue('F'.$pos, $revenue->seconds_effective_total);
+            $sheet->setCellValue('G'.$pos, $revenue->sale);
+            $sheet->setCellValue('H'.$pos, $revenue->cost);
+
+            $spreadsheet->getActiveSheet()
+            ->getStyle('C'.$pos.':F'.$pos)
+            ->getNumberFormat()
+            ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+            
+            $spreadsheet->getActiveSheet()
+            ->getStyle('G'.$pos.':H'.$pos)
+            ->getNumberFormat()
+            ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+            
+            $pos++;
+        }
+
+        $sheet->setCellValue('A'.$pos, 'Total');
+        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':B'.$pos);
+
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+                )
+            );
+        
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':H'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':H'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f79646');  
+        
+        $spreadsheet->getActiveSheet()
+        ->getStyle('C'.$pos.':F'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+        
+        $spreadsheet->getActiveSheet()
+        ->getStyle('G'.$pos.':H'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+        
+        foreach (range('C', 'H') as $column) {
+            $sheet->setCellValue($column.$pos, '=SUM('.$column.($posHeader+1).':'.$column.($pos-1).')');
+        }
+
+        $pos++;
+
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '00000000'],
+                ],
+            ],
+        ];
+
+        foreach (range('A', 'H') as $column) {
+            $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.($pos-1))->applyFromArray($styleArray);
+        }
+
+        foreach (range('A', 'H') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+        
+        $center= [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        ];
+
+        $spreadsheet->getActiveSheet()
+        ->getStyle('A1'.':H'.($pos-1))
+        ->getAlignment()
+        ->applyFromArray($center);
+
+        ob_start();
+        $writer->save('php://output');
+        $content = ob_get_contents();
+        ob_end_clean();
+        
+        $file_name = 'Consumos_mensuales_del_';
+        $file_name .= $month.'_'.$year.'_de_'.$name_client.'_en_'.$vs_name;
+
+        return response()->excel($content, $file_name);
     }
     /**
      * Display a listing of the resource.

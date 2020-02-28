@@ -81,7 +81,7 @@
                             <div class=card>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div><i class="fas fa-layer-group mr-1"></i><i class="fas fa-user"></i><span class="font-weight-bold ml-2">Consumos mensual por dia de un cliente</span></div>
+                                        <div><i class="fas fa-layer-group mr-1"></i><i class="fas fa-user"></i><span class="font-weight-bold ml-2">Consumos del mes por dia de un cliente</span></div>
                                     </div>
                                     <hr class="my-3">
                                     <form action="{{ route('revenues.client.download') }}" method="post">

@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class SubredesController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-        $this->middleware('admin')->except(['index', 'show']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +17,7 @@ class SubredesController extends Controller
      */
     public function index()
     {
-        return view('Subredes.index');
+        return view('subredes.index');
     }
 
     /**
@@ -31,7 +27,7 @@ class SubredesController extends Controller
      */
     public function create()
     {
-        return view('Subredes.create');
+        return view('subredes.create');
     }
 
     /**
@@ -96,7 +92,7 @@ class SubredesController extends Controller
     {
         $subred = Subred::find($id);
         $sub = new IPv4\SubnetCalculator($subred->ip, $subred->mask2cdr());
-        return view('Subredes.show', compact('subred', 'sub'));
+        return view('subredes.show', compact('subred', 'sub'));
     }
 
     /**
@@ -108,7 +104,7 @@ class SubredesController extends Controller
     public function edit($id)
     {
         $subred = Subred::find($id);
-        return view('Subredes.edit', compact('subred'));
+        return view('subredes.edit', compact('subred'));
     }
 
     /**

@@ -63,7 +63,7 @@
                         </div>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="">Subredes</a>
+                                <a class="nav-link" href="{{ route('subredes.index') }}">Subredes</a>
                             </li>
                         </ul>
                         <ul class="nav flex-column">

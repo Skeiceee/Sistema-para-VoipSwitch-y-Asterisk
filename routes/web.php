@@ -82,3 +82,6 @@ Route::resource('/categorias/documentos', 'DocumentsCategoriesController')->name
         'destroy' => 'categories.documents.destroy'
     ]
 );;
+
+Route::resource('subredes', 'SubredesController');
+Route::resource('hosts', 'HostsController')->except(['create', 'store', 'destroy']);

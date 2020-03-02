@@ -8,7 +8,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Agregar un documento</span></div>
                     </div>
+                    
                     <hr class="my-3">
+
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
@@ -54,10 +56,9 @@
                                     <a class="btn btn-primary" style="width: 150px" href="{{ route('documents.index') }}">Volver</a>
                                 </div>
                             </form>
-
-
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

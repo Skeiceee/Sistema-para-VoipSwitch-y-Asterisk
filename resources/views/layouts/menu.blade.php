@@ -57,6 +57,21 @@
                             </li>
                         </ul>
                     </div>
+                    <div style="width: 150px">
+                        <div class="text-muted py-1">
+                            <i class="fas fa-server"></i><span class="ml-2 font-weight-bold">Sistemas</span>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">Subredes</a>
+                            </li>
+                        </ul>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">Hosts</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="d-sm-block d-md-none" style="width: 150px">
                         <div class="text-muted py-1">
                             <i class="fas fa-user"></i><span class="ml-2 font-weight-bold">Cuenta</span>

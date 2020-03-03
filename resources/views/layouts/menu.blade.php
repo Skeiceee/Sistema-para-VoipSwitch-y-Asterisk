@@ -68,7 +68,7 @@
                         </ul>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="">Hosts</a>
+                                <a class="nav-link" href="{{ route('hosts.index') }}">Hosts</a>
                             </li>
                         </ul>
                     </div>

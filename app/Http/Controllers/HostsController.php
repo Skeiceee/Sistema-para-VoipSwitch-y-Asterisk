@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Host;
-use App\Subred;
 use Illuminate\Support\Facades\Crypt;
+use App\Subred;
+use App\Host;
 
 class HostsController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-        $this->middleware('admin')->except(['show']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +16,20 @@ class HostsController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()){
+            $subred = request()->get('subred');
+            
+            return datatables()->of(
+                Host::select('id', 'server', 'hostname', 'ip')
+                    ->where('id_sub', $subred)
+            )
+            ->addColumn('btn','actions.hosts')
+            ->rawColumns(['btn'])
+            ->make(true);
+        }
+
         $subredes = Subred::all();
-        return view('Hosts.index', compact('subredes'));
+        return view('hosts.index', compact('subredes'));
     }
 
     /**
@@ -33,7 +41,7 @@ class HostsController extends Controller
     public function show($id)
     {
         $host = Host::find($id);
-        return view('Hosts.show', compact('host'));
+        return view('hosts.show', compact('host'));
     }
 
     /**
@@ -45,7 +53,7 @@ class HostsController extends Controller
     public function edit($id)
     {
         $host = Host::find($id);
-        return view('Hosts.edit', compact('host'));
+        return view('hosts.edit', compact('host'));
     }
 
     /**

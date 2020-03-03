@@ -1,0 +1,2 @@
+<a class="btn btn-primary btn-sm" href="{{ route('hosts.show', $id) }}"><i class="fas fa-eye"></i></a>
+<a class="btn btn-primary btn-sm" href="{{ route('hosts.edit', $id) }}"><i class="fas fa-edit"></i></a>

@@ -1,29 +1,47 @@
 @extends('layouts.app')
 @section('content')
-<section class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-10 mx-auto">
-            @include('Common.status')
-            @include('Common.error')
-            @include('Common.requestError')
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <span><i class="fas fa-edit"></i> Modificar subred</span>
-                </div>
                 <div class="card-body">
-                <form class="form-group" action="{{ url('subredes/'.$subred->id) }}" method="post">
-                    @method('PUT')
-                    @csrf
-                    <label for="name">Nombre</label>
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-edit"></i> Modificar subred</span>
+                    </div>
+
+                    <hr class="my-3">
+
+                    @include('Common.status')
+                    @include('Common.error')
+
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ route('subredes.update', $subred->id) }}" method="post">
+                                @method('PUT')
+                                @csrf
+                                <div class="form-group">
+                                    <label for="name">Nombre</label>
+                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-primary btn-inline" style="width: 150px" type="submit">Modificar</button>
+                                    <a class="btn btn-primary btn-inline float-right" style="width: 150px" href="{{ route('subredes.index') }}">Volver</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary btn-inline" type="submit">Modificar</button>
-                    <a class="btn btn-primary btn-inline float-right" href="{{ route('subredes.index') }}">Volver</a>
-                </div>
-                </form>
             </div>
         </div>
     </div>
+</div>
 </section>
 @endsection
+@push('scripts')
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+@endpush

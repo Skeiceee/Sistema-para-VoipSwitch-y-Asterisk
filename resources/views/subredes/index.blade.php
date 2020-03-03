@@ -7,9 +7,14 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-server"></i><span class="font-weight-bold ml-2">Subredes</span></div>
-                        <a id="add_subred" href="{{ route('subredes.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva subred.">
-                            <i class="fas fa-plus"></i>
-                        </a>
+                        <div>
+                            <a id="add_subred" href="{{ route('subredes.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva subred.">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            <a id="add_subred" href="{{ route('restore.index') }}" class="btn btn-primary" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva subred.">
+                                Importar Subred
+                            </a>
+                        </div>
                     </div>
                     <hr class="my-3">
                     <div class="card">
@@ -35,7 +40,7 @@
 </div>
 @endsection
 @push('css')
-    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -49,29 +54,17 @@
     $(document).ready(function(){
         let token = $('meta[name=csrf_token]').attr("content")
         $('#Subredes').DataTable({
-        bAutoWidth: false,
+        processing: true,
+        serverSide: true,
+        scrollX: true,
         language:{ url: SITEURL + 'datatables/spanish' },
-        destroy: true,
-        responsive: true,
-        serverSide:true,
-        ajax: {
-            url: "",
-            method: "POST",
-            data: {
-                _token: token,
-            }
-        },
-        columnDefs: [{
-        targets: 'no-sort',
-        orderable: false,
-        searchable: false,
-        }],
+        ajax: { url: SITEURL + '/subredes', type: 'GET' },
         columns:[
-            {data: 'name', name: 's.name'},
-            {data: 'ip', name: 's.ip'},
-            {data: 'gateway', name: 's.gateway'},
-            {data: 'mask', name: 's.mask'},
-            {data: 'btn'},
+            {data: 'name', name: 'name'},
+            {data: 'ip', name: 'ip'},
+            {data: 'gateway', name: 'gateway'},
+            {data: 'mask', name: 'mask'},
+            {data: 'btn', orderable: false, searchable: false},
         ]
         });
     });

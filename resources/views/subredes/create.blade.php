@@ -14,6 +14,9 @@
 
                     <hr class="my-3">
 
+                    @include('common.status')
+                    @include('common.error')
+
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('subredes.store') }}" method="post">

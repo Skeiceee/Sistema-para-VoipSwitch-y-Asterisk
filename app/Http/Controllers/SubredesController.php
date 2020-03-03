@@ -17,6 +17,14 @@ class SubredesController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()){
+            return datatables()->of(
+                Subred::select('id', 'name', 'ip', 'gateway', 'mask')
+            )
+            ->addColumn('btn','actions.subredes')
+            ->rawColumns(['btn'])
+            ->make(true);
+        }
         return view('subredes.index');
     }
 
@@ -79,7 +87,7 @@ class SubredesController extends Controller
             return redirect()->route('subredes.create')->withInput()->with('error','La mascara de red no es valida.');
         }
         
-        return redirect()->route('subredes.index')->with('status','Se ha agregado la subred exitosamente.');
+        return redirect()->route('subredes.create')->with('status','Se ha agregado la subred exitosamente.');
     }
 
     /**

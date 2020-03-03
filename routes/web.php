@@ -86,6 +86,5 @@ Route::resource('/categorias/documentos', 'DocumentsCategoriesController')->name
 Route::resource('subredes', 'SubredesController');
 Route::resource('hosts', 'HostsController')->except(['create', 'store', 'destroy']);
 
-//Importar contraseñas
 Route::get('restore', 'RestorePasswordController@restore')->name('restore.index');
 Route::post('restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');

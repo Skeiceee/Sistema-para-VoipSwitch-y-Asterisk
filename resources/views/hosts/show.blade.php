@@ -1,14 +1,19 @@
 @extends('layouts.app')
 @section('content')
-<section class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-5 mx-auto">
-            @include('Common.status')
-            @include('Common.error')
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <span><i class="fas fa-network-wired pr-1"></i> {{ $host->ip }}</span>
-                </div>
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-network-wired pr-1"></i> {{ $host->ip }}</span>
+                    </div>
+                    
+                    <hr class="my-3">
+
+                    @include('common.status')
+                    @include('common.error')
                 <div class="card-body">
                     <section class="landing">
                         <div class="container mx-auto">
@@ -85,16 +90,22 @@
                         </div>
                     @endisset
                 </div>
-                    <div class="card-footer">
-                        <a class="btn btn-primary btn-inline float-right" href="{{ route('subredes.show', $host->id_sub) }}">Volver</a>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a class="btn btn-primary btn-block" href="{{ route('subredes.show', $host->id_sub) }}">Volver</a>
+                </div>
                 </form>
+
             </div>
         </div>
     </div>
-</section>
+</div>
 @endsection
-@section('js')
-    <script src="{{asset('./js/clipboard.min.js')}}"></script>
-    <script>var clipboard = new ClipboardJS('#copy')</script>
-@endsection
+@push('scripts')
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/clipboard.min.js') }}"></script>
+<script>
+    var clipboard = new ClipboardJS('#copy')
+</script>
+@endpush

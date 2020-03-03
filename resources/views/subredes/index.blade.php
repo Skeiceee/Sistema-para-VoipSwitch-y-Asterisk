@@ -12,7 +12,7 @@
                                 <i class="fas fa-plus"></i>
                             </a>
                             <a id="add_subred" href="{{ route('restore.index') }}" class="btn btn-primary" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva subred.">
-                                Importar Subred
+                                <span class="font-weight-bold">Importar Subred</span>
                             </a>
                         </div>
                     </div>

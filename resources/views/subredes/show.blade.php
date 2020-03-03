@@ -85,7 +85,6 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         scrollX: true,
-        deferLoading: 0,
         language:{ url: SITEURL + 'datatables/spanish' },
         ajax: { url: SITEURL + '/hosts?subred=' + "{{ $subred->id }}", type: 'GET' },
         columns:[

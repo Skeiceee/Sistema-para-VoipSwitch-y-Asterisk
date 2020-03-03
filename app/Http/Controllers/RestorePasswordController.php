@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Host;
 use App\Subred;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -94,9 +95,9 @@ class RestorePasswordController extends Controller
         }
 
         if($sigue){
-            return redirect()->route('restore')->with('status','Se ha importado la subred completa exitosamente.');
+            return redirect()->route('restore.index')->with('status','Se ha importado la subred completa exitosamente.');
         }else{
-            return redirect()->route('restore')->with('error','El formato del archivo esta corrupto.');
+            return redirect()->route('restore.index')->with('error','El formato del archivo esta corrupto.');
         }
 
     }

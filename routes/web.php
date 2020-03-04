@@ -88,3 +88,5 @@ Route::resource('hosts', 'HostsController')->except(['create', 'store', 'destroy
 
 Route::get('restore', 'RestorePasswordController@restore')->name('restore.index');
 Route::post('restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');
+
+Route::post('exportar/{id}', 'BackupPasswordController@backupDownload')->name('exportar.download');

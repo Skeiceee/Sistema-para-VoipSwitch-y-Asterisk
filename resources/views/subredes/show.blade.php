@@ -14,9 +14,18 @@
                         <div>
                             <i class="fas fa-network-wired pr-1"></i><span class="font-weight-bold ml-2">{{ $subred->ip }}</span>
                         </div>
-                        <a class="btn btn-primary icon-width float-right" style="width: 40px" data-placement="left" data-tooltip="true" title="Información de la subred" data-toggle="collapse" href="#collapseExample" aria-controls="collapseExample">
-                            <i class="fas fa-info"></i>
-                        </a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-primary" style="width: 40px" data-placement="left" data-tooltip="true" title="Información de la subred" data-toggle="collapse" href="#collapseExample" aria-controls="collapseExample">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <form class="ml-1" action="{{ route('exportar.download', $subred->id) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $subred->id }}">
+                                <button class="btn btn-primary btn-block" type="submit">
+                                    <span class="font-weight-bold">Exportar subred</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                     <hr class="my-3">

@@ -13,12 +13,6 @@ class BackupPasswordController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('admin');
-    }
-
-    public function backup(){
-        $subredes = Subred::all();
-        return view('Backup.index', compact('subredes'));
     }
 
     public function backupDownload(Request $request){

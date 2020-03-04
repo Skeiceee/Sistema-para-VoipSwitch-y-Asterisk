@@ -32,8 +32,7 @@ class HostsController extends Controller
             ->make(true);
         }
 
-        $subredes = Subred::all();
-        return view('hosts.index', compact('subredes'));
+        return redirect()->route('subredes.index');
     }
 
     /**

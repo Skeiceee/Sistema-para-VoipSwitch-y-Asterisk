@@ -6,8 +6,8 @@
             <div class="card">
                 <div class="card-body">
 
-                    @include('Common.status')
-                    @include('Common.error')
+                    @include('common.status')
+                    @include('common.error')
                     
                     <div>
                         <i class="fas fa-edit"></i><span class="font-weight-bold ml-2">Modificar host</span>

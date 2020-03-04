@@ -24,7 +24,7 @@
 
                     <hr class="my-3">
 
-                    @include('Common.status')
+                    @include('common.status')
                     <div class="card">
                         <div class="container-fluid table-responsive card-body">
                             <table id="Hosts" class="table table-bordered table-hover table-striped dt-responsive display nowrap" cellspacing="0" width="100%">

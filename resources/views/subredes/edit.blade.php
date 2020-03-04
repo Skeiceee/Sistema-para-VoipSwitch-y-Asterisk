@@ -12,8 +12,8 @@
 
                     <hr class="my-3">
 
-                    @include('Common.status')
-                    @include('Common.error')
+                    @include('common.status')
+                    @include('common.error')
 
                     <div class="card">
                         <div class="card-body">

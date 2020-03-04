@@ -9,6 +9,10 @@ use App\Host;
 
 class HostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -88,7 +92,7 @@ class HostsController extends Controller
         $host->estado = 1;
         $host->save();
 
-        return redirect()->route('hosts.index')->with('status','Se ha modificado el host exitosamente.');
+        return redirect()->route('subredes.show', $host->id_sub)->with('status','Se ha modificado el host exitosamente.');
     }
 
 }

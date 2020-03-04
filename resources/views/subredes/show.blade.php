@@ -11,7 +11,9 @@
                 <div class="card-body">
                 
                     <div class="d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-network-wired pr-1"></i> {{ $subred->ip }}</span>
+                        <div>
+                            <i class="fas fa-network-wired pr-1"></i><span class="font-weight-bold ml-2">{{ $subred->ip }}</span>
+                        </div>
                         <a class="btn btn-primary icon-width float-right" style="width: 40px" data-placement="left" data-tooltip="true" title="Información de la subred" data-toggle="collapse" href="#collapseExample" aria-controls="collapseExample">
                             <i class="fas fa-info"></i>
                         </a>
@@ -59,7 +61,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a class="btn btn-primary btn-inline float-right" style="width: 150px" href="{{ route('subredes.index') }}">Volver</a>
+                        <a class="btn btn-primary btn-inline" style="width: 150px" href="{{ route('subredes.index') }}">Volver</a>
                     </div>
                 </div>
             </div>

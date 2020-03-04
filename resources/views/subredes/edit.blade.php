@@ -7,7 +7,7 @@
                 <div class="card-body">
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <span><i class="fas fa-edit"></i> Modificar subred</span>
+                        <div><i class="fas fa-edit "></i><span class="font-weight-bold ml-2">Modificar subred</span></div>
                     </div>
 
                     <hr class="my-3">

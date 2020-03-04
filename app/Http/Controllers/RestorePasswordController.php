@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Crypt;
 
 class RestorePasswordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function restore(){
         return view('restore.index');
     }

@@ -17,6 +17,7 @@
         "laraveles/spanish": "^1.2",
         "markrogoyski/ipv4-subnet-calculator": "3.*",
         "phpoffice/phpspreadsheet": "^1.9",
+        "usmanhalalit/laracsv": "^2.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

@@ -7,9 +7,6 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-server"></i><span class="font-weight-bold ml-2">Crear subred</span></div>
-                        <a id="add_subred" href="{{ route('subredes.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva subred.">
-                            <i class="fas fa-plus"></i>
-                        </a>
                     </div>
 
                     <hr class="my-3">

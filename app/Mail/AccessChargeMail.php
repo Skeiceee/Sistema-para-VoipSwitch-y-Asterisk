@@ -29,7 +29,7 @@ class AccessChargeMail extends Mailable
      */
     public function build()
     {
-        return $this->from('noreply@capa1.cl')
+        return $this->from('no-reply@vozdigital.cl')
                     ->to($this->data['to'])
                     ->subject($this->data['subject'])
                     ->attachFromStorage('/revenues/'.$this->data['file_date'].'.xlsx')

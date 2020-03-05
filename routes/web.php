@@ -81,10 +81,19 @@ Route::resource('/categorias/documentos', 'DocumentsCategoriesController')->name
         'store' => 'categories.documents.store',
         'destroy' => 'categories.documents.destroy'
     ]
-);;
+);
 
 Route::resource('subredes', 'SubredesController');
 Route::resource('hosts', 'HostsController')->except(['create', 'store', 'destroy']);
+
+Route::resource('llamadas', 'CallsController')->names(
+    [
+        'index' => 'calls.index',
+        'create' => 'calls.create',
+        'store' => 'calls.store',
+        'destroy' => 'calls.destroy'
+    ]
+);
 
 Route::get('restore', 'RestorePasswordController@restore')->name('restore.index');
 Route::post('restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');

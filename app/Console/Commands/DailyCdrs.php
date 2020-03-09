@@ -99,39 +99,27 @@ class DailyCdrs extends Command
             foreach ($clients as $client) {
                 if($voipswitch->version == '2.986.0.137'){
                     $calls = getCalls($voipswitch, $client, $startYesterday, $endYesterday);
-
-                    $csvExporter = new Export();
-                    $csvExporter->build($calls, ['call_start', 'call_end', 'called_number', 'duration', 'cost', 'tariffdesc']);
-                    $csvWriter = $csvExporter->getWriter();
                     
                     $login = str_replace(' ', '_', $client->Login);
                     $login = str_replace(array('.', '-'), '', $login);
-
-                    $nameVps = str_replace(' ','', $voipswitch->name);
-                    $nameVps = str_replace(array('.', '-'), '_', $nameVps);
-
-                    $date = Carbon::yesterday()->format('d_m_Y');
-                    
-                    $nameFile = strtolower('cdrs_'.$login.'_'.$nameVps.'_'.$date.'.csv');
-                    Storage::disk('calls')->put($nameVps.'/'.$nameFile, $csvWriter->getContent()); 
                 }else if ($voipswitch->version == '2.0.0.954'){
                     $calls = getCalls($voipswitch, $client, $startYesterday, $endYesterday);
-                    
-                    $csvExporter = new Export();
-                    $csvExporter->build($calls, ['call_start', 'call_end', 'called_number', 'duration', 'cost', 'tariffdesc']);
-                    $csvWriter = $csvExporter->getWriter();
 
                     $login = str_replace(' ', '_', $client->login);
                     $login = str_replace(array('.', '-'), '', $login);
-
-                    $nameVps = str_replace(' ','', $voipswitch->name);
-                    $nameVps = str_replace(array('.', '-'), '_', $nameVps);
-
-                    $date = Carbon::yesterday()->format('d_m_Y');
-
-                    $nameFile = strtolower('cdrs_'.$login.'_'.$nameVps.'_'.$date.'.csv');
-                    Storage::disk('calls')->put($nameVps.'/'.$nameFile, $csvWriter->getContent());
                 }
+
+                $csvExporter = new Export();
+                $csvExporter->build($calls, ['call_start', 'call_end', 'called_number', 'duration', 'cost', 'tariffdesc']);
+                $csvWriter = $csvExporter->getWriter();
+
+                $nameVps = str_replace(' ','', $voipswitch->name);
+                $nameVps = str_replace(array('.', '-'), '_', $nameVps);
+
+                $date = Carbon::yesterday()->format('d_m_Y');
+
+                $nameFile = strtolower('cdrs_'.$login.'_'.$nameVps.'_'.$date.'.csv');
+                Storage::disk('calls')->put($nameVps.'/'.$nameFile, $csvWriter->getContent());
             }
         }
     }

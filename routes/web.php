@@ -83,19 +83,13 @@ Route::resource('/categorias/documentos', 'DocumentsCategoriesController')->name
     ]
 );
 
-Route::resource('subredes', 'SubredesController');
-Route::resource('hosts', 'HostsController')->except(['create', 'store', 'destroy']);
+Route::resource('/subredes', 'SubredesController');
+Route::resource('/hosts', 'HostsController')->except(['create', 'store', 'destroy']);
 
-Route::resource('llamadas', 'CallsController')->names(
-    [
-        'index' => 'calls.index',
-        'create' => 'calls.create',
-        'store' => 'calls.store',
-        'destroy' => 'calls.destroy'
-    ]
-);
+Route::get('/llamadas', 'CallsController@index')->name('calls.index');
+Route::post('/llamadas/buscar/vps', 'CallsController@searchvps')->name('calls.searchvps');
 
-Route::get('restore', 'RestorePasswordController@restore')->name('restore.index');
-Route::post('restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');
+Route::get('/restore', 'RestorePasswordController@restore')->name('restore.index');
+Route::post('/restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');
 
-Route::post('exportar/{id}', 'BackupPasswordController@backupDownload')->name('exportar.download');
+Route::post('/exportar/{id}', 'BackupPasswordController@backupDownload')->name('exportar.download');

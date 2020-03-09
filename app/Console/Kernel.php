@@ -337,6 +337,9 @@ class Kernel extends ConsoleKernel
 
         // Envia el correo de consumos diarios.
         $schedule->command('email:accesscharge')->dailyAt('08:00')->timezone('America/Santiago');
+
+        // Crea los archivos diarios de CDRs.
+        $schedule->command('daily:cdrs')->dailyAt('05:00')->timezone('America/Santiago');
     }
 
     /**

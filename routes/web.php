@@ -88,6 +88,7 @@ Route::resource('/hosts', 'HostsController')->except(['create', 'store', 'destro
 
 Route::get('/llamadas', 'CallsController@index')->name('calls.index');
 Route::post('/llamadas/buscar/vps', 'CallsController@searchvps')->name('calls.searchvps');
+Route::post('/llamadas/download', 'CallsController@download')->name('calls.download');
 
 Route::get('/restore', 'RestorePasswordController@restore')->name('restore.index');
 Route::post('/restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');

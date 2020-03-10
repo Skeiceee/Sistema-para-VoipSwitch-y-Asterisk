@@ -71,6 +71,7 @@ class DailyCdrs extends Command
                     ]
                 )
                 ->whereRaw('(id_client != 1 OR client_type != 32)')
+                ->orderBy('call_start')
                 ->get();
             }else if ($voipswitch->version == '2.0.0.954'){
                 $calls = Calls::on($voipswitch->conn_name)
@@ -82,6 +83,7 @@ class DailyCdrs extends Command
                         DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
                     ]
                 )
+                ->orderBy('call_start')
                 ->get();
             }
 

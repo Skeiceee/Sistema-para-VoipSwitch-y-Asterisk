@@ -94,12 +94,13 @@ class CallsController extends Controller
 
         $period = new CarbonPeriod($start_date, '1 day', $end_date);
 
-        $zip = Zip::create(storage_path('app/').'cdrs.zip');
+        $zip = Zip::create(join(DIRECTORY_SEPARATOR, [storage_path('app'), 'cdrs.zip']));
         foreach ($period as $dt) {
             $date = $dt->format('d_m_Y');
-            $nameFile = $nameVps.'/'.$partNameFile.$date.'.csv';
-            $pathFile = storage_path('app/calls/').$nameFile;
+            $nameFile = join(DIRECTORY_SEPARATOR, [$nameVps, $partNameFile.$date.'.csv']);
+            $pathFile = join(DIRECTORY_SEPARATOR, [storage_path('app'), 'calls', $nameFile]);
 
+            dd($pathFile, $nameFile);
             if (file_exists($pathFile)) {
                 $zip->add($pathFile);
                 $zip->listFiles();

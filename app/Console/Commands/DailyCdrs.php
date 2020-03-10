@@ -101,17 +101,17 @@ class DailyCdrs extends Command
                     $calls = getCalls($voipswitch, $client, $startYesterday, $endYesterday);
                     
                     $login = str_replace(' ', '_', $client->Login);
-                    $login = str_replace(array('.', '-'), '', $login);
                 }else if ($voipswitch->version == '2.0.0.954'){
                     $calls = getCalls($voipswitch, $client, $startYesterday, $endYesterday);
 
                     $login = str_replace(' ', '_', $client->login);
-                    $login = str_replace(array('.', '-'), '', $login);
                 }
 
                 $csvExporter = new Export();
                 $csvExporter->build($calls, ['call_start', 'call_end', 'called_number', 'duration', 'cost', 'tariffdesc']);
                 $csvWriter = $csvExporter->getWriter();
+
+                $login = str_replace(array('.', '-'), '', $login);
 
                 $nameVps = str_replace(' ','', $voipswitch->name);
                 $nameVps = str_replace(array('.', '-'), '_', $nameVps);

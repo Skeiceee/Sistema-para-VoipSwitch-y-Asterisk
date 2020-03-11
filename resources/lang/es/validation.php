@@ -146,8 +146,10 @@ return [
 
     'attributes' => [
         'password' => 'contraseña',
+        'username' => 'usuario',
         'email' => 'correo electrónico',
         'name' => 'nombre',
+        'title' => 'titulo',
         'description' => 'descripción',
         'lastName' => 'apellido',
         'address' => 'direccion',

@@ -94,3 +94,12 @@ Route::get('/restore', 'RestorePasswordController@restore')->name('restore.index
 Route::post('/restore', 'RestorePasswordController@restoreUpload')->name('restore.upload');
 
 Route::post('/exportar/{id}', 'BackupPasswordController@backupDownload')->name('exportar.download');
+
+Route::resource('/cuentas', 'AccountsController')->names(
+    [
+        'index' => 'accounts.index',
+        'create' => 'accounts.create',
+        'store' => 'accounts.store',
+        'destroy' => 'accounts.destroy'
+    ]
+);

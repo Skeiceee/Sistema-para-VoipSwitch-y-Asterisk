@@ -111,7 +111,7 @@ $(document).ready(function(){
     $('input[name="date"]').datepicker({
         todayButton: new Date(),
         maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date),
-        minDate: new Date(2020, 2,9) {{-- /* TODO: Conseguir este valor directamente desde la base de datos. */ --}}
+        minDate: new Date(2020, 2, 9) {{-- /* TODO: Conseguir este valor directamente desde la base de datos. */ --}}
     })
 
     $('input[name="id_vps"]').on( 'click', function() {

@@ -15,4 +15,17 @@ class Account extends Model
     protected $fillable = [
         'id_user', 'title', 'username', 'password', 'description'
     ];
+
+    public function getUsernameAttribute($value){
+        return decrypt($this->attributes['username']);
+    }
+
+    public function getPasswordAttribute($value){
+        return decrypt($this->attributes['password']);
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id_user', 'id');
+    }
 }

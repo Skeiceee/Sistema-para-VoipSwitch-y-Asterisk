@@ -78,7 +78,7 @@ class DocumentsController extends Controller
         
         $document->save();
 
-        return $request;
+        return redirect()->route('documents.create')->with('status','Se ha agregado el documento exitosamente.');
     }
 
     /**

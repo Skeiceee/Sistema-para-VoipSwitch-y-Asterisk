@@ -42,4 +42,9 @@ class User extends Authenticatable
     public function initials(){
         return $this->name[0].$this->last_name[0];
     }
+
+    public function accounts()
+    {
+        return $this->hasMany('App\Account', 'id_user', 'id');
+    }
 }

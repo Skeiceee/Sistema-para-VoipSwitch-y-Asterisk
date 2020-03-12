@@ -8,9 +8,8 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-folder"></i><span class="font-weight-bold ml-2">Agregar un documento</span></div>
                     </div>
-                    
                     <hr class="my-3">
-
+                    @include('common.status')
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\Http\Requests\AccountsStoreRequest;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountsController extends Controller
 {
@@ -14,6 +17,24 @@ class AccountsController extends Controller
      */
     public function index()
     {
+        if(request()->ajax()){
+            $currentUser = User::find(auth()->user()->id);
+            $accounts = $currentUser->accounts()
+                ->select(
+                    'id', 
+                    'title', 
+                    'description', 
+                    'username', 
+                    'password'
+                )
+                ->get();
+            
+            return datatables()->of($accounts)
+            ->addColumn('action', 'actions.documents')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
         return view('accounts.index');
     }
 
@@ -35,7 +56,18 @@ class AccountsController extends Controller
      */
     public function store(AccountsStoreRequest $request)
     {
-        return $request;
+        $currentUser = User::find(auth()->user()->id);
+        
+        $account = new Account;
+
+        $account->title = $request->title;
+        $account->description = $request->description;
+        $account->username = encrypt($request->username);
+        $account->password = encrypt($request->password);
+
+        $currentUser->accounts()->save($account);
+
+        return redirect()->route('accounts.create')->with('status','Se ha agregado la cuenta exitosamente.');
     }
 
     /**

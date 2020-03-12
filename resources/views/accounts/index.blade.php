@@ -8,7 +8,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-user-circle"></i><span class="font-weight-bold ml-2">Cuentas</span></div>
                         <div>
-                            <a id="add_accounts" href="{{ route('accounts.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva cuenta.">
+                            <a id="add_account" href="{{ route('accounts.create') }}" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Agregar nueva cuenta.">
                                 <i class="fas fa-plus"></i>
                             </a>
                         </div>
@@ -19,10 +19,10 @@
                             <table id="documents" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theader-danger">
                                     <tr>
+                                        <th>Titulo</th>
                                         <th>Descripción</th>
                                         <th>Usuario</th>
                                         <th>Contraseña</th>
-                                        <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -57,12 +57,12 @@
             serverSide: true,
             scrollX: true,
             language:{ url: SITEURL + 'datatables/spanish' },
-            ajax: { url: SITEURL + '/documentos', type: 'GET' },
+            ajax: { url: SITEURL + '/cuentas', type: 'GET' },
             columns: [
-                { data: 'nombre', name: 'documents.name' },
+                { data: 'title', name: 'title' },
                 {
-                    data: 'descripcion', 
-                    name: 'documents.description', 
+                    data: 'description', 
+                    name: 'description', 
                     render: function(data){
                         res = data.substring(0, 35);
                         if (data.length !== res.length) {
@@ -72,8 +72,8 @@
                         return res
                     }
                 },
-                { data: 'name_category', name: 'documents_categories.name' },
-                { data: 'action', name: 'action', orderable: false }
+                { data: 'username', name: 'username' },
+                { data: 'password', name: 'password'},
             ],
             drawCallback: function(settings, json) {
                 $('[title]').tooltip();
@@ -86,9 +86,8 @@
 
     })
 
-    let addClient = $('#add_document');
-    let categories = $('#categories');
-    addClient.tooltip()
-    categories.tooltip()
+    let addAccount = $('#add_account');
+    addAccount.tooltip()
+
 </script>
 @endpush

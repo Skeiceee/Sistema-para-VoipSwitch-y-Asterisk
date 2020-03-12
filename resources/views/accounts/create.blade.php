@@ -10,7 +10,7 @@
                     </div>
                     
                     <hr class="my-3">
-
+                    @include('common.status')
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('accounts.store') }}" method="post" enctype="multipart/form-data">

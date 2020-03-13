@@ -46,7 +46,7 @@
                                     <div class="mt-1"><span class="text-muted" id="counter">Quedan 300 caracteres</span> </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <button class="btn btn-primary" style="width: 150px" >Agregar</button>
+                                    <button class="btn btn-primary" style="width: 150px" >Modificar</button>
                                     <a class="btn btn-primary" style="width: 150px" href="{{ route('accounts.index') }}">Volver</a>
                                 </div>
                             </form>

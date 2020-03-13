@@ -103,7 +103,17 @@ class AccountsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+
+        $account = Account::find($id);
+
+        $account->title = $request->title;
+        $account->description = $request->description;
+        $account->username = encrypt($request->username);
+        $account->password = encrypt($request->password);
+
+        $account->save();
+
+        return redirect()->route('accounts.create')->with('status','Se ha modificado la cuenta exitosamente.');
     }
 
     /**

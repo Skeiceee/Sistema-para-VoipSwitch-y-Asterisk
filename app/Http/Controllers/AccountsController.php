@@ -30,7 +30,7 @@ class AccountsController extends Controller
                 ->get();
             
             return datatables()->of($accounts)
-            ->addColumn('action', 'actions.documents')
+            ->addColumn('action', 'actions.accounts')
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);
@@ -89,7 +89,9 @@ class AccountsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $account = Account::findOrFail($id);
+
+        return view('accounts.edit', compact('account'));
     }
 
     /**
@@ -101,7 +103,7 @@ class AccountsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request;
     }
 
     /**
@@ -112,6 +114,9 @@ class AccountsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $account = Account::findOrFail($id);
+        $account->delete();
+
+        return redirect()->route('accounts.index')->with('status','Se ha eliminado la cuenta exitosamente.');
     }
 }

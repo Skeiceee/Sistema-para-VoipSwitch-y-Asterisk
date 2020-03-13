@@ -100,6 +100,8 @@ Route::resource('/cuentas', 'AccountsController')->names(
         'index' => 'accounts.index',
         'create' => 'accounts.create',
         'store' => 'accounts.store',
+        'edit' => 'accounts.edit',
+        'update' => 'accounts.update',
         'destroy' => 'accounts.destroy'
     ]
 );

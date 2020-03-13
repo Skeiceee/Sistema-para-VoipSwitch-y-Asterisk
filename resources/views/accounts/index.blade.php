@@ -14,6 +14,7 @@
                         </div>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div class="card">
                         <div class="table-responsive card-body">
                             <table id="documents" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
@@ -23,6 +24,7 @@
                                         <th>Descripción</th>
                                         <th>Usuario</th>
                                         <th>Contraseña</th>
+                                        <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -74,6 +76,7 @@
                 },
                 { data: 'username', name: 'username' },
                 { data: 'password', name: 'password'},
+                { data: 'action', name: 'action', orderable: false }
             ],
             drawCallback: function(settings, json) {
                 $('[title]').tooltip();

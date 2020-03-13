@@ -18,28 +18,28 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="username">Titulo</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" name="title" id="title" type="text" value="{{ old('title')}}">
+                                    <input class="form-control @error('title') is-invalid @enderror" name="title" id="title" type="text" value="{{  empty(old('title')) ? $account->title : old('title') }}">
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="username">Usuario</label>
-                                    <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" type="text" value="{{ old('username')}}">
+                                    <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" type="text" value="{{ empty(old('username')) ? $account->username : old('username') }}">
                                     @error('username')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Contraseña</label>
-                                    <input class="form-control @error('password') is-invalid @enderror" name="password" id="password" type="text" value="{{ old('password')}}">
+                                    <input class="form-control @error('password') is-invalid @enderror" name="password" id="password" type="text" value="{{ empty(old('password')) ? $account->password : old('password') }}">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group d-flex flex-column">
                                     <label for="description">Descripción</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="5" maxlength=300>{{ old('description') }}</textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="5" maxlength=300>{{ empty(old('description')) ? $account->description : old('description') }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                     @enderror

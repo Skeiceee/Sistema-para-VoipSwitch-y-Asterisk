@@ -48,7 +48,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div><i class="fas fa-trophy"></i><span class="font-weight-bold ml-2">Clientes</span></div>
+                                    <div><i class="fas fa-trophy"></i><span class="font-weight-bold ml-2">Ranking de clientes</span></div>
+                                    <span class="font-weight-bold ">{{ $yesterday }}</span>
                                 </div>    
                                 <table class="table table-sm table-hover mt-3">
                                     <thead>

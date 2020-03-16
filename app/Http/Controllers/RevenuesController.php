@@ -450,8 +450,9 @@ class RevenuesController extends Controller
         )
         ->orderBy('margin', 'desc')
         ->get();
-
-        return view('revenues.index', compact('clients', 'dailyRevenues'));
+            
+        $yesterday = Carbon::yesterday()->format('d-m-Y');
+        return view('revenues.index', compact('clients', 'dailyRevenues', 'yesterday'));
     }
     
     /**

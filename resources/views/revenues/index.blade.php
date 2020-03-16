@@ -44,6 +44,56 @@
                         </div>
                     </div>
 
+                    <div class="my-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div><i class="fas fa-trophy"></i><span class="font-weight-bold ml-2">Clientes</span></div>
+                                </div>    
+                                <table class="table table-sm table-hover mt-3">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="text-center">#</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Voipswitch</th>
+                                        <th scope="col">Minutos reales</th>
+                                        <th scope="col">Minutos efectivos</th>
+                                        <th scope="col">Venta</th>
+                                        <th scope="col">Costo</th>
+                                        <th scope="col">Margen</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($dailyRevenues as $key => $dailyRevenue)  
+                                        <tr>
+                                            <th scope="row" class="text-center">
+                                                @if ($key + 1 == 1)
+                                                    <i class="fas fa-medal"></i>
+                                                @else
+                                                    {{ $key + 1 }}
+                                                @endif
+                                            </th> 
+                                            <td>{{ $dailyRevenue->login }}</td>
+                                            <td>
+                                                @if ($dailyRevenue->name != null)
+                                                    {{ $dailyRevenue->name }}
+                                                @else
+                                                    <span>Interconexion directa</span>
+                                                @endif    
+                                            </td>
+                                            <td>{{ $dailyRevenue->minutes_real }}</td>
+                                            <td>{{ $dailyRevenue->minutes_effective }}</td>
+                                            <td><i class="fas fa-dollar-sign"></i><span class="float-right">{{ round($dailyRevenue->sale, 2) }}</span></td>
+                                            <td><i class="fas fa-dollar-sign"></i><span class="float-right">{{ round($dailyRevenue->cost, 2) }}</span></td>
+                                            <td><i class="fas fa-dollar-sign"></i><span class="float-right">{{ round($dailyRevenue->margin, 2) }}</span></td>
+                                        </tr>
+                                    @endforeach
+                                     </tbody>        
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-6">
                             <div class="card">

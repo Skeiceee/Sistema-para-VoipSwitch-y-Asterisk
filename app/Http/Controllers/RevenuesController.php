@@ -428,7 +428,30 @@ class RevenuesController extends Controller
             ->distinct()
             ->get();
 
-        return view('revenues.index', compact('clients'));
+        $startYesterday = Carbon::yesterday()->toDateTimeString();
+        $endYesterday =  Carbon::yesterday()->hour(23)->minute(59)->second(59)->toDateTimeString();
+
+        $dailyRevenues = DailyRevenue::select(
+            'daily_revenues.login', 
+            'voipswitchs.name as name', 
+            'daily_revenues.minutes_real', 
+            'daily_revenues.minutes_effective',
+            'daily_revenues.sale', 
+            'daily_revenues.cost', 
+            DB::raw('(sale-cost) as margin')            
+        )
+        ->leftJoin('voipswitchs', 'voipswitchs.id', 'daily_revenues.id_voipswitch')
+        ->whereBetween(
+            'date', 
+            [
+                $startYesterday, 
+                $endYesterday
+            ]
+        )
+        ->orderBy('margin', 'desc')
+        ->get();
+
+        return view('revenues.index', compact('clients', 'dailyRevenues'));
     }
     
     /**

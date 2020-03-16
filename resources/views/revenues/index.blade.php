@@ -53,14 +53,14 @@
                                 <table class="table table-sm table-hover mt-3">
                                     <thead>
                                       <tr>
-                                        <th scope="col" class="text-center">#</th>
+                                        <th scope="col" class="text-center border-left ">#</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Voipswitch</th>
                                         <th scope="col">Minutos reales</th>
                                         <th scope="col">Minutos efectivos</th>
                                         <th scope="col">Venta</th>
                                         <th scope="col">Costo</th>
-                                        <th scope="col">Margen</th>
+                                        <th scope="col" class="border-right">Margen</th>
                                       </tr>
                                     </thead>
                                     <tbody>

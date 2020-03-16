@@ -56,7 +56,7 @@
                                       <tr>
                                         <th scope="col" class="text-center border-left ">#</th>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Voipswitch</th>
+                                        <th scope="col">Maquina</th>
                                         <th scope="col">Minutos reales</th>
                                         <th scope="col">Minutos efectivos</th>
                                         <th scope="col">Venta</th>

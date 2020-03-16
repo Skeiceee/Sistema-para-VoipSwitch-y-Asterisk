@@ -68,7 +68,9 @@
                                         <tr>
                                             <th scope="row" class="text-center">
                                                 @if ($key + 1 == 1)
-                                                    <i class="fas fa-medal"></i>
+                                                    <div class="bg-dark rounded">
+                                                        <i class="fas fa-medal text-white"></i>
+                                                    </div>
                                                 @else
                                                     {{ $key + 1 }}
                                                 @endif

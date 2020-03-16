@@ -51,7 +51,7 @@
                                     <div><i class="fas fa-trophy"></i><span class="font-weight-bold ml-2">Ranking de clientes</span></div>
                                     <span class="font-weight-bold ">{{ $yesterday }}</span>
                                 </div>    
-                                <table class="table table-sm table-hover mt-3">
+                                <table class="table table-sm table-hover mt-3 mb-0">
                                     <thead>
                                       <tr>
                                         <th scope="col" class="text-center border-left ">#</th>

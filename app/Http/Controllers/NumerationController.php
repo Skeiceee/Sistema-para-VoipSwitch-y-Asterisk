@@ -68,6 +68,7 @@ class NumerationController extends Controller
                 $numeration = new Numeration();
                 $numeration->number = $number;
                 $numeration->type_id = $types[$key];
+                $numeration->status = 1;
                 $numeration->save();
             }
         }
@@ -119,7 +120,7 @@ class NumerationController extends Controller
     {
         $numeration = Numeration::find($id);
         
-        if($numeration->status == 0){
+        if($numeration->status == 1){
             $numeration->delete();
             return redirect()->route('numeration.index')->with('status','Se ha eliminado el numero exitosamente.');
         }else{

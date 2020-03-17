@@ -158,10 +158,10 @@ class ClientsController extends Controller
 
                 if($numeration){
 
-                    if($numeration->status == 0){
+                    if($numeration->status == 1){
                         $client->numerations()->save($numeration);
                         
-                        $numeration->status = 1;
+                        $numeration->status = 2;
                         $numeration->save();
                     }else{
                         $assigned_numeration[] = [
@@ -191,7 +191,7 @@ class ClientsController extends Controller
 
         for ($i = $start_range; $i <= $end_range; $i++) {
             $numeration = Numeration::where('number', $i)->first();
-            $numeration->status = 0;
+            $numeration->status = 1;
 
             $numeration->save();
             $client->numerations()->detach($numeration->id);

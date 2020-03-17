@@ -102,7 +102,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div><i class="fas fa-layer-group"></i><span class="font-weight-bold ml-2">Consumos acomulados</span></div>
+                                        <div><i class="fas fa-layer-group"></i><span class="font-weight-bold ml-2">Consumos acumulados</span></div>
                                     </div>
                                     <hr class="my-3">
                                     <form action="{{ route('revenues.accomulated.download') }}" method="post">

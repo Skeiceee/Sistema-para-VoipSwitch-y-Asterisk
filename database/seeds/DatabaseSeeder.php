@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 TypesTableSeeder::class,
-                VoipswitchsTableSeeder::class
+                VoipswitchsTableSeeder::class,
+                StatusSeeder::class
             ]
         );
     }

@@ -43,7 +43,7 @@ class SendAccessChargeMail extends Command
     {
         $yesterday = Carbon::yesterday();
 
-        $data['file_date'] = $yesterday->format('Y-m-d');;
+        $data['file_date'] = $yesterday->format('Y-m-d');
 
         $data['to'] = [
             'administracion@vozdigital.cl',

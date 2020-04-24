@@ -83,6 +83,15 @@ Route::resource('/categorias/documentos', 'DocumentsCategoriesController')->name
     ]
 );
 
+Route::resource('/cargosrecurrentes', 'RecurringChargeController')->names(
+    [
+        'index' => 'recurringcharge.index',
+        'create' => 'recurringcharge.create',
+        'store' => 'recurringcharge.store',
+        'destroy' => 'recurringcharge.destroy'
+    ]
+);
+
 Route::resource('/subredes', 'SubredesController');
 Route::resource('/hosts', 'HostsController')->except(['create', 'store', 'destroy']);
 

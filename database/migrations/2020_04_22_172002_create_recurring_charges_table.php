@@ -13,13 +13,18 @@ class CreateRecurringChargesTable extends Migration
      */
     public function up()
     {
-        Schema::create('recurring_charges', function (Blueprint $table) {
+        Schema::connection('mysql')->create('recurring_charges', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('id_client')->unsigned();
+            $table->foreign('id_client')
+                ->references('id')->on('clients')
+                ->onDelete('cascade');
             $table->string('description', 200);
+            $table->tinyInteger('isPerMonth');
+            $table->dateTime('date')->nullable();
             $table->integer('cost_unit')->unsigned();
             $table->integer('quantity')->unsigned();
             $table->integer('cost_total')->unsigned();
-            $table->tinyInteger('isPerMonth');
             $table->timestamps();
         });
     }

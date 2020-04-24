@@ -25,6 +25,9 @@
                                 <a class="nav-link " href="{{ route('revenues.index') }}">Consumos</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link " href="{{ route('recurringcharge.index') }}">Cargos recurrentes</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link " href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
                             </li>
                             <li class="nav-item">

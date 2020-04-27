@@ -50,11 +50,12 @@ class RecurringChargeController extends Controller
                     )
                     ->join('clients', 'clients.id', 'recurring_charges.id_client')
                     ->whereBetween('date',
-                        [
-                            DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'),
-                            DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
+                    [
+                        DB::raw('str_to_date("'.$date_start->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")'),
+                        DB::raw('str_to_date("'.$date_end->format('Y-m-d H:i:s').'", "%Y-%m-%d %H:%i:%s")')
                         ]
-                    )
+                        )
+                    ->orWhere('date', '=', null)
             )
             ->addColumn('action', 'actions.recurringcharges')
             ->rawColumns(['action'])

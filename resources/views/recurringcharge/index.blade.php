@@ -115,8 +115,7 @@ $(document).ready(function(){
                 let year = date.getFullYear()
                 revenuesTable.ajax.url(SITEURL+'cargosrecurrentes?month='+month+'&year='+year).load();
             }
-        },
-        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
+        }
     })
 
     $("#add_recurring_charge").tooltip()

@@ -37,11 +37,17 @@
 
                     <div class="card">
                         <div class="table-responsive card-body">
-                            <table id="revenues" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
+                            <table id="recurring_charges" class="table table-bordered table-hover table-striped dt-responsive display nowrap mb-0" cellspacing="0" width="100%">
                                 <thead class="theade-danger">
                                     <tr>
+                                        <th>#</th>
+                                        <th>Cliente</th>
                                         <th>Fecha</th>
                                         <th>Descripcion</th>
+                                        <th>Modalidad</th>
+                                        <th>Costo unitario</th>
+                                        <th>Cantidad</th>
+                                        <th>Costo total</th>
                                         <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
@@ -81,15 +87,21 @@ $(document).ready(function(){
     });
     $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
 
-    let revenuesTable = $('#revenues').DataTable({
+    let revenuesTable = $('#recurring_charges').DataTable({
         processing: true,
         serverSide: true,
         scrollX: true,
         language:{ url: SITEURL + 'datatables/spanish' },
         ajax: { url: SITEURL + 'cargosrecurrentes', type: 'GET' },
         columns: [
-            {data: 'date', name: 'date'},
-            {data: 'description', name: 'description'},
+            {data: 'id', name: 'recurring_charges.id'},
+            {data: 'name', name: 'clients.name'},
+            {data: 'date', name: 'recurring_charges.date'},
+            {data: 'description', name: 'recurring_charges.description'},
+            {data: 'isPerMonth', name: 'recurring_charges.isPerMonth'},
+            {data: 'cost_unit', name: 'recurring_charges.cost_unit'},
+            {data: 'quantity', name: 'recurring_charges.quantity'},
+            {data: 'cost_total', name: 'recurring_charges.cost_total'},
             {data: 'action', name: 'action', orderable: false}
         ],
         order: [[0, 'desc']]

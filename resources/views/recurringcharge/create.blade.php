@@ -99,8 +99,7 @@
     });
 
     $('input[name="date"]').datepicker({
-        todayButton: new Date(),
-        maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)
+        todayButton: new Date()
     })
 
     function cancelar(e) {

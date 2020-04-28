@@ -88,8 +88,9 @@ Route::resource('/cargosrecurrentes', 'RecurringChargeController')->names(
         'index' => 'recurringcharge.index',
         'create' => 'recurringcharge.create',
         'store' => 'recurringcharge.store',
-        'destroy' => 'recurringcharge.destroy'
-    ]
+        'destroy' => 'recurringcharge.destroy',
+        'edit' => 'recurringcharge.edit'
+        ]
 );
 
 Route::resource('/subredes', 'SubredesController');

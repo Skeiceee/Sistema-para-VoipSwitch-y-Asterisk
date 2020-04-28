@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DailyRevenue;
 use App\Http\Requests\DownloadAccomulatedRequest;
+use App\RecurringCharge;
 use App\Revenue;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -11,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class RevenuesController extends Controller
 {
@@ -170,6 +172,81 @@ class RevenuesController extends Controller
             $pos++;
         }
         
+        // Cargos recurrentes
+        $recurringCharges = RecurringCharge::select(
+            'recurring_charges.id',
+            'clients.name',
+            'recurring_charges.date',
+            'recurring_charges.description',
+            'recurring_charges.isPerMonth',
+            'recurring_charges.cost_unit',
+            'recurring_charges.quantity',
+            'recurring_charges.cost_total'
+        )
+        ->join('clients', 'clients.id', 'recurring_charges.id_client')
+        ->whereBetween('date',
+        [
+            DB::raw('str_to_date("'.$dates[0].' 00:00:00", "%d-%m-%Y %H:%i:%s")'),
+            DB::raw('str_to_date("'.$dates[1].' 23:59:59", "%d-%m-%Y %H:%i:%s")')
+            ]
+            )
+        ->orWhere('date', '=', null)->get();
+
+        $pos_rc = 1;
+        $sheet->setCellValue('I'.$pos_rc, 'Cargos recurrentes');
+        $spreadsheet->getActiveSheet()->mergeCells('I'.$pos_rc.':N'.$pos_rc);
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+            )
+        );
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');    
+
+        $pos_rc++;
+
+        $sheet->setCellValue('I'.$pos_rc, 'Cliente');
+        $sheet->setCellValue('J'.$pos_rc, 'Descripción');
+        $sheet->setCellValue('K'.$pos_rc, 'Fecha');
+        $sheet->setCellValue('L'.$pos_rc, 'Costo unitario');
+        $sheet->setCellValue('M'.$pos_rc, 'Cantidad');
+        $sheet->setCellValue('N'.$pos_rc, 'Costo total');
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
+        
+
+        $pos_rc++;
+
+        foreach ($recurringCharges as $recurringCharge) {
+            $sheet->setCellValue('I'.$pos_rc, $recurringCharge->name);
+            $sheet->setCellValue('J'.$pos_rc, $recurringCharge->description);
+            $sheet->setCellValue('K'.$pos_rc, $recurringCharge->date != null ? $recurringCharge->date : 'Mensual');
+            $sheet->setCellValue('L'.$pos_rc, $recurringCharge->cost_unit);
+            $sheet->setCellValue('M'.$pos_rc, $recurringCharge->quantity);
+            $sheet->setCellValue('N'.$pos_rc, '=L'.$pos_rc.'*M'.$pos_rc);
+            
+            $spreadsheet->getActiveSheet()
+            ->getStyle('L'.$pos_rc.':M'.$pos_rc)
+            ->getNumberFormat()
+            ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+
+            $spreadsheet->getActiveSheet()
+            ->getStyle('N'.$pos_rc)
+            ->getNumberFormat()
+            ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+            
+            $pos_rc++;
+        }
+        // ------------------
+
         $styleArray = [
             'borders' => [
                 'allBorders' => [
@@ -179,6 +256,15 @@ class RevenuesController extends Controller
             ],
         ];
 
+        // Cargos recurrentes   
+        foreach (range('I', 'N') as $column) {
+            $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.($pos_rc-1))->applyFromArray($styleArray);
+        }
+        foreach (range('I', 'N') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+        // ------------------
+
         foreach (range('A', 'G') as $column) {
             $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.($pos-1))->applyFromArray($styleArray);
         }
@@ -187,7 +273,7 @@ class RevenuesController extends Controller
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
         
-        $center= [
+        $center = [
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
         ];
@@ -196,7 +282,12 @@ class RevenuesController extends Controller
         ->getStyle('A1'.':G'.($pos-1))
         ->getAlignment()
         ->applyFromArray($center);
-
+        // Cargos recurrentes  
+        $spreadsheet->getActiveSheet()
+        ->getStyle('I1'.':N'.($pos_rc-1))
+        ->getAlignment()
+        ->applyFromArray($center);
+        // ------------------
         ob_start();
         $writer->save('php://output');
         $content = ob_get_contents();

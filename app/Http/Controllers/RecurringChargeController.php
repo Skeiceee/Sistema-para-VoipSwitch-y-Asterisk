@@ -159,6 +159,8 @@ class RecurringChargeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = RecurringCharge::findOrFail($id);
+        $client->delete();
+        return redirect()->route('recurringcharge.index', $client->id)->with('status', 'Se ha eliminado correctamente el cargo recurrente.');
     }
 }

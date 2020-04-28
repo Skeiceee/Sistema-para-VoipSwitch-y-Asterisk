@@ -17,6 +17,7 @@
                         </div>
                     </div>
                     <hr class="my-3">
+                    @include('common.status')
                     <div id="filter_wrapper" class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">

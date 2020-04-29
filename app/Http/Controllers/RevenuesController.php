@@ -177,11 +177,13 @@ class RevenuesController extends Controller
             'recurring_charges.id',
             'clients.name',
             'recurring_charges.date',
+            'recurring_charges.date_service_start',
             'recurring_charges.description',
             'recurring_charges.isPerMonth',
             'recurring_charges.cost_unit',
             'recurring_charges.quantity',
-            'recurring_charges.cost_total'
+            'recurring_charges.cost_total',
+            'recurring_charges.money_type'
         )
         ->join('clients', 'clients.id', 'recurring_charges.id_client')
         ->whereBetween('date',
@@ -194,7 +196,7 @@ class RevenuesController extends Controller
 
         $pos_rc = 1;
         $sheet->setCellValue('I'.$pos_rc, 'Cargos recurrentes');
-        $spreadsheet->getActiveSheet()->mergeCells('I'.$pos_rc.':N'.$pos_rc);
+        $spreadsheet->getActiveSheet()->mergeCells('I'.$pos_rc.':P'.$pos_rc);
         $styleArray = array(
             'font'  => array(
                 'color' => array('rgb' => 'FFFFFF'),
@@ -202,44 +204,48 @@ class RevenuesController extends Controller
             )
         );
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');    
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':P'.$pos_rc)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':P'.$pos_rc)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');    
 
         $pos_rc++;
 
-        $sheet->setCellValue('I'.$pos_rc, 'Cliente');
-        $sheet->setCellValue('J'.$pos_rc, 'Descripción');
-        $sheet->setCellValue('K'.$pos_rc, 'Fecha');
-        $sheet->setCellValue('L'.$pos_rc, 'Costo unitario');
-        $sheet->setCellValue('M'.$pos_rc, 'Cantidad');
-        $sheet->setCellValue('N'.$pos_rc, 'Costo total');
+        $sheet->setCellValue('I'.$pos_rc, 'Fecha');
+        $sheet->setCellValue('J'.$pos_rc, 'Cliente');
+        $sheet->setCellValue('K'.$pos_rc, 'Descripción');
+        $sheet->setCellValue('L'.$pos_rc, 'Inicio de servicio');
+        $sheet->setCellValue('M'.$pos_rc, 'Costo unitario');
+        $sheet->setCellValue('N'.$pos_rc, 'Cantidad');
+        $sheet->setCellValue('O'.$pos_rc, 'Costo total');
+        $sheet->setCellValue('P'.$pos_rc, 'Tipo de moneda');
         $styleArray = array(
             'font'  => array(
                 'color' => array('rgb' => 'FFFFFF'),
                 'bold' => true
         ));
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':N'.$pos_rc)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':P'.$pos_rc)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('I'.$pos_rc.':P'.$pos_rc)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
         
 
         $pos_rc++;
 
         foreach ($recurringCharges as $recurringCharge) {
-            $sheet->setCellValue('I'.$pos_rc, $recurringCharge->name);
-            $sheet->setCellValue('J'.$pos_rc, $recurringCharge->description);
-            $sheet->setCellValue('K'.$pos_rc, $recurringCharge->date != null ? $recurringCharge->date : 'Mensual');
-            $sheet->setCellValue('L'.$pos_rc, $recurringCharge->cost_unit);
-            $sheet->setCellValue('M'.$pos_rc, $recurringCharge->quantity);
-            $sheet->setCellValue('N'.$pos_rc, '=L'.$pos_rc.'*M'.$pos_rc);
+            $sheet->setCellValue('I'.$pos_rc, $recurringCharge->date != null ? $recurringCharge->date : 'Mensual');
+            $sheet->setCellValue('J'.$pos_rc, $recurringCharge->name);
+            $sheet->setCellValue('K'.$pos_rc, $recurringCharge->description);
+            $sheet->setCellValue('L'.$pos_rc, $recurringCharge->date_service_start);
+            $sheet->setCellValue('M'.$pos_rc, $recurringCharge->cost_unit);
+            $sheet->setCellValue('N'.$pos_rc, $recurringCharge->quantity);
+            $sheet->setCellValue('O'.$pos_rc, '=M'.$pos_rc.'*N'.$pos_rc);
+            $sheet->setCellValue('P'.$pos_rc, $recurringCharge->money_type);
             
             $spreadsheet->getActiveSheet()
-            ->getStyle('L'.$pos_rc.':M'.$pos_rc)
+            ->getStyle('M'.$pos_rc.':N'.$pos_rc)
             ->getNumberFormat()
             ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
 
             $spreadsheet->getActiveSheet()
-            ->getStyle('N'.$pos_rc)
+            ->getStyle('O'.$pos_rc)
             ->getNumberFormat()
             ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
             
@@ -257,10 +263,10 @@ class RevenuesController extends Controller
         ];
 
         // Cargos recurrentes   
-        foreach (range('I', 'N') as $column) {
+        foreach (range('I', 'P') as $column) {
             $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.($pos_rc-1))->applyFromArray($styleArray);
         }
-        foreach (range('I', 'N') as $column) {
+        foreach (range('I', 'P') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
         // ------------------
@@ -284,7 +290,7 @@ class RevenuesController extends Controller
         ->applyFromArray($center);
         // Cargos recurrentes  
         $spreadsheet->getActiveSheet()
-        ->getStyle('I1'.':N'.($pos_rc-1))
+        ->getStyle('I1'.':P'.($pos_rc-1))
         ->getAlignment()
         ->applyFromArray($center);
         // ------------------

@@ -44,11 +44,13 @@
                                         <th>#</th>
                                         <th>Cliente</th>
                                         <th>Fecha</th>
+                                        <th>Fecha de inicio de servicio</th>
                                         <th>Descripcion</th>
                                         <th>Modalidad</th>
                                         <th>Costo unitario</th>
                                         <th>Cantidad</th>
                                         <th>Costo total</th>
+                                        <th>Tipo de moneda</th>
                                         <th width="10px">Acciones</th>
                                     </tr>
                                 </thead>
@@ -98,11 +100,13 @@ $(document).ready(function(){
             {data: 'id', name: 'recurring_charges.id'},
             {data: 'name', name: 'clients.name'},
             {data: 'date', name: 'recurring_charges.date'},
+            {data: 'date_service_start', name: 'recurring_charges.date_service_start'},
             {data: 'description', name: 'recurring_charges.description'},
             {data: 'isPerMonth', name: 'recurring_charges.isPerMonth'},
             {data: 'cost_unit', name: 'recurring_charges.cost_unit'},
             {data: 'quantity', name: 'recurring_charges.quantity'},
             {data: 'cost_total', name: 'recurring_charges.cost_total'},
+            {data: 'money_type', name: 'recurring_charges.money_type'},
             {data: 'action', name: 'action', orderable: false}
         ],
         order: [[0, 'desc']]

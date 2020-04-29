@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\RecurringCharge;
+use App\Http\Requests\RecurringChargeStoreRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -86,7 +87,7 @@ class RecurringChargeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RecurringChargeStoreRequest $request)
     {
         $recurring_charge = new  RecurringCharge();
 

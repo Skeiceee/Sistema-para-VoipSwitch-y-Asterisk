@@ -32,16 +32,19 @@
                                         type="text"
                                         data-language="es"
                                         data-date-format="dd/mm/yyyy" 
-                                        class="form-control"
+                                        class="form-control @error('date_service_start') is-invalid @enderror"
                                         name="date_service_start"
                                         autocomplete="off"
                                         >
+                                        @error('date_service_start')
+                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
-                                    <textarea class="form-control" name="description" cols="30" rows="3" maxlength="200" onkeydown="cancelar(event)">{{ old('name') }}</textarea>
+                                    <textarea class="form-control" name="description" cols="30" rows="3" maxlength="200" onkeydown="cancelar(event)" >{{ old('name') }}</textarea>
                                     <div class="text-muted float-right mt-1" id="counter">Quedan 500 caracteres</div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -63,21 +66,30 @@
                                         type="text"
                                         data-language="es"
                                         data-date-format="dd/mm/yyyy" 
-                                        class="form-control"
+                                        class="form-control @error('date') is-invalid @enderror"
                                         name="date"
                                         autocomplete="off"
                                         >
+                                        @error('date')
+                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="quantity">Cantidad</label>
-                                    <input class="form-control" type="number" name="quantity" id="quantity">
+                                    <input class="form-control @error('quantity') is-invalid @enderror" type="number" name="quantity" id="quantity" value="{{ old('quantity') }}">
+                                    @error('quantity')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="cost_unit">Costo unitario</label>
-                                    <input class="form-control" type="number" step="0.01" name="cost_unit" id="cost_unit">
+                                    <input class="form-control @error('cost_unit') is-invalid @enderror" type="number" step="0.01" name="cost_unit" id="cost_unit" value="{{ old('cost_unit') }}">
+                                    @error('cost_unit')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">

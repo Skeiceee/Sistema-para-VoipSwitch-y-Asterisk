@@ -162,6 +162,10 @@ return [
         'rate_reduced' => 'tarifa reducida',
         'rate_night' => 'tarifa nocturna',
         'category' => 'categoria',
+        'quantity' => 'cantidad',
+        'cost_unit' => 'costo unitario',
+        'date_service_start' => 'fecha de inicio de servicio',
+        'modality' => 'modalidad del cargo recurrente'
     ],
 
 ];

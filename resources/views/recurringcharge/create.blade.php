@@ -21,6 +21,24 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="date_service_start">Fecha de inicio de servicio</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input id="date_service_start" 
+                                        type="text"
+                                        data-language="es"
+                                        data-date-format="dd/mm/yyyy" 
+                                        class="form-control"
+                                        name="date_service_start"
+                                        autocomplete="off"
+                                        >
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
                                     <textarea class="form-control" name="description" cols="30" rows="3" maxlength="200" onkeydown="cancelar(event)">{{ old('name') }}</textarea>
@@ -61,7 +79,15 @@
                                     <label for="cost_unit">Costo unitario</label>
                                     <input class="form-control" type="number" step="0.01" name="cost_unit" id="cost_unit">
                                 </div>
-                                
+
+                                <div class="form-group">
+                                    <label for="money_type">Tipo de moneda</label>
+                                    <select class="form-control" name="money_type" id="money_type">
+                                        <option value="UF">UF</option>
+                                        <option value="CLP">CLP</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
 
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary" style="width: 150px">Agregar</button>
@@ -99,6 +125,10 @@
     });
 
     $('input[name="date"]').datepicker({
+        todayButton: new Date()
+    })
+    
+    $('input[name="date_service_start"]').datepicker({
         todayButton: new Date()
     })
 

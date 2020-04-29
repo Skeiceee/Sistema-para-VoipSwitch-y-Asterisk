@@ -87,7 +87,13 @@ class RecurringChargeController extends Controller
     public function store(Request $request)
     {
         $recurring_charge = new  RecurringCharge();
+
         $recurring_charge->id_client = $request->id_client;
+        $date_service_start = Carbon::createFromFormat('d/m/Y', $request->date_service_start, 'America/Santiago')
+            ->hour(0)
+            ->minute(0)
+            ->second(0);
+        $recurring_charge->date_service_start = $date_service_start;
         $recurring_charge->description = $request->description;
 
         $modality = $request->modality;
@@ -108,9 +114,11 @@ class RecurringChargeController extends Controller
         }
 
 
-        $recurring_charge->cost_unit = $request->cost_unit;
         $recurring_charge->quantity = $request->quantity;
+        $recurring_charge->cost_unit = $request->cost_unit;
+        $recurring_charge->money_type = $request->money_type;
         $recurring_charge->cost_total = $request->cost_unit * $request->quantity;
+
 
         $recurring_charge->save();
 

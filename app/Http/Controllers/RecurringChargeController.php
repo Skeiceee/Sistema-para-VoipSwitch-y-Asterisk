@@ -146,7 +146,22 @@ class RecurringChargeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $recurringCharge = RecurringCharge::findOrFail($id);
+
+        $clients = Client::all();
+
+        $money_types = [
+            'UF',
+            'CLP',
+            'USD'
+        ];
+
+        $modalities = [
+            0 => 'Único',
+            1 => 'Mensual'
+        ];
+
+        return view('recurringcharge.edit', compact('recurringCharge', 'clients', 'money_types', 'modalities'));
     }
 
     /**
@@ -158,7 +173,7 @@ class RecurringChargeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**

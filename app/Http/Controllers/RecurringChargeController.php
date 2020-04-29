@@ -42,11 +42,13 @@ class RecurringChargeController extends Controller
                         'recurring_charges.id',
                         'clients.name',
                         'recurring_charges.date',
+                        'recurring_charges.date_service_start',
                         'recurring_charges.description',
                         'recurring_charges.isPerMonth',
                         'recurring_charges.cost_unit',
                         'recurring_charges.quantity',
-                        'recurring_charges.cost_total'
+                        'recurring_charges.cost_total',
+                        'recurring_charges.money_type'
                     )
                     ->join('clients', 'clients.id', 'recurring_charges.id_client')
                     ->whereBetween('date',

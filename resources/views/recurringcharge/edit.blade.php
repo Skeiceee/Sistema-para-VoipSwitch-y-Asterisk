@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div><i class="fas fa-wallet"></i><span class="font-weight-bold ml-2">Agregar nuevo cargo recurrente</span></div>
+                        <div><i class="fas fa-wallet"></i><span class="font-weight-bold ml-2">Modificar cargo recurrente</span></div>
                     </div>
                     <hr class="my-3">
                     <div class="card">
@@ -33,13 +33,16 @@
                                         type="text"
                                         data-language="es"
                                         data-date-format="dd/mm/yyyy" 
-                                        class="form-control"
+                                        class="form-control @error('date_service_start') is-invalid @enderror"
                                         name="date_service_start"
                                         autocomplete="off"
                                         @if ($recurringCharge->date_service_start)
                                           value="{{ $recurringCharge->getCarbonDateServiceStart()->format('d/m/Y') }}"
                                         @endif
                                         >
+                                        @error('date_service_start')
+                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -68,24 +71,33 @@
                                         type="text"
                                         data-language="es"
                                         data-date-format="dd/mm/yyyy" 
-                                        class="form-control"
+                                        class="form-control @error('date') is-invalid @enderror"
                                         name="date"
                                         autocomplete="off"
                                         @if ($recurringCharge->date)
                                             value="{{ $recurringCharge->getCarbonDate()->format('d/m/Y') }}"
                                         @endif
                                         >
+                                        @error('date')
+                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="quantity">Cantidad</label>
-                                    <input class="form-control" type="number" name="quantity" id="quantity" value="{{ empty(old('quantity')) ? $recurringCharge->quantity : old('quantity') }}">
+                                    <input class="form-control @error('quantity') is-invalid @enderror" type="number" name="quantity" id="quantity" value="{{ empty(old('quantity')) ? $recurringCharge->quantity : old('quantity') }}">
+                                    @error('quantity')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="cost_unit">Costo unitario</label>
-                                    <input class="form-control" type="number" step="0.01" name="cost_unit" id="cost_unit" value="{{ empty(old('cost_unit')) ? $recurringCharge->cost_unit : old('cost_unit') }}">
+                                    <input class="form-control @error('cost_unit') is-invalid @enderror" type="number" step="0.01" name="cost_unit" id="cost_unit" value="{{ empty(old('cost_unit')) ? $recurringCharge->cost_unit : old('cost_unit') }}">
+                                    @error('cost_unit')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">

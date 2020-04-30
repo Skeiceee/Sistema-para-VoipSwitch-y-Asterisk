@@ -12,10 +12,6 @@ class RecurringCharge extends Model
     protected $connection = 'mysql';
 
     function getCarbonDate(){
-
-        if($this->date != null){
-            return false;
-        }
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->date, 'America/Santiago');
     }
 

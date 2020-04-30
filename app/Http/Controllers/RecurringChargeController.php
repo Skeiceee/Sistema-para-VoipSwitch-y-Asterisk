@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\RecurringCharge;
 use App\Http\Requests\RecurringChargeStoreRequest;
+use App\Http\Requests\RecurringChargeUpdateRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -172,7 +173,7 @@ class RecurringChargeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RecurringChargeUpdateRequest $request, $id)
     {
         dd($request);
     }

@@ -175,7 +175,41 @@ class RecurringChargeController extends Controller
      */
     public function update(RecurringChargeUpdateRequest $request, $id)
     {
-        dd($request);
+        $recurring_charge = RecurringCharge::findOrFail($id);
+
+        $recurring_charge->id_client = $request->id_client;
+        $date_service_start = Carbon::createFromFormat('d/m/Y', $request->date_service_start, 'America/Santiago')
+            ->hour(0)
+            ->minute(0)
+            ->second(0);
+        $recurring_charge->date_service_start = $date_service_start;
+        $recurring_charge->description = $request->description;
+
+        $modality = $request->modality;
+        if($modality == 0){
+            //  Unique
+            $recurring_charge->isPerMonth = 0;
+            
+            $date = Carbon::createFromFormat('d/m/Y', $request->date, 'America/Santiago')
+                ->hour(0)
+                ->minute(0)
+                ->second(0);
+
+            $recurring_charge->date = $date;
+        }else if($modality == 1){
+            //  Monthly
+            $recurring_charge->isPerMonth = 1;
+            $recurring_charge->date = null;
+        }
+
+        $recurring_charge->quantity = $request->quantity;
+        $recurring_charge->cost_unit = $request->cost_unit;
+        $recurring_charge->money_type = $request->money_type;
+        $recurring_charge->cost_total = $request->cost_unit * $request->quantity;
+
+        $recurring_charge->save();
+
+        return redirect()->route('recurringcharge.index')->with('status', 'Se ha modificado correctamente el cargo recurrente.');
     }
 
     /**
@@ -186,8 +220,8 @@ class RecurringChargeController extends Controller
      */
     public function destroy($id)
     {
-        $client = RecurringCharge::findOrFail($id);
-        $client->delete();
+        $recurring_charge = RecurringCharge::findOrFail($id);
+        $recurring_charge->delete();
         return redirect()->route('recurringcharge.index', $client->id)->with('status', 'Se ha eliminado correctamente el cargo recurrente.');
     }
 }

@@ -299,10 +299,14 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 <<<<<<< HEAD
+<<<<<<< HEAD
         })->dailyAt('05:00')->timezone('America/Santiago');
 
 =======
         })->dailyAt('09:50')->timezone('America/Santiago');
+=======
+        })->dailyAt('09:59')->timezone('America/Santiago');
+>>>>>>> c2d57b3374df1dbc4ca6e2050bf479a5720fbb68
             
 >>>>>>> 82e8e818b7b4fdcc0df81cb19877de9b5f08ce81
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
@@ -336,7 +340,7 @@ class Kernel extends ConsoleKernel
 
             DB::connection('mysql')->table('average_calls')->insert($toInsert);
 
-        })->dailyAt('09:50')->timezone('America/Santiago');
+        })->dailyAt('09:59')->timezone('America/Santiago');
 
         // Agrega a la tabla 'daily_revenue' los consumos diarios.
         $schedule->command('daily:revenues')->dailyAt('08:00')->timezone('America/Santiago');
@@ -346,7 +350,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('email:alarmsessions')->cron('0 */3 * * *')->timezone('America/Santiago');
         // Crea los archivos diarios de CDRs.
-        $schedule->command('daily:cdrs')->dailyAt('09:50')->timezone('America/Santiago');
+        $schedule->command('daily:cdrs')->dailyAt('09:59')->timezone('America/Santiago');
     }
 
     /**

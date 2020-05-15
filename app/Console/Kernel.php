@@ -29,9 +29,9 @@ class Kernel extends ConsoleKernel
      */
     protected static function newTable(Spreadsheet $spreadsheet, Object $sheet, Object $revenues, String $title, Int $pos = 1){
         if($pos == 1){
-            $center= [ 
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
+            $center= [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ];
             $spreadsheet->getActiveSheet()->getStyle('A:G')->getAlignment()->applyFromArray($center);
         }else{
@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
                 'bold' => true
         ));
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');  
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');
 
         $pos++;
         $sheet->setCellValue('A'.$pos, 'Cliente');
@@ -67,11 +67,11 @@ class Kernel extends ConsoleKernel
             $sheet->setCellValue('F'.$pos, $revenue->sale);
             $sheet->setCellValue('G'.$pos, $revenue->cost);
             if($pos % 2 != 0){
-                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f2f2f2');   
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f2f2f2');
             }
             $pos++;
         }
-        
+
         foreach (range('A', 'G') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
@@ -85,8 +85,8 @@ class Kernel extends ConsoleKernel
                 'bold' => true
         ));
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':G'.$posHeader)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':G'.$posHeader)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');        
-        
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':G'.$posHeader)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('b47eb6');
+
         $styleArray = [
             'borders' => [
                 'allBorders' => [
@@ -99,7 +99,7 @@ class Kernel extends ConsoleKernel
         foreach (range('A', 'G') as $column) {
             $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle($column.'1:'.$column.$pos)->applyFromArray($styleArray);
         }
-        
+
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
         $sheet->setCellValue('A'.$pos, 'Total');
 
@@ -111,8 +111,8 @@ class Kernel extends ConsoleKernel
         );
 
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->applyFromArray($styleArray);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f79646');  
-        
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('f79646');
+
         $spreadsheet->getActiveSheet()
             ->getStyle('B'.$posFirstRevenue.':E'.$pos)
             ->getNumberFormat()
@@ -122,9 +122,9 @@ class Kernel extends ConsoleKernel
             ->getStyle('F'.$posFirstRevenue.':G'.$pos)
             ->getNumberFormat()
             ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
-        
+
         $styleArray = [
-            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT, 
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
             'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
         ];
 
@@ -144,18 +144,18 @@ class Kernel extends ConsoleKernel
         return DB::connection('condell.'.$nameDataBase)
                 ->table('calls as c')
                 ->select(
-                    'c.id_client as id_customer', 
+                    'c.id_client as id_customer',
                     'cs.login as customer',
                     DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                     DB::raw('round(sum(c.duration)) as seconds_real_total'),
                     DB::raw('round((sum(c.duration)/60)) as minutes_effective'),
-                    DB::raw('round(sum(c.duration)) as seconds_effective_total'), 
-                    DB::raw('round(sum(c.cost), 2) as sale'), 
+                    DB::raw('round(sum(c.duration)) as seconds_effective_total'),
+                    DB::raw('round(sum(c.cost), 2) as sale'),
                     DB::raw('round(sum(c.costD), 4) as cost')
                 )
                 ->join('clientsip as cs', 'c.id_client', 'cs.id_client')
                 ->whereBetween(
-                    'c.call_start', 
+                    'c.call_start',
                     [
                         DB::raw('str_to_date("'.$start.'", "%Y-%m-%d %H:%i:%s")'),
                         DB::raw('str_to_date("'.$end.'", "%Y-%m-%d %H:%i:%s")')
@@ -186,7 +186,7 @@ class Kernel extends ConsoleKernel
             $revenuesArgentina = DB::connection('argentina')
                 ->table('calls as c')
                 ->select(
-                    'c.id_client as id_customer', 
+                    'c.id_client as id_customer',
                     'i.Login as customer',
                     DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                     DB::raw('round(sum(c.duration)) as seconds_real_total'),
@@ -197,7 +197,7 @@ class Kernel extends ConsoleKernel
                 )
                 ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
                 ->whereBetween(
-                    'c.call_start', 
+                    'c.call_start',
                     [
                         DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
                         DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
@@ -212,18 +212,18 @@ class Kernel extends ConsoleKernel
             $revenuesWholesale = DB::connection('wholesale')
                 ->table('calls as c')
                 ->select(
-                    'c.id_client as id_customer', 
+                    'c.id_client as id_customer',
                     'i.Login as customer',
                     DB::raw('round((sum(c.duration)/60)) as minutes_real'),
                     DB::raw('round(sum(c.duration)) as seconds_real_total'),
                     DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
-                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
-                    DB::raw('round(sum(c.cost), 2) as sale'), 
+                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'),
+                    DB::raw('round(sum(c.cost), 2) as sale'),
                     DB::raw('round(sum(c.costD), 4) as cost')
                 )
                 ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
                 ->whereBetween(
-                    'c.call_start', 
+                    'c.call_start',
                     [
                         DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
                         DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
@@ -233,7 +233,7 @@ class Kernel extends ConsoleKernel
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
-            
+
             $revenuesSistek = DB::connection('asterisk')
                 ->table('cdr as c')
                 ->select(
@@ -248,7 +248,7 @@ class Kernel extends ConsoleKernel
                 ->where('c.channel', 'like', '%SIP/Sistek%')
                 ->where('c.disposition', '=', 'ANSWERED')
                 ->whereBetween(
-                    'c.calldate', 
+                    'c.calldate',
                     [
                         DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
                         DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
@@ -259,7 +259,7 @@ class Kernel extends ConsoleKernel
             $revenuesHeavyuser = $this::revenuesCondellQuery('heavyuser', $startYesterday, $endYesterday);
             $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
             $revenuesRetail = $this::revenuesCondellQuery('retail', $startYesterday, $endYesterday);
-            
+
             $pos = 1;
             if($revenuesArgentina->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesArgentina, 'Argentina');
@@ -284,7 +284,7 @@ class Kernel extends ConsoleKernel
             $writer->save('php://output');
             $content = ob_get_contents();
             ob_end_clean();
-            
+
             $nameFile = Carbon::yesterday()->format('Y-m-d');
             Storage::disk('revenues')->put($nameFile.".xlsx", $content);
 
@@ -298,7 +298,7 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
         })->dailyAt('05:00')->timezone('America/Santiago');
-            
+
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {
             $startYesterday = Carbon::yesterday()->toDateTimeString();

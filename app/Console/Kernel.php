@@ -208,36 +208,32 @@ class Kernel extends ConsoleKernel
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
-<<<<<<< HEAD
 
-            $revenuesWholesale = DB::connection('wholesale')
-                ->table('calls as c')
-                ->select(
-                    'c.id_client as id_customer',
-                    'i.Login as customer',
-                    DB::raw('round((sum(c.duration)/60)) as minutes_real'),
-                    DB::raw('round(sum(c.duration)) as seconds_real_total'),
-                    DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
-                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'),
-                    DB::raw('round(sum(c.cost), 2) as sale'),
-                    DB::raw('round(sum(c.costD), 4) as cost')
-                )
-                ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
-                ->whereBetween(
-                    'c.call_start',
-                    [
-                        DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
-                        DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
-                    ]
-                )
-                ->where('c.client_type', '=' , DB::raw('i.Type'))
-                ->groupBy('c.id_client', 'i.Login')
-                ->orderBy('sale', 'desc')
-                ->get();
+            // $revenuesWholesale = DB::connection('wholesale')
+            //     ->table('calls as c')
+            //     ->select(
+            //         'c.id_client as id_customer',
+            //         'i.Login as customer',
+            //         DB::raw('round((sum(c.duration)/60)) as minutes_real'),
+            //         DB::raw('round(sum(c.duration)) as seconds_real_total'),
+            //         DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
+            //         DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'),
+            //         DB::raw('round(sum(c.cost), 2) as sale'),
+            //         DB::raw('round(sum(c.costD), 4) as cost')
+            //     )
+            //     ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
+            //     ->whereBetween(
+            //         'c.call_start',
+            //         [
+            //             DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
+            //             DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
+            //         ]
+            //     )
+            //     ->where('c.client_type', '=' , DB::raw('i.Type'))
+            //     ->groupBy('c.id_client', 'i.Login')
+            //     ->orderBy('sale', 'desc')
+            //     ->get();
 
-=======
-            
->>>>>>> 82e8e818b7b4fdcc0df81cb19877de9b5f08ce81
             $revenuesSistek = DB::connection('asterisk')
                 ->table('cdr as c')
                 ->select(
@@ -298,17 +294,9 @@ class Kernel extends ConsoleKernel
             $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[((int)$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
             $revenue->file_name = $nameFile;
             $revenue->save();
-<<<<<<< HEAD
-<<<<<<< HEAD
-        })->dailyAt('05:00')->timezone('America/Santiago');
 
-=======
-        })->dailyAt('09:50')->timezone('America/Santiago');
-=======
         })->dailyAt('09:59')->timezone('America/Santiago');
->>>>>>> c2d57b3374df1dbc4ca6e2050bf479a5720fbb68
-            
->>>>>>> 82e8e818b7b4fdcc0df81cb19877de9b5f08ce81
+
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {
             $startYesterday = Carbon::yesterday()->toDateTimeString();

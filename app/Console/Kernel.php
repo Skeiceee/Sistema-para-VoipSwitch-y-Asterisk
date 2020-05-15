@@ -208,6 +208,7 @@ class Kernel extends ConsoleKernel
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
+<<<<<<< HEAD
 
             $revenuesWholesale = DB::connection('wholesale')
                 ->table('calls as c')
@@ -234,6 +235,9 @@ class Kernel extends ConsoleKernel
                 ->orderBy('sale', 'desc')
                 ->get();
 
+=======
+            
+>>>>>>> 82e8e818b7b4fdcc0df81cb19877de9b5f08ce81
             $revenuesSistek = DB::connection('asterisk')
                 ->table('cdr as c')
                 ->select(
@@ -263,9 +267,6 @@ class Kernel extends ConsoleKernel
             $pos = 1;
             if($revenuesArgentina->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesArgentina, 'Argentina');
-            }
-            if($revenuesWholesale->count() > 0){
-                $pos = $this::newTable($spreadsheet, $sheet, $revenuesWholesale, 'Wholesale', $pos);
             }
             if($revenuesHeavyuser->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesHeavyuser, 'Heavyuser', $pos);
@@ -297,8 +298,13 @@ class Kernel extends ConsoleKernel
             $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[((int)$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
             $revenue->file_name = $nameFile;
             $revenue->save();
+<<<<<<< HEAD
         })->dailyAt('05:00')->timezone('America/Santiago');
 
+=======
+        })->dailyAt('09:50')->timezone('America/Santiago');
+            
+>>>>>>> 82e8e818b7b4fdcc0df81cb19877de9b5f08ce81
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {
             $startYesterday = Carbon::yesterday()->toDateTimeString();
@@ -330,7 +336,7 @@ class Kernel extends ConsoleKernel
 
             DB::connection('mysql')->table('average_calls')->insert($toInsert);
 
-        })->dailyAt('05:00')->timezone('America/Santiago');
+        })->dailyAt('09:50')->timezone('America/Santiago');
 
         // Agrega a la tabla 'daily_revenue' los consumos diarios.
         $schedule->command('daily:revenues')->dailyAt('08:00')->timezone('America/Santiago');
@@ -340,7 +346,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('email:alarmsessions')->cron('0 */3 * * *')->timezone('America/Santiago');
         // Crea los archivos diarios de CDRs.
-        $schedule->command('daily:cdrs')->dailyAt('05:00')->timezone('America/Santiago');
+        $schedule->command('daily:cdrs')->dailyAt('09:50')->timezone('America/Santiago');
     }
 
     /**

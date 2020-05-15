@@ -208,31 +208,6 @@ class Kernel extends ConsoleKernel
                 ->groupBy('c.id_client', 'i.Login')
                 ->orderBy('sale', 'desc')
                 ->get();
-
-            $revenuesWholesale = DB::connection('wholesale')
-                ->table('calls as c')
-                ->select(
-                    'c.id_client as id_customer', 
-                    'i.Login as customer',
-                    DB::raw('round((sum(c.duration)/60)) as minutes_real'),
-                    DB::raw('round(sum(c.duration)) as seconds_real_total'),
-                    DB::raw('round((sum(c.effective_duration)/60)) as minutes_effective'),
-                    DB::raw('round(sum(c.effective_duration)) as seconds_effective_total'), 
-                    DB::raw('round(sum(c.cost), 2) as sale'), 
-                    DB::raw('round(sum(c.costD), 4) as cost')
-                )
-                ->join('invoiceclients as i', 'c.id_client', 'i.IdClient')
-                ->whereBetween(
-                    'c.call_start', 
-                    [
-                        DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
-                        DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
-                    ]
-                )
-                ->where('c.client_type', '=' , DB::raw('i.Type'))
-                ->groupBy('c.id_client', 'i.Login')
-                ->orderBy('sale', 'desc')
-                ->get();
             
             $revenuesSistek = DB::connection('asterisk')
                 ->table('cdr as c')
@@ -264,9 +239,6 @@ class Kernel extends ConsoleKernel
             if($revenuesArgentina->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesArgentina, 'Argentina');
             }
-            if($revenuesWholesale->count() > 0){
-                $pos = $this::newTable($spreadsheet, $sheet, $revenuesWholesale, 'Wholesale', $pos);
-            }
             if($revenuesHeavyuser->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesHeavyuser, 'Heavyuser', $pos);
             }
@@ -297,7 +269,7 @@ class Kernel extends ConsoleKernel
             $revenue->description = 'Consumos del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[((int)$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
             $revenue->file_name = $nameFile;
             $revenue->save();
-        })->dailyAt('05:00')->timezone('America/Santiago');
+        })->dailyAt('09:30')->timezone('America/Santiago');
             
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {
@@ -330,17 +302,17 @@ class Kernel extends ConsoleKernel
 
             DB::connection('mysql')->table('average_calls')->insert($toInsert);
 
-        })->dailyAt('05:00')->timezone('America/Santiago');
+        })->dailyAt('09:30')->timezone('America/Santiago');
 
         // Agrega a la tabla 'daily_revenue' los consumos diarios.
-        $schedule->command('daily:revenues')->dailyAt('08:00')->timezone('America/Santiago');
+        $schedule->command('daily:revenues')->dailyAt('09:30')->timezone('America/Santiago');
 
         // Envia el correo de consumos diarios.
-        $schedule->command('email:accesscharge')->dailyAt('08:00')->timezone('America/Santiago');
+        $schedule->command('email:accesscharge')->dailyAt('09:30')->timezone('America/Santiago');
 
         $schedule->command('email:alarmsessions')->cron('0 */3 * * *')->timezone('America/Santiago');
         // Crea los archivos diarios de CDRs.
-        $schedule->command('daily:cdrs')->dailyAt('05:00')->timezone('America/Santiago');
+        $schedule->command('daily:cdrs')->dailyAt('09:30')->timezone('America/Santiago');
     }
 
     /**

@@ -61,6 +61,12 @@ return [
             'url' => env('APP_URL').'/storage',
         ],
 
+        'inboundaccesscharge' => [
+            'driver' => 'local',
+            'root' => storage_path('app/inboundaccesscharge'),
+            'url' => env('APP_URL').'/storage',
+        ],
+
         'documents' => [
             'driver' => 'local',
             'root' => storage_path('app/documents'),

@@ -48,8 +48,6 @@ class MonthlyInboundAccessCharge extends Command
 
         $startLastPeriod = (new Carbon('first day of last month'))->day(25)->hour(0)->minute(0)->second(0);
         $endLastPeriod =  (new Carbon('last day of last month'))->hour(23)->minute(59)->second(59);
-    
-        $portadores = Portador::all();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -102,17 +100,40 @@ class MonthlyInboundAccessCharge extends Command
 
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':K'.$pos)->applyFromArray($styleArray);
 
+        $idos = DB::connection('asterisk.nostrict')->table('cdr')
+            ->select('in_userfield')
+            ->distinct()
+            ->whereBetween('calldate', [
+                    $startFirstPeriod->format('Y-m-d H:i:s'),
+                    $endLastPeriod->format('Y-m-d H:i:s')
+                ]
+            )
+            ->where('disposition', 'ANSWERED')
+            ->where(function ($query) {
+                $query->whereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [200,499])
+                    ->orWhereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [700,799]);
+            })
+            ->orderBy('in_userfield', 'asc')
+            ->get();
         
-        // foreach($portadores as $portador){
+        foreach ($idos as $ido) {
+            $pos++;
+            $sheet->setCellValue('A'.$pos, $ido->in_userfield);
 
-        // }        
+            $portador = Portador::where('id_port', $ido->in_userfield)->first();
+            if($portador){
+                $sheet->setCellValue('B'.$pos, $portador->portador);
+            }
+
+            
+        }
 
         ob_start();
         $writer->save('php://output');
         $content = ob_get_contents();
         ob_end_clean();
 
-        $nameFile = 'lalala';
+        $nameFile = 'excel_de_prueba';
         Storage::disk('inboundaccesscharge')->put($nameFile.".xlsx", $content);
     }
 }

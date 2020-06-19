@@ -123,9 +123,59 @@ class MonthlyInboundAccessCharge extends Command
             $portador = Portador::where('id_port', $ido->in_userfield)->first();
             if($portador){
                 $sheet->setCellValue('B'.$pos, $portador->portador);
-            }
+    
+                $normal = DB::connection('asterisk.nostrict')->table('cdr')
+                    ->select(
+                        'in_userfield',
+                        DB::raw('sum( billsec ) AS "seconds"'),
+                        DB::raw('count(*) AS "calls"')
+                    )
+                    ->whereBetween('calldate', [
+                        $startFirstPeriod->format('Y-m-d H:i:s'),
+                        $endFirstPeriod->format('Y-m-d H:i:s')
+                    ])
+                    ->whereRaw('dayofweek(calldate) between 2 and 6 ')
+                    ->whereRaw('hour(calldate) between 9 and 23 ')
+                    ->where('disposition', 'ANSWERED')
+                    ->where('in_userfield', $ido->in_userfield)
+                    ->first();
 
-            
+                if($normal){
+                    $sheet->setCellValue('C'.$pos, $normal->seconds != null ? $normal->seconds : 0);
+                    $sheet->setCellValue('D'.$pos, $normal->calls != null ? $normal->calls : 0);
+                }else{
+                    $sheet->setCellValue('C'.$pos, 0);
+                    $sheet->setCellValue('D'.$pos, 0);
+                }
+
+                $reduced = DB::connection('asterisk.nostrict')->table('cdr')
+                    ->select(
+                        'in_userfield',
+                        DB::raw('sum( billsec ) AS "seconds"'),
+                        DB::raw('count(*) AS "calls"')
+                    )
+                    ->whereBetween('calldate', [
+                        $startFirstPeriod->format('Y-m-d H:i:s'),
+                        $endFirstPeriod->format('Y-m-d H:i:s')
+                    ])
+                    ->where(function ($query) {
+                        $query->where(DB::raw('dayofweek(calldate)'), 7)
+                            ->orWhere(DB::raw('dayofweek(calldate)'), 1);
+                    })
+                    ->whereRaw('hour(calldate) between 9 and 23')
+                    ->where('disposition', 'ANSWERED')
+                    ->where('in_userfield', $ido->in_userfield)
+                    ->first();
+
+                if($normal){
+                    $sheet->setCellValue('F'.$pos, $reduced->seconds != null ? $reduced->seconds : 0);
+                    $sheet->setCellValue('G'.$pos, $reduced->calls != null ? $reduced->calls : 0);
+                }else{
+                    $sheet->setCellValue('F'.$pos, 0);
+                    $sheet->setCellValue('G'.$pos, 0);
+                }
+
+            }
         }
 
         ob_start();

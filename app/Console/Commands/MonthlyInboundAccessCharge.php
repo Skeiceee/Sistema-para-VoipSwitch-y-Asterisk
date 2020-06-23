@@ -53,10 +53,10 @@ class MonthlyInboundAccessCharge extends Command
         $sheet = $spreadsheet->getActiveSheet();
         $writer = new Xlsx($spreadsheet);
 
-        // Header
+        // Primer periodo.
         $pos = 1;
         $posHeader = $pos;
-        $sheet->setCellValue('A'.$pos, 'Desde '.$startFirstPeriod->format('d/m/Y').' hasta el '.$endFirstPeriod->day(24)->format('d/m/Y'));
+        $sheet->setCellValue('A'.$pos, 'Desde '.$startFirstPeriod->format('d/m/Y').' hasta el '.$endFirstPeriod->format('d/m/Y'));
         $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':K'.$pos);
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
         
@@ -100,6 +100,7 @@ class MonthlyInboundAccessCharge extends Command
 
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':K'.$pos)->applyFromArray($styleArray);
 
+        $posFirstRow = $pos;
         $idos = DB::connection('asterisk.nostrict')->table('cdr')
             ->select('in_userfield')
             ->distinct()
@@ -123,60 +124,291 @@ class MonthlyInboundAccessCharge extends Command
             $portador = Portador::where('id_port', $ido->in_userfield)->first();
             if($portador){
                 $sheet->setCellValue('B'.$pos, $portador->portador);
+            }
     
-                $normal = DB::connection('asterisk.nostrict')->table('cdr')
-                    ->select(
-                        'in_userfield',
-                        DB::raw('sum( billsec ) AS "seconds"'),
-                        DB::raw('count(*) AS "calls"')
-                    )
-                    ->whereBetween('calldate', [
-                        $startFirstPeriod->format('Y-m-d H:i:s'),
-                        $endFirstPeriod->format('Y-m-d H:i:s')
-                    ])
-                    ->whereRaw('dayofweek(calldate) between 2 and 6 ')
-                    ->whereRaw('hour(calldate) between 9 and 23 ')
-                    ->where('disposition', 'ANSWERED')
-                    ->where('in_userfield', $ido->in_userfield)
-                    ->first();
+            $normal = DB::connection('asterisk.nostrict')->table('cdr')
+                ->select(
+                    'in_userfield',
+                    DB::raw('sum( billsec ) AS "seconds"'),
+                    DB::raw('count(*) AS "calls"')
+                )
+                ->whereBetween('calldate', [
+                    $startFirstPeriod->format('Y-m-d H:i:s'),
+                    $endFirstPeriod->format('Y-m-d H:i:s')
+                ])
+                ->whereRaw('dayofweek(calldate) between 2 and 6 ')
+                ->whereRaw('hour(calldate) between 9 and 23 ')
+                ->where('disposition', 'ANSWERED')
+                ->where('in_userfield', $ido->in_userfield)
+                ->first();
 
-                if($normal){
-                    $sheet->setCellValue('C'.$pos, $normal->seconds != null ? $normal->seconds : 0);
-                    $sheet->setCellValue('D'.$pos, $normal->calls != null ? $normal->calls : 0);
-                }else{
-                    $sheet->setCellValue('C'.$pos, 0);
-                    $sheet->setCellValue('D'.$pos, 0);
-                }
+            if($normal){
+                $sheet->setCellValue('C'.$pos, $normal->seconds != null ? $normal->seconds : 0);
+                $sheet->setCellValue('D'.$pos, $normal->calls != null ? $normal->calls : 0);
+            }else{
+                $sheet->setCellValue('C'.$pos, 0);
+                $sheet->setCellValue('D'.$pos, 0);
+            }
 
-                $reduced = DB::connection('asterisk.nostrict')->table('cdr')
-                    ->select(
-                        'in_userfield',
-                        DB::raw('sum( billsec ) AS "seconds"'),
-                        DB::raw('count(*) AS "calls"')
-                    )
-                    ->whereBetween('calldate', [
-                        $startFirstPeriod->format('Y-m-d H:i:s'),
-                        $endFirstPeriod->format('Y-m-d H:i:s')
-                    ])
-                    ->where(function ($query) {
-                        $query->where(DB::raw('dayofweek(calldate)'), 7)
-                            ->orWhere(DB::raw('dayofweek(calldate)'), 1);
-                    })
-                    ->whereRaw('hour(calldate) between 9 and 23')
-                    ->where('disposition', 'ANSWERED')
-                    ->where('in_userfield', $ido->in_userfield)
-                    ->first();
+            $reduced = DB::connection('asterisk.nostrict')->table('cdr')
+                ->select(
+                    'in_userfield',
+                    DB::raw('sum( billsec ) AS "seconds"'),
+                    DB::raw('count(*) AS "calls"')
+                )
+                ->whereBetween('calldate', [
+                    $startFirstPeriod->format('Y-m-d H:i:s'),
+                    $endFirstPeriod->format('Y-m-d H:i:s')
+                ])
+                ->where(function ($query) {
+                    $query->where(DB::raw('dayofweek(calldate)'), 7)
+                        ->orWhere(DB::raw('dayofweek(calldate)'), 1);
+                })
+                ->whereRaw('hour(calldate) between 9 and 23')
+                ->where('disposition', 'ANSWERED')
+                ->where('in_userfield', $ido->in_userfield)
+                ->first();
 
-                if($normal){
-                    $sheet->setCellValue('F'.$pos, $reduced->seconds != null ? $reduced->seconds : 0);
-                    $sheet->setCellValue('G'.$pos, $reduced->calls != null ? $reduced->calls : 0);
-                }else{
-                    $sheet->setCellValue('F'.$pos, 0);
-                    $sheet->setCellValue('G'.$pos, 0);
-                }
+            if($normal){
+                $sheet->setCellValue('F'.$pos, $reduced->seconds != null ? $reduced->seconds : 0);
+                $sheet->setCellValue('G'.$pos, $reduced->calls != null ? $reduced->calls : 0);
+            }else{
+                $sheet->setCellValue('F'.$pos, 0);
+                $sheet->setCellValue('G'.$pos, 0);
+            }
 
+            $night = DB::connection('asterisk.nostrict')->table('cdr')
+                ->select(
+                    'in_userfield',
+                    DB::raw('sum( billsec ) AS "seconds"'),
+                    DB::raw('count(*) AS "calls"')
+                )
+                ->whereBetween('calldate', [
+                    $startFirstPeriod->format('Y-m-d H:i:s'),
+                    $endFirstPeriod->format('Y-m-d H:i:s')
+                ])
+                ->whereRaw('hour(cdr.calldate) between 0 and 8')
+                ->where('disposition', 'ANSWERED')
+                ->where('in_userfield', $ido->in_userfield)
+                ->first();
+
+            if($normal){
+                $sheet->setCellValue('I'.$pos, $night->seconds != null ? $night->seconds : 0);
+                $sheet->setCellValue('J'.$pos, $night->calls != null ? $night->calls : 0);
+            }else{
+                $sheet->setCellValue('I'.$pos, 0);
+                $sheet->setCellValue('J'.$pos, 0);
             }
         }
+
+        // Ajusta las celdas al tamaño de contenido.
+        foreach (range('A', 'K') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        // Agrega los bordes a las celdas.
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '00000000'],
+                ],
+            ],
+        ];
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:K'.$pos)->applyFromArray($styleArray);
+
+        // Centra todas las celdas.
+        $styleArray = [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        ];
+        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':K'.$pos)->getAlignment()->applyFromArray($styleArray);
+
+        // Centra horizontalmente a la izquierda.
+        $styleArray = [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT
+        ];
+
+        $spreadsheet->getActiveSheet()->getStyle('B'.$posFirstRow.':B'.$pos)->getAlignment()->applyFromArray($styleArray);
+
+        // Segundo periodo.
+        $pos++;
+        $posHeader = $pos;
+        $sheet->setCellValue('A'.$pos, 'Desde '.$startLastPeriod->format('d/m/Y').' hasta el '.$endLastPeriod->format('d/m/Y'));
+        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':K'.$pos);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+        
+        $pos++;
+        $sheet->setCellValue('A'.$pos, 'IDO');
+        $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':A'.($pos + 1));
+        $sheet->setCellValue('B'.$pos, 'Empresa');
+        $spreadsheet->getActiveSheet()->mergeCells('B'.$pos.':B'.($pos + 1));
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':B'.($pos + 1))->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+        
+        $sheet->setCellValue('C'.$pos, 'Normal');
+        $spreadsheet->getActiveSheet()->mergeCells('C'.$pos.':E'.$pos);
+        $sheet->setCellValue('F'.$pos, 'Reducido');
+        $spreadsheet->getActiveSheet()->mergeCells('F'.$pos.':H'.$pos);
+        $sheet->setCellValue('I'.$pos, 'Nocturno');
+        $spreadsheet->getActiveSheet()->mergeCells('I'.$pos.':K'.$pos);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+
+        $pos++;
+
+        $sub_columns = [
+            'Segundos',
+            'Llamadas',
+            'Monto'
+        ];
+        
+        $i = 0;
+        foreach (range('C', 'K') as $column) {
+            if ($i > 2) { $i = 0; };
+            $sheet->setCellValue($column.$pos, $sub_columns[$i]);
+            $i++;
+        }
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('C'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5b9bd5');
+
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':K'.$pos)->applyFromArray($styleArray);
+
+        $posFirstRow = $pos;
+        $idos = DB::connection('asterisk.nostrict')->table('cdr')
+            ->select('in_userfield')
+            ->distinct()
+            ->whereBetween('calldate', [
+                    $startFirstPeriod->format('Y-m-d H:i:s'),
+                    $endLastPeriod->format('Y-m-d H:i:s')
+                ]
+            )
+            ->where('disposition', 'ANSWERED')
+            ->where(function ($query) {
+                $query->whereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [200,499])
+                    ->orWhereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [700,799]);
+            })
+            ->orderBy('in_userfield', 'asc')
+            ->get();
+        foreach ($idos as $ido) {
+            $pos++;
+            $sheet->setCellValue('A'.$pos, $ido->in_userfield);
+
+            $portador = Portador::where('id_port', $ido->in_userfield)->first();
+            if($portador){
+                $sheet->setCellValue('B'.$pos, $portador->portador);
+            }
+    
+            $normal = DB::connection('asterisk.nostrict')->table('cdr')
+                ->select(
+                    'in_userfield',
+                    DB::raw('sum( billsec ) AS "seconds"'),
+                    DB::raw('count(*) AS "calls"')
+                )
+                ->whereBetween('calldate', [
+                    $startLastPeriod->format('Y-m-d H:i:s'),
+                    $endLastPeriod->format('Y-m-d H:i:s')
+                ])
+                ->whereRaw('dayofweek(calldate) between 2 and 6 ')
+                ->whereRaw('hour(calldate) between 9 and 23 ')
+                ->where('disposition', 'ANSWERED')
+                ->where('in_userfield', $ido->in_userfield)
+                ->first();
+
+            if($normal){
+                $sheet->setCellValue('C'.$pos, $normal->seconds != null ? $normal->seconds : 0);
+                $sheet->setCellValue('D'.$pos, $normal->calls != null ? $normal->calls : 0);
+            }else{
+                $sheet->setCellValue('C'.$pos, 0);
+                $sheet->setCellValue('D'.$pos, 0);
+            }
+
+            $reduced = DB::connection('asterisk.nostrict')->table('cdr')
+                ->select(
+                    'in_userfield',
+                    DB::raw('sum( billsec ) AS "seconds"'),
+                    DB::raw('count(*) AS "calls"')
+                )
+                ->whereBetween('calldate', [
+                    $startLastPeriod->format('Y-m-d H:i:s'),
+                    $endLastPeriod->format('Y-m-d H:i:s')
+                ])
+                ->where(function ($query) {
+                    $query->where(DB::raw('dayofweek(calldate)'), 7)
+                        ->orWhere(DB::raw('dayofweek(calldate)'), 1);
+                })
+                ->whereRaw('hour(calldate) between 9 and 23')
+                ->where('disposition', 'ANSWERED')
+                ->where('in_userfield', $ido->in_userfield)
+                ->first();
+
+            if($normal){
+                $sheet->setCellValue('F'.$pos, $reduced->seconds != null ? $reduced->seconds : 0);
+                $sheet->setCellValue('G'.$pos, $reduced->calls != null ? $reduced->calls : 0);
+            }else{
+                $sheet->setCellValue('F'.$pos, 0);
+                $sheet->setCellValue('G'.$pos, 0);
+            }
+
+            $night = DB::connection('asterisk.nostrict')->table('cdr')
+                ->select(
+                    'in_userfield',
+                    DB::raw('sum( billsec ) AS "seconds"'),
+                    DB::raw('count(*) AS "calls"')
+                )
+                ->whereBetween('calldate', [
+                    $startLastPeriod->format('Y-m-d H:i:s'),
+                    $endLastPeriod->format('Y-m-d H:i:s')
+                ])
+                ->whereRaw('hour(cdr.calldate) between 0 and 8')
+                ->where('disposition', 'ANSWERED')
+                ->where('in_userfield', $ido->in_userfield)
+                ->first();
+
+            if($normal){
+                $sheet->setCellValue('I'.$pos, $night->seconds != null ? $night->seconds : 0);
+                $sheet->setCellValue('J'.$pos, $night->calls != null ? $night->calls : 0);
+            }else{
+                $sheet->setCellValue('I'.$pos, 0);
+                $sheet->setCellValue('J'.$pos, 0);
+            }
+        }
+
+        // Ajusta las celdas al tamaño de contenido.
+        foreach (range('A', 'K') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        // Agrega los bordes a las celdas.
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '00000000'],
+                ],
+            ],
+        ];
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:K'.$pos)->applyFromArray($styleArray);
+
+        // Centra todas las celdas.
+        $styleArray = [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        ];
+        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':K'.$pos)->getAlignment()->applyFromArray($styleArray);
+
+        // Centra horizontalmente a la izquierda.
+        $styleArray = [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT
+        ];
+
+        $spreadsheet->getActiveSheet()->getStyle('B'.$posFirstRow.':B'.$pos)->getAlignment()->applyFromArray($styleArray);
 
         ob_start();
         $writer->save('php://output');

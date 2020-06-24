@@ -255,6 +255,29 @@ class Kernel extends ConsoleKernel
                     ]
                 )
                 ->get();
+            
+            $revenuesMagnusBilling = DB::connection('magnusbilling')
+                    ->table('pkg_cdr_summary_day_user as cdr')
+                    ->select(
+                        DB::raw('usr.username AS customer'),
+                        DB::raw('ROUND( sessiontime / 60 ) AS minutes_real'),
+                        DB::raw('sessiontime AS seconds_real_total'),
+                        DB::raw('ROUND( sessiontime / 60 ) AS minutes_effective'),
+                        DB::raw('sessiontime AS seconds_effective_total'),
+                        DB::raw('sessionbill AS sale'),
+                        DB::raw('buycost AS cost'),
+                    )
+                    ->join('pkg_user as usr', 'cdr.id_user', '=', 'usr.id')
+                    ->whereBetween(
+                        'cdr.day',
+                        [
+                            DB::raw('str_to_date("'.$startYesterday.'", "%Y-%m-%d %H:%i:%s")'),
+                            DB::raw('str_to_date("'.$endYesterday.'", "%Y-%m-%d %H:%i:%s")')
+                        ]
+                    )
+                    ->groupBy('usr.username')
+                    ->orderBy('sale', 'desc')
+                    ->get();
 
             $revenuesHeavyuser = $this::revenuesCondellQuery('heavyuser', $startYesterday, $endYesterday);
             $revenuesSynergo = $this::revenuesCondellQuery('synergo', $startYesterday, $endYesterday);
@@ -276,6 +299,9 @@ class Kernel extends ConsoleKernel
             if($revenuesSistek->count() > 0){
                 $pos = $this::newTable($spreadsheet, $sheet, $revenuesSistek, 'Sistek', $pos);
             }
+            if($revenuesMagnusBilling->count() > 0){
+                $pos = $this::newTable($spreadsheet, $sheet, $revenuesMagnusBilling, 'MagnusBilling', $pos);
+            }
 
             ob_start();
             $writer->save('php://output');
@@ -295,7 +321,8 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->dailyAt('05:00')->timezone('America/Santiago');
+        })->everyMinute()->timezone('America/Santiago');
+        // })->dailyAt('05:00')->timezone('America/Santiago');
 
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {

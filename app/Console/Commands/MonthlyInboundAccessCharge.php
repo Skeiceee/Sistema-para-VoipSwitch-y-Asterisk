@@ -415,7 +415,18 @@ class MonthlyInboundAccessCharge extends Command
         $content = ob_get_contents();
         ob_end_clean();
 
-        $nameFile = 'excel_de_prueba';
+        $fristDayLastMonth = (new Carbon('first day of last month'))->hour(0)->minute(0)->second(0);
+        $nameFile = $fristDayLastMonth->format('Y-m-d');
         Storage::disk('inboundaccesscharge')->put($nameFile.".xlsx", $content);
+
+        $days = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+        $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+        $inboundAccessCharge = new Revenue();
+        $inboundAccessCharge->date = $fristDayLastMonth;
+        $inboundAccessCharge->description = 'Cargos de acceso entrantes de '.$months[((int)$fristDayLastMonth->format('n') - 1)].' del '.$fristDayLastMonth->format('Y');
+        $inboundAccessCharge->file_name = $nameFile;
+        $inboundAccessCharge->save();
+
     }
 }

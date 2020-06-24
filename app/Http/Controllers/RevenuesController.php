@@ -489,6 +489,7 @@ class RevenuesController extends Controller
                     }
                 }
             }
+            
             if($sigue){
                 $date_start = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->startOfMonth();
                 $date_end = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->endOfMonth();

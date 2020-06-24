@@ -14,6 +14,9 @@ Route::post('/consumos/accomulated/download', 'RevenuesController@downloadAccomu
 Route::post('/consumos/client/download', 'RevenuesController@downloadPerClient')->name('revenues.client.download');
 Route::resource('/consumos', 'RevenuesController', ['only' => ['index','create']])->names(['index' => 'revenues.index','create' => 'revenues.create']);
 
+Route::get('/cargosdeacceso/entrantes/download/{id}', 'InboundAccessChargeController@download')->name('inboundaccesscharge.download');
+Route::resource('/cargosdeacceso/entrantes', 'InboundAccessChargeController', ['only' => ['index','create']])->names(['index' => 'inboundaccesscharge.index','create' => 'inboundaccesscharge.create']);
+
 Route::get('/cargosdeacceso/download/{namefile}', 'AccessChargeController@download')->name('accesscharge.download');
 Route::resource('/cargosdeacceso', 'AccessChargeController')->names(['index' => 'accesscharge.index', 'create' => 'accesscharge.create']);
 

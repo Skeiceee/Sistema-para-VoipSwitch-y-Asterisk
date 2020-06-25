@@ -321,7 +321,8 @@ class Kernel extends ConsoleKernel
             $revenue->file_name = $nameFile;
             $revenue->save();
 
-        })->dailyAt('05:00')->timezone('America/Santiago');
+        })->everyMinute()->timezone('America/Santiago');
+        // })->dailyAt('05:00')->timezone('America/Santiago');
 
         //Agrega a la tabla 'avarage_calls' los datos del dia anterior.
         $schedule->call(function () {

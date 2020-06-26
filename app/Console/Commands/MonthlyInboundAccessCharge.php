@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\InboundAccessCharge;
 use App\Portador;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
@@ -199,8 +200,20 @@ class MonthlyInboundAccessCharge extends Command
                 $sheet->setCellValue('I'.$pos, 0);
                 $sheet->setCellValue('J'.$pos, 0);
             }
-        }
 
+            $sheet->setCellValue('O'.$pos, 0);
+            $sheet->setCellValue('P'.$pos, 0);
+            $sheet->setCellValue('Q'.$pos, 0);
+
+            $sheet->setCellValue('L'.$pos, '=O'.$pos.'/'.(1.19));
+            $sheet->setCellValue('M'.$pos, '=P'.$pos.'/'.(1.19));
+            $sheet->setCellValue('N'.$pos, '=Q'.$pos.'/'.(1.19));
+
+            $sheet->setCellValue('E'.$pos, '=C'.$pos.'*L'.$pos);
+            $sheet->setCellValue('H'.$pos, '=F'.$pos.'*M'.$pos);
+            $sheet->setCellValue('K'.$pos, '=I'.$pos.'*N'.$pos);
+        }
+        
         // Ajusta las celdas al tamaño de contenido.
         foreach (range('A', 'K') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
@@ -377,6 +390,18 @@ class MonthlyInboundAccessCharge extends Command
                 $sheet->setCellValue('I'.$pos, 0);
                 $sheet->setCellValue('J'.$pos, 0);
             }
+
+            $sheet->setCellValue('O'.$pos, 0);
+            $sheet->setCellValue('P'.$pos, 0);
+            $sheet->setCellValue('Q'.$pos, 0);
+
+            $sheet->setCellValue('L'.$pos, '=O'.$pos.'/'.(1.19));
+            $sheet->setCellValue('M'.$pos, '=P'.$pos.'/'.(1.19));
+            $sheet->setCellValue('N'.$pos, '=Q'.$pos.'/'.(1.19));
+
+            $sheet->setCellValue('E'.$pos, '=C'.$pos.'*L'.$pos);
+            $sheet->setCellValue('H'.$pos, '=F'.$pos.'*M'.$pos);
+            $sheet->setCellValue('K'.$pos, '=I'.$pos.'*N'.$pos);
         }
 
         // Ajusta las celdas al tamaño de contenido.
@@ -414,7 +439,7 @@ class MonthlyInboundAccessCharge extends Command
         $writer->save('php://output');
         $content = ob_get_contents();
         ob_end_clean();
-
+    
         // Se guarda el excel y subida a la base de datos.
         $fristDayLastMonth = (new Carbon('first day of last month'))->hour(0)->minute(0)->second(0);
         $nameFile = $fristDayLastMonth->format('Y-m-d');
@@ -423,7 +448,7 @@ class MonthlyInboundAccessCharge extends Command
         $days = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
         $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 
-        $inboundAccessCharge = new Revenue();
+        $inboundAccessCharge = new InboundAccessCharge();
         $inboundAccessCharge->date = $fristDayLastMonth;
         $inboundAccessCharge->description = 'Cargos de acceso entrantes de '.$months[((int)$fristDayLastMonth->format('n') - 1)].' del '.$fristDayLastMonth->format('Y');
         $inboundAccessCharge->file_name = $nameFile;

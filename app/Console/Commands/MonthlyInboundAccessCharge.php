@@ -213,7 +213,39 @@ class MonthlyInboundAccessCharge extends Command
             $sheet->setCellValue('H'.$pos, '=F'.$pos.'*M'.$pos);
             $sheet->setCellValue('K'.$pos, '=I'.$pos.'*N'.$pos);
         }
-        
+
+        // Formato en miles
+        $spreadsheet->getActiveSheet()
+        ->getStyle('C'.$posFirstRow.':D'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+
+        $spreadsheet->getActiveSheet()
+        ->getStyle('F'.$posFirstRow.':G'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+
+        $spreadsheet->getActiveSheet()
+        ->getStyle('I'.$posFirstRow.':J'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+
+        // Formato de dinero
+        $spreadsheet->getActiveSheet()
+        ->getStyle('E'.$posFirstRow.':E'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+
+        $spreadsheet->getActiveSheet()
+        ->getStyle('H'.$posFirstRow.':H'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+
+        $spreadsheet->getActiveSheet()
+        ->getStyle('K'.$posFirstRow.':K'.$pos)
+        ->getNumberFormat()
+        ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+
         // Ajusta las celdas al tamaño de contenido.
         foreach (range('A', 'K') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);

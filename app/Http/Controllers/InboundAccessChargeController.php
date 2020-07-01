@@ -35,23 +35,18 @@ class InboundAccessChargeController extends Controller
     {
         if(request()->ajax()){
             $sigue = false;
-            $month = intval(request()->get('month')); // Si es null el valor es igual a 0
             $year = intval(request()->get('year')); // Si es null el valor es igual a 0
 
-            if($month != 0 and $year != 0){
-                foreach (range(1, 12) as $number) {
-                    if($month == $number){
-                        $sigue = true;
-                    }
-                }
+            if($year != 0){
+                $sigue = true;
             }
 
             if($sigue){
-                $date_start = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->startOfMonth();
-                $date_end = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-01')->endOfMonth();
+                $date_start = Carbon::createFromFormat('Y-m-d', $year.'-01-01')->startOfMonth();
+                $date_end = Carbon::createFromFormat('Y-m-d', $year.'-12-01')->endOfMonth();
             }else{
-                $date_start = (new Carbon('first day of this month'))->startOfMonth();
-                $date_end = (new Carbon('first day of this month'))->endOfMonth();
+                $date_start = (new Carbon('first day of this year'))->startOfYear();
+                $date_end = (new Carbon('last day of this year'))->endOfYear();
             }
 
             return datatables()->of(

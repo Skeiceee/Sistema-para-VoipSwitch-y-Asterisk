@@ -31,6 +31,9 @@
                                 <a class="nav-link " href="{{ route('accesscharge.index') }}">Cargos de acceso</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link " href="{{ route('inboundaccesscharge.index') }}">Cargos de acceso entrantes</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link " href="{{ route('invoices.index') }}">Facturas</a>
                             </li>
                         </ul>

@@ -20,9 +20,9 @@
                             <input id="date" 
                             type="text"
                             data-language="es"
-                            data-min-view="months"
-                            data-view="months"
-                            data-date-format="MM - mm/yyyy" 
+                            data-min-view="years"
+                            data-view="years"
+                            data-date-format="yyyy" 
                             class="form-control"
                             name="date"
                             autocomplete="off"
@@ -93,7 +93,7 @@ $(document).ready(function(){
             if(typeof date === 'object' && date !== null){
                 let month = date.getMonth() + 1
                 let year = date.getFullYear()
-                revenuesTable.ajax.url(SITEURL+'cargosdeacceso/entrantes?month='+month+'&year='+year).load();
+                revenuesTable.ajax.url(SITEURL+'cargosdeacceso/entrantes?year='+year).load();
             }
         },
         maxDate: ( d => new Date(d.setDate(d.getDate()-1)) )(new Date)

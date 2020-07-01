@@ -61,6 +61,9 @@ class MonthlyInboundAccessCharge extends Command
         $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':K'.$pos);
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
         
+        $spreadsheet->getActiveSheet()->mergeCells('L'.$pos.':Q'.$pos);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('L'.$pos.':Q'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+
         $pos++;
         $sheet->setCellValue('A'.$pos, 'IDO');
         $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':A'.($pos + 1));
@@ -74,7 +77,13 @@ class MonthlyInboundAccessCharge extends Command
         $spreadsheet->getActiveSheet()->mergeCells('F'.$pos.':H'.$pos);
         $sheet->setCellValue('I'.$pos, 'Nocturno');
         $spreadsheet->getActiveSheet()->mergeCells('I'.$pos.':K'.$pos);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('C'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+
+        $sheet->setCellValue('L'.$pos, 'Tarifa (s/IVA)');
+        $spreadsheet->getActiveSheet()->mergeCells('L'.$pos.':N'.$pos);
+        $sheet->setCellValue('O'.$pos, 'Tarifa (c/IVA)');
+        $spreadsheet->getActiveSheet()->mergeCells('O'.$pos.':Q'.$pos);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('L'.$pos.':Q'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
 
         $pos++;
 
@@ -93,13 +102,29 @@ class MonthlyInboundAccessCharge extends Command
 
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('C'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5b9bd5');
 
+        $sub_columns = [
+            'Normal',
+            'Reducido',
+            'Nocturno'
+        ];
+        
+        $i = 0;
+
+        foreach (range('L', 'Q') as $column) {
+            if ($i > 2) { $i = 0; };
+            $sheet->setCellValue($column.$pos, $sub_columns[$i]);
+            $i++;
+        }
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('L'.$pos.':Q'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5b9bd5');
+
         $styleArray = array(
             'font'  => array(
                 'color' => array('rgb' => 'FFFFFF'),
                 'bold' => true
         ));
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':K'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':Q'.$pos)->applyFromArray($styleArray);
 
         $posFirstRow = $pos;
         $idos = DB::connection('asterisk.nostrict')->table('cdr')
@@ -247,7 +272,7 @@ class MonthlyInboundAccessCharge extends Command
         ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
 
         // Ajusta las celdas al tamaño de contenido.
-        foreach (range('A', 'K') as $column) {
+        foreach (range('A', 'Q') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
 
@@ -261,14 +286,14 @@ class MonthlyInboundAccessCharge extends Command
             ],
         ];
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:K'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:Q'.$pos)->applyFromArray($styleArray);
 
         // Centra todas las celdas.
         $styleArray = [
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
         ];
-        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':K'.$pos)->getAlignment()->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':Q'.$pos)->getAlignment()->applyFromArray($styleArray);
 
         // Centra horizontalmente a la izquierda.
         $styleArray = [
@@ -284,6 +309,9 @@ class MonthlyInboundAccessCharge extends Command
         $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':K'.$pos);
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
         
+        $spreadsheet->getActiveSheet()->mergeCells('L'.$pos.':Q'.$pos);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('L'.$pos.':Q'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+
         $pos++;
         $sheet->setCellValue('A'.$pos, 'IDO');
         $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':A'.($pos + 1));
@@ -297,7 +325,13 @@ class MonthlyInboundAccessCharge extends Command
         $spreadsheet->getActiveSheet()->mergeCells('F'.$pos.':H'.$pos);
         $sheet->setCellValue('I'.$pos, 'Nocturno');
         $spreadsheet->getActiveSheet()->mergeCells('I'.$pos.':K'.$pos);
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('C'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
+
+        $sheet->setCellValue('L'.$pos, 'Tarifa (s/IVA)');
+        $spreadsheet->getActiveSheet()->mergeCells('L'.$pos.':N'.$pos);
+        $sheet->setCellValue('O'.$pos, 'Tarifa (c/IVA)');
+        $spreadsheet->getActiveSheet()->mergeCells('O'.$pos.':Q'.$pos);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('L'.$pos.':Q'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
 
         $pos++;
 
@@ -316,13 +350,29 @@ class MonthlyInboundAccessCharge extends Command
 
         $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('C'.$pos.':K'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5b9bd5');
 
+        $sub_columns = [
+            'Normal',
+            'Reducido',
+            'Nocturno'
+        ];
+        
+        $i = 0;
+
+        foreach (range('L', 'Q') as $column) {
+            if ($i > 2) { $i = 0; };
+            $sheet->setCellValue($column.$pos, $sub_columns[$i]);
+            $i++;
+        }
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('L'.$pos.':Q'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5b9bd5');
+
         $styleArray = array(
             'font'  => array(
                 'color' => array('rgb' => 'FFFFFF'),
                 'bold' => true
         ));
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':K'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':Q'.$pos)->applyFromArray($styleArray);
 
         $posFirstRow = $pos;
         $idos = DB::connection('asterisk.nostrict')->table('cdr')
@@ -340,6 +390,7 @@ class MonthlyInboundAccessCharge extends Command
             })
             ->orderBy('in_userfield', 'asc')
             ->get();
+        
         foreach ($idos as $ido) {
             $pos++;
             $sheet->setCellValue('A'.$pos, $ido->in_userfield);
@@ -469,7 +520,7 @@ class MonthlyInboundAccessCharge extends Command
         ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
 
         // Ajusta las celdas al tamaño de contenido.
-        foreach (range('A', 'K') as $column) {
+        foreach (range('A', 'Q') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
 
@@ -483,14 +534,14 @@ class MonthlyInboundAccessCharge extends Command
             ],
         ];
 
-        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:K'.$pos)->applyFromArray($styleArray);
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:Q'.$pos)->applyFromArray($styleArray);
 
         // Centra todas las celdas.
         $styleArray = [
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
         ];
-        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':K'.$pos)->getAlignment()->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':Q'.$pos)->getAlignment()->applyFromArray($styleArray);
 
         // Centra horizontalmente a la izquierda.
         $styleArray = [

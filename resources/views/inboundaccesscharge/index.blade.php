@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div><i class="fas fa-wallet"></i><span class="font-weight-bold ml-2">Cargos de acceso entrantes</span></div>
-                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los consumos.">
+                        <button id="filter_toggle" class="btn btn-primary" style="width: 40px" data-placement="left" data-toggle="tooltip" data-original-title="Filtrar los cargos de acceso entrantes.">
                             <i class="fas fa-filter"></i>
                         </button>
                     </div>

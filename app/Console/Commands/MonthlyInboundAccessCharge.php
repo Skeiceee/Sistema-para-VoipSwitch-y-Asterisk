@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\InboundAccessCharge;
 use App\Portador;
+use App\Rate;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -226,9 +227,26 @@ class MonthlyInboundAccessCharge extends Command
                 $sheet->setCellValue('J'.$pos, 0);
             }
 
-            $sheet->setCellValue('O'.$pos, 0);
-            $sheet->setCellValue('P'.$pos, 0);
-            $sheet->setCellValue('Q'.$pos, 0);
+            $date_rate = (new Carbon('first day of last month'))->startOfMonth()->subMonth(1);
+
+            $rate = Rate::where('id_port', $ido->in_userfield)
+                ->whereBetween('end_date', 
+                    [
+                        $date_rate->format('Y-m-d H:i:s'),
+                        $date_rate->endOfMonth()->format('Y-m-d H:i:s')
+                    ]
+                )
+                ->first();
+
+            if(isset($rate)){
+                $sheet->setCellValue('O'.$pos, $rate->rate_normal);
+                $sheet->setCellValue('P'.$pos, $rate->rate_reduced);
+                $sheet->setCellValue('Q'.$pos, $rate->rate_night);
+            }else{
+                $sheet->setCellValue('O'.$pos, 0);
+                $sheet->setCellValue('P'.$pos, 0);
+                $sheet->setCellValue('Q'.$pos, 0);              
+            }
 
             $sheet->setCellValue('L'.$pos, '=O'.$pos.'/'.(1.19));
             $sheet->setCellValue('M'.$pos, '=P'.$pos.'/'.(1.19));
@@ -474,9 +492,26 @@ class MonthlyInboundAccessCharge extends Command
                 $sheet->setCellValue('J'.$pos, 0);
             }
 
-            $sheet->setCellValue('O'.$pos, 0);
-            $sheet->setCellValue('P'.$pos, 0);
-            $sheet->setCellValue('Q'.$pos, 0);
+            $date_rate = (new Carbon('first day of last month'))->day(25)->hour(0)->minute(0)->second(0);
+
+            $rate = Rate::where('id_port', $ido->in_userfield)
+                ->whereBetween('end_date', 
+                    [
+                        $date_rate->format('Y-m-d H:i:s'),
+                        $date_rate->endOfMonth()->format('Y-m-d H:i:s')
+                    ]
+                )
+                ->first();
+
+            if(isset($rate)){
+                $sheet->setCellValue('O'.$pos, $rate->rate_normal);
+                $sheet->setCellValue('P'.$pos, $rate->rate_reduced);
+                $sheet->setCellValue('Q'.$pos, $rate->rate_night);
+            }else{
+                $sheet->setCellValue('O'.$pos, 0);
+                $sheet->setCellValue('P'.$pos, 0);
+                $sheet->setCellValue('Q'.$pos, 0);              
+            }
 
             $sheet->setCellValue('L'.$pos, '=O'.$pos.'/'.(1.19));
             $sheet->setCellValue('M'.$pos, '=P'.$pos.'/'.(1.19));

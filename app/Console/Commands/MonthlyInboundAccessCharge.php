@@ -492,7 +492,7 @@ class MonthlyInboundAccessCharge extends Command
                 $sheet->setCellValue('J'.$pos, 0);
             }
 
-            $date_rate = (new Carbon('first day of last month'))->day(25)->hour(0)->minute(0)->second(0);
+            $date_rate = (new Carbon('first day of last month'))->startOfMonth();
 
             $rate = Rate::where('id_port', $ido->in_userfield)
                 ->whereBetween('end_date', 

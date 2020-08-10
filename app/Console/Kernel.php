@@ -370,6 +370,9 @@ class Kernel extends ConsoleKernel
 
         // Crea los archivos mensuales de los cargos de acceso entrantes.
         $schedule->command('monthly:inboundaccesscharge')->monthlyOn(1, '05:00')->timezone('America/Santiago');
+    
+        //Envia el correo de consumos a los clientes.
+        $schedule->command('email:clientsrevenues')->dailyAt('08:00')->timezone('America/Santiago');
     }
 
     /**

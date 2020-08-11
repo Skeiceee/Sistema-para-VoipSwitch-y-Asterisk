@@ -68,7 +68,7 @@ body[yahoo] .unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; 
             <tr>
             <td align="center" class="bodycopy">
                 Se hace entrega de {{ $data['revenues_date'] }}, si tiene algún problema contáctese con el
-                <a href="mailto:noc@vozdigital.cl" style="color:rgb(17,85,204)" target="_blank"><span style="color:rgb(5,99,193)">servicio tecnico</span></a>.
+                <a href="mailto:noc@vozdigital.cl" style="color:rgb(17,85,204)" target="_blank"><span style="color:rgb(5,99,193)">servicio técnico</span></a>.
             </td>
             </tr>
         </table>
@@ -82,8 +82,8 @@ body[yahoo] .unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; 
                     <th>Minutos</th>
                 </tr>
                 <tr align="center">
-                    <td>{{ $data['calls'] }}</td>
-                    <td>{{ $data['minutes'] }}</td>
+                    <td>{{ number_format($data['calls'], 0, ',', '.' ) }}</td>
+                    <td>{{ number_format($data['minutes'], 0, ',', '.' ) }}</td>
                 </tr>
             </table>
         </td>
@@ -105,7 +105,7 @@ body[yahoo] .unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; 
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
             <td align="center" class="footercopy">
-                Copyright © 2019 - Vozdigital<br/>
+                Copyright © 2020 - Vozdigital<br/>
             </td>
             </tr>
         </table>

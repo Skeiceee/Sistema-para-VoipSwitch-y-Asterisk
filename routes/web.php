@@ -119,3 +119,5 @@ Route::resource('/cuentas', 'AccountsController')->names(
         'destroy' => 'accounts.destroy'
     ]
 );
+
+Route::resource('/sesiones/movistar', 'SessionsMovistarPeakController', ['only' => ['index','create']])->names(['index' => 'sessionsmovistarpeak.index','create' => 'sessionsmovistarpeak.create']);

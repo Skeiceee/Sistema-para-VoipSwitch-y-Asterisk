@@ -369,7 +369,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('daily:cdrs')->dailyAt('05:00')->timezone('America/Santiago');
 
         // Crea los archivos mensuales de los cargos de acceso entrantes.
-        $schedule->command('monthly:inboundaccesscharge')->monthlyOn(1, '05:00')->timezone('America/Santiago');
+        $schedule->command('monthly:inboundaccesscharge')->monthlyOn(1, '08:00')->timezone('America/Santiago');
     
         //Envia el correo de consumos a los clientes.
         $schedule->command('email:clientsrevenues')->dailyAt('08:00')->timezone('America/Santiago');

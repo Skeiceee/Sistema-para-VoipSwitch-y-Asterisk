@@ -67,6 +67,12 @@ return [
             'url' => env('APP_URL').'/storage',
         ],
 
+        'sessionsmovistarpeak' => [
+            'driver' => 'local',
+            'root' => storage_path('app/sessionsmovistarpeak'),
+            'url' => env('APP_URL').'/storage',
+        ],
+        
         'documents' => [
             'driver' => 'local',
             'root' => storage_path('app/documents'),

@@ -100,12 +100,14 @@ class SessionsMovistarPeak extends Command
             $sheet->setCellValue('C'.$pos, $sessions_per_hour->max);
         }
         
-        $sheet->getStyle('B'.$posFirstRow.':B'.$pos)->getNumberFormat()->setFormatCode('###,###,###.##'); 
-        $sheet->getStyle('C'.$posFirstRow.':C'.$pos)->getNumberFormat()->setFormatCode('###,###,###'); 
+        $spreadsheet->getActiveSheet()
+            ->getStyle('B'.$posFirstRow.':C'.$pos)
+            ->getNumberFormat()
+            ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
 
-        foreach (range('A', 'C') as $column) {
-            $sheet->getColumnDimension($column)->setAutoSize(true);
-        }
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setWidth(11);
+        $sheet->getColumnDimension('C')->setWidth(11);
 
         // Agrega los bordes a las celdas.
         $styleArray = [

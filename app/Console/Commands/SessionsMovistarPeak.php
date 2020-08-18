@@ -56,6 +56,7 @@ class SessionsMovistarPeak extends Command
 
         $sheet->setCellValue('A'.$pos, 'Hora');
         $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':A'.($pos+1));
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':C'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4472c4');
 
         $sheet->setCellValue('B'.$pos, 'Sesiones de Movistar');     
         $spreadsheet->getActiveSheet()->mergeCells('B'.$pos.':C'.$pos);
@@ -63,7 +64,16 @@ class SessionsMovistarPeak extends Command
         $pos++;
         $sheet->setCellValue('B'.$pos, 'Promedio');
         $sheet->setCellValue('C'.$pos, 'Peak');
-    
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('B'.$pos.':C'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('5b9bd5');
+        
+        $styleArray = array(
+            'font'  => array(
+                'color' => array('rgb' => 'FFFFFF'),
+                'bold' => true
+        ));
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$posHeader.':C'.$pos)->applyFromArray($styleArray);
+        
         $sessions_avg_and_peak = DB::connection('asterisk.nostrict')
             ->table('sessions_movistar')
             ->select(
@@ -80,7 +90,8 @@ class SessionsMovistarPeak extends Command
             )
             ->groupBy('hour')
             ->get();
-
+        
+        $posFirstRow = $pos;
         foreach ($sessions_avg_and_peak as $sessions_per_hour) {
             $pos++;
 
@@ -89,10 +100,32 @@ class SessionsMovistarPeak extends Command
             $sheet->setCellValue('C'.$pos, $sessions_per_hour->max);
         }
         
+        $sheet->getStyle('B'.$posFirstRow.':B'.$pos)->getNumberFormat()->setFormatCode('###,###,###.##'); 
+        $sheet->getStyle('C'.$posFirstRow.':C'.$pos)->getNumberFormat()->setFormatCode('###,###,###'); 
+
         foreach (range('A', 'C') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
 
+        // Agrega los bordes a las celdas.
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '00000000'],
+                ],
+            ],
+        ];
+
+        $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:C'.$pos)->applyFromArray($styleArray);
+
+        // Centra todas las celdas.
+        $styleArray = [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        ];
+        $spreadsheet->getActiveSheet()->getStyle('A'.$posHeader.':C'.$pos)->getAlignment()->applyFromArray($styleArray);
+        
         ob_start();
         $writer->save('php://output');
         $content = ob_get_contents();

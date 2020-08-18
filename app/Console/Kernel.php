@@ -373,6 +373,9 @@ class Kernel extends ConsoleKernel
     
         //Envia el correo de consumos a los clientes.
         $schedule->command('email:clientsrevenues')->dailyAt('08:00')->timezone('America/Santiago');
+
+        //Envia el correo de saldos a los clientes.
+        $schedule->command('email:accountstate')->dailyAt('08:00')->timezone('America/Santiago');
     }
 
     /**

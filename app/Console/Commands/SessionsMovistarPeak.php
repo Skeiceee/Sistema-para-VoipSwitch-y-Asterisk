@@ -137,5 +137,16 @@ class SessionsMovistarPeak extends Command
         $dateYesterday = Carbon::yesterday();
         $nameFile = $dateYesterday->format('Y-m-d');
         Storage::disk('sessionsmovistarpeak')->put($nameFile.".xlsx", $content);
+
+        $days = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+        $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+        $yesterday = Carbon::yesterday();
+        
+        $sessions_movistar = new SessionsMovistar();
+        $sessions_movistar->date = $yesterday;
+        $sessions_movistar->description = 'Cargos de acceso entrantes de '.$months[((int)$$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
+        $sessions_movistar->file_name = $nameFile;
+        $sessions_movistar->save();
     }
 }

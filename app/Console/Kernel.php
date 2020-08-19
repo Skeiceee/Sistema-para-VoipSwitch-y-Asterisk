@@ -359,23 +359,27 @@ class Kernel extends ConsoleKernel
         // Agrega a la tabla 'daily_revenue' los consumos diarios.
         $schedule->command('daily:revenues')->dailyAt('08:00')->timezone('America/Santiago');
 
+        // Crea los archivos diarios de CDRs.
+        $schedule->command('daily:cdrs')->dailyAt('05:00')->timezone('America/Santiago');
+        
+        //Crea el reporte diario por hora de promedio y el peak de las sesiones de Movistar
+        $schedule->command('daily:sessionsmovistar')->dailyAt('08:00')->timezone('America/Santiago');
+        
+        // Crea los archivos mensuales de los cargos de acceso entrantes.
+        $schedule->command('monthly:inboundaccesscharge')->monthlyOn(1, '08:00')->timezone('America/Santiago');
+        
         // Envia el correo de consumos diarios.
         $schedule->command('email:accesscharge')->dailyAt('08:00')->timezone('America/Santiago');
 
         // Envia el correo que avisa de las sessiones.
         $schedule->command('email:alarmsessions')->cron('0 */1 * * *')->timezone('America/Santiago');
-
-        // Crea los archivos diarios de CDRs.
-        $schedule->command('daily:cdrs')->dailyAt('05:00')->timezone('America/Santiago');
-
-        // Crea los archivos mensuales de los cargos de acceso entrantes.
-        $schedule->command('monthly:inboundaccesscharge')->monthlyOn(1, '08:00')->timezone('America/Santiago');
     
         //Envia el correo de consumos a los clientes.
         $schedule->command('email:clientsrevenues')->dailyAt('08:00')->timezone('America/Santiago');
 
         //Envia el correo de saldos a los clientes.
         $schedule->command('email:accountstate')->dailyAt('08:00')->timezone('America/Santiago');
+        
     }
 
     /**

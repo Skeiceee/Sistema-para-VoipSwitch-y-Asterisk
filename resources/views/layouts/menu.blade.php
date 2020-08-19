@@ -12,6 +12,9 @@
                                 <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                             </li>
                             <li id="dashboard" class="nav-item">
+                                <a class="nav-link" href="{{ route('sessionsmovistar.index') }}">Sesiones de Movistar</a>
+                            </li>
+                            <li id="dashboard" class="nav-item">
                                 <a class="nav-link" href="{{ route('traffic.index') }}">Tráfico</a>
                             </li>
                         </ul>

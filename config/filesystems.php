@@ -67,9 +67,9 @@ return [
             'url' => env('APP_URL').'/storage',
         ],
 
-        'sessionsmovistarpeak' => [
+        'sessionsmovistar' => [
             'driver' => 'local',
-            'root' => storage_path('app/sessionsmovistarpeak'),
+            'root' => storage_path('app/sessionsmovistar'),
             'url' => env('APP_URL').'/storage',
         ],
         

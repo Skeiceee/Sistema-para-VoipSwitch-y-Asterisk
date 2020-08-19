@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\SessionsMovistar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class SessionsMovistarPeak extends Command
      *
      * @var string
      */
-    protected $signature = 'daily:sessionsmovistarpeak';
+    protected $signature = 'daily:sessionsmovistar';
 
     /**
      * The console command description.
@@ -136,7 +137,7 @@ class SessionsMovistarPeak extends Command
         // Se guarda el excel y subida a la base de datos.
         $dateYesterday = Carbon::yesterday();
         $nameFile = $dateYesterday->format('Y-m-d');
-        Storage::disk('sessionsmovistarpeak')->put($nameFile.".xlsx", $content);
+        Storage::disk('sessionsmovistar')->put($nameFile.".xlsx", $content);
 
         $days = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
         $months = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
@@ -145,7 +146,7 @@ class SessionsMovistarPeak extends Command
         
         $sessions_movistar = new SessionsMovistar();
         $sessions_movistar->date = $yesterday;
-        $sessions_movistar->description = 'Cargos de acceso entrantes de '.$months[((int)$$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
+        $sessions_movistar->description = 'Sesiones de Movistar del '.$days[$yesterday->format('w')].', '.$yesterday->format('d').' de '.$months[((int)$yesterday->format('n') - 1)].' del '.$yesterday->format('Y');
         $sessions_movistar->file_name = $nameFile;
         $sessions_movistar->save();
     }

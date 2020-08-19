@@ -120,4 +120,5 @@ Route::resource('/cuentas', 'AccountsController')->names(
     ]
 );
 
-Route::resource('/sesiones/movistar', 'SessionsMovistarPeakController', ['only' => ['index','create']])->names(['index' => 'sessionsmovistarpeak.index','create' => 'sessionsmovistarpeak.create']);
+Route::get('/sesiones/movistar/download/{namefile}', 'SessionsMovistarController@download')->name('sessionsmovistar.download');
+Route::resource('/sesiones/movistar', 'SessionsMovistarController', ['only' => ['index','create']])->names(['index' => 'sessionsmovistar.index','create' => 'sessionsmovistar.create']);

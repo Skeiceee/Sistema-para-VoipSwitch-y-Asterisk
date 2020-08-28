@@ -103,6 +103,46 @@ return [
             ]) : [],
         ],
 
+        'asterisk2' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_ASTERISK2', '127.0.0.1'),
+            'port' => env('DB_PORT_ASTERISK2', '3306'),
+            'database' => env('DB_DATABASE_ASTERISK2', 'forge'),
+            'username' => env('DB_USERNAME_ASTERISK2', 'forge'),
+            'password' => env('DB_PASSWORD_ASTERISK2', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'latin1',
+            'collation' => 'latin1_swedish_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'asterisk2.nostrict' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_ASTERISK2', '127.0.0.1'),
+            'port' => env('DB_PORT_ASTERISK2', '3306'),
+            'database' => env('DB_DATABASE_ASTERISK2', 'forge'),
+            'username' => env('DB_USERNAME_ASTERISK2', 'forge'),
+            'password' => env('DB_PASSWORD_ASTERISK2', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'latin1',
+            'collation' => 'latin1_swedish_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'magnusbilling' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),

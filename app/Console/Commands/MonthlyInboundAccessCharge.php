@@ -138,8 +138,8 @@ class MonthlyInboundAccessCharge extends Command
             )
             ->where('disposition', 'ANSWERED')
             ->where(function ($query) {
-                $query->whereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [200,499])
-                    ->orWhereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [700,799]);
+                $query->whereBetween(DB::raw('CAST(cdr.in_userfield AS UNSIGNED)'), [200,499])
+                    ->orWhereBetween(DB::raw('CAST(cdr.in_userfield AS UNSIGNED)'), [700,799]);
             })
             ->orderBy('in_userfield', 'asc')
             ->get();
@@ -403,8 +403,8 @@ class MonthlyInboundAccessCharge extends Command
             )
             ->where('disposition', 'ANSWERED')
             ->where(function ($query) {
-                $query->whereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [200,499])
-                    ->orWhereBetween(DB::raw('CAST(cdr.in_userfield AS INTEGER)'), [700,799]);
+                $query->whereBetween(DB::raw('CAST(cdr.in_userfield AS UNSIGNED)'), [200,499])
+                    ->orWhereBetween(DB::raw('CAST(cdr.in_userfield AS UNSIGNED)'), [700,799]);
             })
             ->orderBy('in_userfield', 'asc')
             ->get();

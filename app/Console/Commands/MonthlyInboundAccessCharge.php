@@ -229,14 +229,34 @@ class MonthlyInboundAccessCharge extends Command
 
             $date_rate = (new Carbon('first day of this month'))->startOfMonth()->subMonth(1);
 
-            $rate = Rate::where('id_port', $ido->in_userfield)
-                ->whereBetween('end_date', 
-                    [
-                        $date_rate->format('Y-m-d H:i:s'),
-                        $date_rate->endOfMonth()->format('Y-m-d H:i:s')
-                    ]
-                )
-                ->first();
+            $exclude_ido = [
+                '215',
+                '317',
+                '220',
+                '322',
+                '723',
+                '788'
+            ];
+
+            if (in_array($ido->in_userfield, $exclude_ido)) {
+                $rate = Rate::where('id_port', 317)
+                    ->whereBetween('end_date', 
+                        [
+                            $date_rate->format('Y-m-d H:i:s'),
+                            $date_rate->endOfMonth()->format('Y-m-d H:i:s')
+                        ]
+                    )
+                    ->first(); 
+            }else{
+                $rate = Rate::where('id_port', $ido->in_userfield)
+                    ->whereBetween('end_date', 
+                        [
+                            $date_rate->format('Y-m-d H:i:s'),
+                            $date_rate->endOfMonth()->format('Y-m-d H:i:s')
+                        ]
+                    )
+                    ->first();
+            }
 
             if(isset($rate)){
                 $sheet->setCellValue('O'.$pos, $rate->rate_normal);
@@ -494,14 +514,34 @@ class MonthlyInboundAccessCharge extends Command
 
             $date_rate = (new Carbon('first day of this month'))->startOfMonth();
 
-            $rate = Rate::where('id_port', $ido->in_userfield)
-                ->whereBetween('end_date', 
-                    [
-                        $date_rate->format('Y-m-d H:i:s'),
-                        $date_rate->endOfMonth()->format('Y-m-d H:i:s')
-                    ]
-                )
-                ->first();
+            $exclude_ido = [
+                '215',
+                '317',
+                '220',
+                '322',
+                '723',
+                '788'
+            ];
+
+            if (in_array($ido->in_userfield, $exclude_ido)) {
+                $rate = Rate::where('id_port', 317)
+                    ->whereBetween('end_date', 
+                        [
+                            $date_rate->format('Y-m-d H:i:s'),
+                            $date_rate->endOfMonth()->format('Y-m-d H:i:s')
+                        ]
+                    )
+                    ->first(); 
+            }else{
+                $rate = Rate::where('id_port', $ido->in_userfield)
+                    ->whereBetween('end_date', 
+                        [
+                            $date_rate->format('Y-m-d H:i:s'),
+                            $date_rate->endOfMonth()->format('Y-m-d H:i:s')
+                        ]
+                    )
+                    ->first();
+            }
 
             if(isset($rate)){
                 $sheet->setCellValue('O'.$pos, $rate->rate_normal);

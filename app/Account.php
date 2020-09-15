@@ -13,7 +13,11 @@ class Account extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_user', 'title', 'username', 'password', 'description'
+        'id_user', 
+        'title', 
+        'username', 
+        'password', 
+        'description'
     ];
 
     public function getUsernameAttribute($value){

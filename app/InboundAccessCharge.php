@@ -12,6 +12,8 @@ class InboundAccessCharge extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'date', 'description', 'file_name'
+        'date', 
+        'description', 
+        'file_name'
     ];
 }

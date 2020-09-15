@@ -21,6 +21,7 @@
                                     </div>
                                     <hr>
                                     <div id="filter_wrapper" class="form-group">
+                                        <label for="date">Fecha</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-white"><i class="far fa-calendar-alt"></i></span>
@@ -34,6 +35,14 @@
                                             class="form-control"
                                             name="date"
                                             autocomplete="off">
+                                        </div>
+                                        
+                                        <div class="from-group mt-3">
+                                            <label for="itx">Interconexión</label>
+                                            <select name="itx" class="form-control form-control-chosen">
+                                                <option value="1">example 1</option>
+                                                <option value="2">example 2</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <canvas id="avgPerHourChart" width="400" height="250"></canvas>
@@ -68,17 +77,21 @@
 @endsection
 @push('css')
 <link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/chosen.min.css') }}" rel="stylesheet">
 @endpush
 @push('scripts')
 <script src="{{ asset('js/chart.min.js') }}"></script>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/chosen.min.js')}}"></script>
 <script src="{{ asset('js/datepicker.min.js') }}"></script>
 <script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
 <script>
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
+    $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
+    
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
     var ctx = document.getElementById('avgPerHourChart').getContext('2d');
     var avgPerHourChart = new Chart(ctx, {

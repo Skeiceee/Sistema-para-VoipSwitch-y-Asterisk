@@ -4,16 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SessionsMovistar extends Model
+class Interconnection extends Model
 {
-    protected $table = "sessions_movistar";
+    protected $table = "interconnections";
     protected $primaryKey = "id";
     protected $connection = 'mysql';
-    public $timestamps = false;
 
     protected $fillable = [
-        'date', 
-        'description', 
-        'file_name'
+        'name',
+        'connection_name',
+        'connection_no_strict_name'
     ];
 }

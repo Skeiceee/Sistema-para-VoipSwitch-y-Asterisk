@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interconnection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -21,7 +22,8 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return view('traffic.index');
+        $interconnections = Interconnection::all();
+        return view('traffic.index', compact('interconnections'));
     }
 
     public function avgperhrcalls(Request $request)
@@ -35,11 +37,14 @@ class ReportsController extends Controller
             $month = $request->month;
         }
 
+        set_time_limit(0);
+        $interconnection = Interconnection::find($request->itx);
+
         $strDate = $year.'-'.$month.'-01';
         $startDay = (new Carbon($strDate))->day;
         $endDay = (new Carbon($strDate))->endOfMonth()->day;
 
-        function avgsPerHour($year, $month, $day){
+        function avgsPerHour($year, $month, $day, $id_interconnection){
             $strDay = $year.'-'.$month.'-'.$day;
             return $avgDay = DB::connection('mysql')
                 ->table('average_calls')
@@ -51,13 +56,14 @@ class ReportsController extends Controller
                         DB::raw('str_to_date("'.$strDay.' 23:59:59", "%Y-%m-%d %H:%i:%s")') 
                     ]
                 )
+                ->where('id_interconnection', $id_interconnection)
                 ->get();
         }
 
         $datasets = [];
         for ($day = $startDay; $day <= $endDay; $day++) {
             $dataset = []; $avgs = [];
-            $avgsPerHour = avgsPerHour($year, $month, $day);
+            $avgsPerHour = avgsPerHour($year, $month, $day, $interconnection->id);
             $dataset = ['label' => $day.'/'.$month.'/'.$year];
             foreach ($avgsPerHour as $key => $avgPerHour) {
                 $avgs = $avgs + [$key => $avgPerHour->avg];
@@ -72,6 +78,8 @@ class ReportsController extends Controller
 
     public function processedcalls(Request $request)
     {   
+        set_time_limit(0);
+        $interconnection = Interconnection::find($request->itx);
 
         if(is_null($request->month) and is_null($request->year)){
             $start = Carbon::now()->firstOfMonth();
@@ -86,7 +94,7 @@ class ReportsController extends Controller
         $startDay = (new Carbon($strDate));
         $endDay = (new Carbon($strDate))->endOfMonth();
 
-        $query = DB::connection('asterisk.nostrict')
+        $query = DB::connection($interconnection->connection_no_strict_name)
             ->table('report')
             ->select(
                 'date',

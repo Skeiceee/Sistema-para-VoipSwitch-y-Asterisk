@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             [
                 TypesTableSeeder::class,
                 VoipswitchsTableSeeder::class,
-                StatusSeeder::class
+                StatusSeeder::class,
+                InterconecctionSeeder::class
             ]
         );
     }

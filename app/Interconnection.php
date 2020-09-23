@@ -10,7 +10,8 @@ class Interconnection extends Model
     protected $primaryKey = "id";
     protected $connection = 'mysql';
 
-    protected $fillable = [
+    protected $fillable = 
+    [
         'name',
         'connection_name',
         'connection_no_strict_name'

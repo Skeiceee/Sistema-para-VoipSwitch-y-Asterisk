@@ -61,7 +61,7 @@ class AccessChargeController extends Controller
              * @return object
              */
             function queryAccessCharge(String $start_date, String $end_date, $ido, String $rate, $time = 'normal'){
-                $base = DB::connection('asterisk')
+                $base_asterisk_one = DB::connection('asterisk')
                     ->table('cdr as c')
                     ->select(
                         DB::raw('sum(c.billsec) as segundos'),
@@ -80,19 +80,54 @@ class AccessChargeController extends Controller
                     ->where('c.userfield', '!=' ,'');
                 
                 if($time == 'normal' || $time == 1){
-                    $base = $base->whereRaw('dayofweek(c.calldate) between 2 AND 6')
+                    $base_asterisk_one = $base_asterisk_one->whereRaw('dayofweek(c.calldate) between 2 AND 6')
                         ->whereRaw('hour(c.calldate) between 9 AND 23')
                         ->get();
                 }else if($time == 'reduced' || $time == 2){
-                    $base = $base->whereRaw('(dayofweek(c.calldate)= 7 OR dayofweek(c.calldate)= 1)')
+                    $base_asterisk_one = $base_asterisk_one->whereRaw('(dayofweek(c.calldate)= 7 OR dayofweek(c.calldate)= 1)')
                         ->whereRaw('hour(c.calldate) between 9 AND 23')
                         ->get();
                 }else if($time == 'night' || $time == 3){
-                    $base = $base->whereRaw('hour(c.calldate) between 0 AND 8')
+                    $base_asterisk_one = $base_asterisk_one->whereRaw('hour(c.calldate) between 0 AND 8')
                         ->get();  
                 }
+
+                $base_asterisk_two = DB::connection('asterisk2')
+                    ->table('cdr as c')
+                    ->select(
+                        DB::raw('sum(c.billsec) as segundos'),
+                        DB::raw('count(c.userfield) as llamadas'),
+                        DB::raw('sum(c.billsec) *  '.$rate.' as total')
+                    )
+                    ->whereBetween(
+                        'c.calldate', 
+                        [
+                            DB::raw('str_to_date("'.$start_date.' 00:00:00", "%d/%m/%Y %H:%i:%s")'),
+                            DB::raw('str_to_date("'.$end_date.'23:59:59", "%d/%m/%Y %H:%i:%s")')
+                        ]
+                    )
+                    ->where('c.disposition', 'ANSWERED')
+                    ->where('c.userfield', $ido)
+                    ->where('c.userfield', '!=' ,'');
                 
-                return $base;
+                if($time == 'normal' || $time == 1){
+                    $base_asterisk_two = $base_asterisk_two->whereRaw('dayofweek(c.calldate) between 2 AND 6')
+                        ->whereRaw('hour(c.calldate) between 9 AND 23')
+                        ->get();
+                }else if($time == 'reduced' || $time == 2){
+                    $base_asterisk_two = $base_asterisk_two->whereRaw('(dayofweek(c.calldate)= 7 OR dayofweek(c.calldate)= 1)')
+                        ->whereRaw('hour(c.calldate) between 9 AND 23')
+                        ->get();
+                }else if($time == 'night' || $time == 3){
+                    $base_asterisk_two = $base_asterisk_two->whereRaw('hour(c.calldate) between 0 AND 8')
+                        ->get();  
+                }
+
+                $base_asterisk_one[0]->segundos = $base_asterisk_one[0]->segundos + $base_asterisk_two[0]->segundos;
+                $base_asterisk_one[0]->llamadas = $base_asterisk_one[0]->llamadas + $base_asterisk_two[0]->llamadas;
+                $base_asterisk_one[0]->total = $base_asterisk_one[0]->total + $base_asterisk_two[0]->total;
+
+                return $base_asterisk_one;
             }
 
             function addAccessCharges(Object $sheet, String $namePortador, Object $accessCharges, String $time, $pos){
@@ -106,7 +141,7 @@ class AccessChargeController extends Controller
             }
 
             function newTable(Spreadsheet $spreadsheet, Object $sheet, Object $portador, Object $normal, Object $reduced, Object $night, String $title, Int $pos = 1){
-                if($pos == 1){
+                if($pos == 2){
                     $center = [ 
                         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
@@ -174,7 +209,32 @@ class AccessChargeController extends Controller
                 $writer = new Xlsx($spreadsheet);
                 
                 $pos = 1;
+                $sheet->setCellValue('A'.$pos, 'Vozdigital');
+
+                $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':E'.$pos);
+                $styleArray = array(
+                    'font'  => array(
+                        'color' => array('rgb' => 'FFFFFF'),
+                        'bold' => true
+                ));
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':E'.$pos)->applyFromArray($styleArray);
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':E'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');
+                
+                $center = [ 
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
+                ];
+                $spreadsheet->getActiveSheet()->getStyle('A'.$pos)->getAlignment()->applyFromArray($center);
+
+                $pos++;
+
+                $pos_sum_one = $pos + 2;
+
                 for ($i = 0; $i < count($start_dates); $i++){
+                    if($i > 0){
+                        $pos_sum_one = $pos + 3;
+                    }
+
                     $ido = $portador->id_port;
                     $normal = queryAccessCharge($start_dates[$i], $end_dates[$i], $ido, $normal_rates[$i], 1);
                     $reduced = queryAccessCharge($start_dates[$i], $end_dates[$i], $ido, $reduced_rates[$i], 2);
@@ -182,8 +242,42 @@ class AccessChargeController extends Controller
                     
                     $title = 'Desde '.$start_dates[$i].' hasta '.$end_dates[$i];
                     $pos = newTable($spreadsheet, $sheet, $portador, $normal, $reduced, $night, $title, $pos);
+
+                    $pos_sum_two = $pos;
+                    $pos_sum[] = [$pos_sum_one, $pos_sum_two];
                 }
-        
+                
+                //Totales
+                $string_sum = '';
+                $last_without_add_sign = false;
+
+                foreach($pos_sum as $key => $pos){
+                    if ($key === array_key_first($pos)){
+                        $string_sum .= '=SUM(C'.$pos[0].':'.'C'.$pos[1].')';
+                    }
+
+                    if(array_key_first($pos) !== array_key_last($pos)){
+                        if($key !== array_key_first($pos) || $key !== array_key_last($pos)){
+                            $last_without_add_sign = true;
+                            $string_sum .= 'SUM(C'.$pos[0].':'.'C'.$pos[1].')2';
+                        }
+                        
+                        if ($key === array_key_last($pos)){
+                            if($last_without_add_sign){
+                                $string_sum .= 'SUM(C'.$pos[0].':'.'C'.$pos[1].')+';
+                            }else{
+                                $string_sum .= '1SUM(C'.$pos[0].':'.'C'.$pos[1].')';
+                            }
+                        }
+                    }        
+                }
+
+                // $sheet->setCellValue('C'.$pos, $string_sum);
+                // $sheet->setCellValue('D'.$pos, 'Portador');
+                // $sheet->setCellValue('E'.$pos, 'Portador');
+                
+                //
+
                 ob_start();
                 $writer->save('php://output');
                 $content = ob_get_contents();
@@ -197,7 +291,9 @@ class AccessChargeController extends Controller
                 Storage::disk('accesscharge')->put($nameFile.".xlsx", $content);
 
                 return response()->json([
-                    'filename' => $nameFile
+                    'filename' => $nameFile,
+                    'pos_num' => $pos_sum,
+                    'string_sum' => $string_sum
                 ], 200);
             }else{
                 return response()->json([

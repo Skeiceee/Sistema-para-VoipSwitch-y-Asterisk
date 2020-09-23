@@ -36,12 +36,13 @@
                                             name="date"
                                             autocomplete="off">
                                         </div>
-                                        
+
                                         <div class="from-group mt-3">
                                             <label for="itx">Interconexión</label>
-                                            <select name="itx" class="form-control form-control-chosen">
-                                                <option value="1">example 1</option>
-                                                <option value="2">example 2</option>
+                                            <select id="itx" name="itx" class="form-control form-control-chosen">
+                                                @foreach ($interconnections as $interconnection)
+                                                    <option value="{{ $interconnection->id }}">{{ $interconnection->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -91,7 +92,7 @@
 var SITEURL = '{{ URL::to('').'/' }}'
 $(document).ready(function(){
     $('.form-control-chosen').chosen({no_results_text: "No se ha encontrado"})
-    
+
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}})
     var ctx = document.getElementById('avgPerHourChart').getContext('2d');
     var avgPerHourChart = new Chart(ctx, {
@@ -129,10 +130,19 @@ $(document).ready(function(){
         $.ajax({
             type: "post",
             url: param.url,
-            data: { month: param.month, year: param.year },
+            data: { month: param.month, year: param.year, itx: param.itx},
             dataType: "json",
-            success: function(data){
-                $('#info-client-load').removeClass('d-flex').addClass('d-none')
+            beforeSend : function(){
+                $("#filter_toggle").prop("disabled", true);
+                $("#date").prop("disabled", true);
+                $("#itx").attr('disabled', true).trigger("chosen:updated")
+            },
+        }).done(function(data){
+            $("#filter_toggle").prop("disabled", false);
+            $("#date").prop("disabled", false);
+            $("#itx").attr('disabled', false).trigger("chosen:updated")
+
+            $('#info-client-load').removeClass('d-flex').addClass('d-none')
                 let listProcesseedCalls = $('#list_processeed_calls').empty()
                 let total = 0
                 data.forEach(function(e){
@@ -160,15 +170,14 @@ $(document).ready(function(){
                             .append(numberWithDot(total)+' llamadas')
                     )
                 )
-            }
-        })
+        });
     }
 
     function avgPerHourGraph(param){
         $.ajax({
             type: "post",
             url: param.url,
-            data: { month: param.month, year: param.year },
+            data: { month: param.month, year: param.year, itx: param.itx},
             dataType: "json",
             success: function(data){
                 let datasets = []
@@ -186,20 +195,33 @@ $(document).ready(function(){
         })
     }
 
-    maxProcessedCalls({ url : SITEURL+'trafico/processed/calls' })
-    avgPerHourGraph({ url : SITEURL+'trafico/avg/hr/calls' })
-
-    $('input[name="date"]').datepicker({
+    var datepicker = $('input[name="date"]').datepicker({
         todayButton: new Date(),
         onSelect: function(fd, date){
             if(typeof date === 'object' && date !== null){
                 $('#info-client-load').removeClass('d-none').addClass('d-flex')
                 $('#list_processeed_calls').empty()
+                let itx = $('#itx').val()
                 let month = date.getMonth() + 1
                 let year = date.getFullYear()
-                maxProcessedCalls({url : SITEURL+'trafico/processed/calls', month, year})
-                avgPerHourGraph({url : SITEURL+'trafico/avg/hr/calls', month, year})
+                maxProcessedCalls({url : SITEURL+'trafico/processed/calls', month, year, itx})
+                avgPerHourGraph({url : SITEURL+'trafico/avg/hr/calls', month, year, itx})
             }
+        }
+    })
+
+    datepicker.datepicker().data('datepicker').selectDate(new Date());
+
+    $('#itx').change(function(){
+        var date = datepicker.datepicker().data('datepicker').selectedDates[0];
+        if(typeof date === 'object' && date !== null){
+            $('#info-client-load').removeClass('d-none').addClass('d-flex')
+            $('#list_processeed_calls').empty()
+            let itx = $('#itx').val()
+            let month = date.getMonth() + 1
+            let year = date.getFullYear()
+            maxProcessedCalls({url : SITEURL+'trafico/processed/calls', month, year, itx})
+            avgPerHourGraph({url : SITEURL+'trafico/avg/hr/calls', month, year, itx})
         }
     })
 

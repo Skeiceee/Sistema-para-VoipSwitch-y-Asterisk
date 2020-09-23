@@ -20,7 +20,7 @@ class DailyAveregeCalls extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'It is responsible for bringing the average number of calls from the two interconnections';
 
     /**
      * Create a new command instance.

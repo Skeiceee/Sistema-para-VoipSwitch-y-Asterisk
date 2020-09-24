@@ -244,37 +244,36 @@ class AccessChargeController extends Controller
                     $pos = newTable($spreadsheet, $sheet, $portador, $normal, $reduced, $night, $title, $pos);
 
                     $pos_sum_two = $pos;
-                    $pos_sum[] = [$pos_sum_one, $pos_sum_two];
+                    $all_pos_sum[] = [$pos_sum_one, $pos_sum_two];
                 }
                 
+
                 //Totales
-                $string_sum = '';
-                $last_without_add_sign = false;
+                $string_sum_call = '';
+                $string_sum_seconds = '';
+                $string_sum_total = '';
 
-                foreach($pos_sum as $key => $pos){
-                    if ($key === array_key_first($pos)){
-                        $string_sum .= '=SUM(C'.$pos[0].':'.'C'.$pos[1].')';
+                foreach($all_pos_sum as $key => $pos_sum){
+                    if ($key === array_key_first($all_pos_sum)){
+                        $string_sum_call .= '=SUM(C'.$pos_sum[0].':'.'C'.$pos_sum[1].')';
+                        $string_sum_seconds .= '=SUM(D'.$pos_sum[0].':'.'D'.$pos_sum[1].')';
+                        $string_sum_total .= '=SUM(E'.$pos_sum[0].':'.'E'.$pos_sum[1].')';
                     }
-
-                    if(array_key_first($pos) !== array_key_last($pos)){
-                        if($key !== array_key_first($pos) || $key !== array_key_last($pos)){
-                            $last_without_add_sign = true;
-                            $string_sum .= 'SUM(C'.$pos[0].':'.'C'.$pos[1].')2';
-                        }
-                        
-                        if ($key === array_key_last($pos)){
-                            if($last_without_add_sign){
-                                $string_sum .= 'SUM(C'.$pos[0].':'.'C'.$pos[1].')+';
-                            }else{
-                                $string_sum .= '1SUM(C'.$pos[0].':'.'C'.$pos[1].')';
-                            }
-                        }
-                    }        
+                    if($key <= array_key_last($all_pos_sum) && $key > array_key_first($all_pos_sum)){
+                        $string_sum_call .= '+SUM(C'.$pos_sum[0].':'.'C'.$pos_sum[1].')';
+                        $string_sum_seconds .= '+SUM(D'.$pos_sum[0].':'.'D'.$pos_sum[1].')';
+                        $string_sum_total .= '+SUM(E'.$pos_sum[0].':'.'E'.$pos_sum[1].')';
+                    }
                 }
 
-                // $sheet->setCellValue('C'.$pos, $string_sum);
-                // $sheet->setCellValue('D'.$pos, 'Portador');
-                // $sheet->setCellValue('E'.$pos, 'Portador');
+                $pos++;
+
+                $sheet->setCellValue('A'.$pos, 'Total');
+                $spreadsheet->getActiveSheet()->mergeCells('A'.$pos.':B'.$pos);
+
+                $sheet->setCellValue('C'.$pos, $string_sum_call);
+                $sheet->setCellValue('D'.$pos, $string_sum_seconds);
+                $sheet->setCellValue('E'.$pos, $string_sum_total);
                 
                 //
 
@@ -291,9 +290,7 @@ class AccessChargeController extends Controller
                 Storage::disk('accesscharge')->put($nameFile.".xlsx", $content);
 
                 return response()->json([
-                    'filename' => $nameFile,
-                    'pos_num' => $pos_sum,
-                    'string_sum' => $string_sum
+                    'filename' => $nameFile
                 ], 200);
             }else{
                 return response()->json([

@@ -275,7 +275,59 @@ class AccessChargeController extends Controller
                 $sheet->setCellValue('D'.$pos, $string_sum_seconds);
                 $sheet->setCellValue('E'.$pos, $string_sum_total);
                 
+                $styleArray = array(
+                    'font'  => array(
+                        'color' => array('rgb' => 'FFFFFF'),
+                        'bold' => true
+                ));
+
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':E'.$pos)->applyFromArray($styleArray);
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A'.$pos.':E'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');
+                
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('F1:G'.$pos)->applyFromArray($styleArray);
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('F1:G'.$pos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('4f81bd');
+                
+                $styleArray = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '00000000'],
+                        ],
+                    ],
+                ];
+
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('A1:E'.$pos)->applyFromArray($styleArray);
+                $spreadsheet->setActiveSheetIndexByName($sheet->getTitle())->getStyle('F1:G'.$pos)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->mergeCells('F1:G'.($pos - 1));
+                
+                $sheet->setCellValue('F'.$pos, 'C/IVA');
+                $center = [ 
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, 
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER, 
+                ];
+                $spreadsheet->getActiveSheet()->getStyle('F'.$pos)->getAlignment()->applyFromArray($center);
+
+                $sheet->setCellValue('G'.$pos, '=E'.$pos.'*1.19');
                 //
+
+                $spreadsheet->getActiveSheet()
+                    ->getStyle('C1:D'.$pos)
+                    ->getNumberFormat()
+                    ->setFormatCode('_(* #,##0_);_(* -#,##0_);_(* "-"_);_(@_)');
+
+                $spreadsheet->getActiveSheet()
+                    ->getStyle('E1:E'.$pos)
+                    ->getNumberFormat()
+                    ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+                
+                $spreadsheet->getActiveSheet()
+                    ->getStyle('G1:G'.$pos)
+                    ->getNumberFormat()
+                    ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"_);_(@_)');
+                
+                foreach (range('A', 'G') as $column) {
+                    $sheet->getColumnDimension($column)->setAutoSize(true);
+                }
 
                 ob_start();
                 $writer->save('php://output');

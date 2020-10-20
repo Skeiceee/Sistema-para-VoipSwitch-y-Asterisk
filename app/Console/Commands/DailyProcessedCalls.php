@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Interconnection;
+use App\ProcessedCalls;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;

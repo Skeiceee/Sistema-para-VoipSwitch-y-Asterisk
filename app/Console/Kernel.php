@@ -368,6 +368,9 @@ class Kernel extends ConsoleKernel
         //Crea el reporte diario por hora de promedio y el peak de las sesiones de Movistar
         $schedule->command('daily:sessionsmovistar')->dailyAt('08:00')->timezone('America/Santiago');
         
+        //Envia el correo de saldos a los clientes.
+        $schedule->command('daily:processedcalls')->dailyAt('08:00')->timezone('America/Santiago');
+        
         // Crea los archivos mensuales de los cargos de acceso entrantes.
         $schedule->command('monthly:inboundaccesscharge')->monthlyOn(1, '08:00')->timezone('America/Santiago');
         
@@ -382,6 +385,7 @@ class Kernel extends ConsoleKernel
 
         //Envia el correo de saldos a los clientes.
         $schedule->command('email:accountstate')->dailyAt('08:00')->timezone('America/Santiago');
+
         
     }
 

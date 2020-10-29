@@ -94,11 +94,12 @@ class ReportsController extends Controller
         $startDay = (new Carbon($strDate));
         $endDay = (new Carbon($strDate))->endOfMonth();
 
-        $query = DB::connection($interconnection->connection_no_strict_name)
-            ->table('report')
+
+        $query = DB::connection('mysql.nostrict')
+            ->table('processed_calls')
             ->select(
                 'date',
-                'processed_calls'
+                'processed as processed_calls' 
             )
             ->whereBetween(
                 'date',
@@ -107,13 +108,29 @@ class ReportsController extends Controller
                     DB::raw('str_to_date("'.$endDay->format('Y-m-d').' 23:59:59", "%Y-%m-%d %H:%i:%s")') 
                 ]
             )
-            ->whereRaw('hour(date) = 23')
-            ->whereRaw('minute(date) = 59')
-            ->whereRaw('second(date) = 59')
             ->groupBy(
                 DB::raw('day(date)')
             )->get();
 
+        // $query = DB::connection($interconnection->connection_no_strict_name)
+        //     ->table('report')
+        //     ->select(
+        //         'date',
+        //         'processed_calls'
+        //     )
+        //     ->whereBetween(
+        //         'date',
+        //         [
+        //             DB::raw('str_to_date("'.$startDay->format('Y-m-d').' 00:00:00", "%Y-%m-%d %H:%i:%s")'),
+        //             DB::raw('str_to_date("'.$endDay->format('Y-m-d').' 23:59:59", "%Y-%m-%d %H:%i:%s")') 
+        //         ]
+        //     )
+        //     ->whereRaw('hour(date) = 23')
+        //     ->whereRaw('minute(date) = 59')
+        //     ->whereRaw('second(date) = 59')
+        //     ->groupBy(
+        //         DB::raw('day(date)')
+        //     )->get();
             return response()->json($query);
     }
 }

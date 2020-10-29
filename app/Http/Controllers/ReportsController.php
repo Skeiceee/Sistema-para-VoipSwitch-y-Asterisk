@@ -108,6 +108,7 @@ class ReportsController extends Controller
                     DB::raw('str_to_date("'.$endDay->format('Y-m-d').' 23:59:59", "%Y-%m-%d %H:%i:%s")') 
                 ]
             )
+            ->where('id_interconnection', $interconnection->id)
             ->groupBy(
                 DB::raw('day(date)')
             )->get();

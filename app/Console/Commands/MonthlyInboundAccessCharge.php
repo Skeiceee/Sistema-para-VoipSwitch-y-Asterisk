@@ -232,6 +232,7 @@ class MonthlyInboundAccessCharge extends Command
             $exclude_ido = [
                 '215',
                 '317',
+                '236',
                 '220',
                 '322',
                 '723',

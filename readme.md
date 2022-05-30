@@ -1,4 +1,4 @@
-# Sistema mejorado para Vozdigital.
+# Sistema mejorado para VoipSwitch y Asterisk.
 
 ### Funciones del sistema (Modulos en producción).
 
